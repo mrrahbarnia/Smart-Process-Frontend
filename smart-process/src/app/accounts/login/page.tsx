@@ -22,7 +22,7 @@ const Page = () => {
     const login = useAuthStore((state) => state.login);
     const setRule = useAuthStore((state) => state.setRule);
 
-    const { 
+    const {
         register,
         handleSubmit,
         setError,
@@ -51,7 +51,7 @@ const Page = () => {
     
             return () => clearTimeout(id);
         }
-    }, [loginMessage])
+    }, [loginMessage, setLoginMessage])
 
     return (
         <Fragment>
