@@ -20,28 +20,14 @@ const Page = () => {
     const setLoginMessage = useAccountsStore((state) => state.setLoginMessage);
     const loginMessage = useAccountsStore((state) => state.loginMessage);
     const login = useAuthStore((state) => state.login);
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
     const setRule = useAuthStore((state) => state.setRule);
 
-    const {
-        register,
-        handleSubmit,
-        setError,
-        formState: { errors, isSubmitting }
-     } = useForm<InputTypes>();
-
-    const onSubmit: SubmitHandler<InputTypes>  = async(data) => {
-        axios.post(INTERNAL_API, data, {
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        .then((response) => {
-            login();
-            setRule(response.data?.user_rule);
+    useEffect(() => {
+        if (isAuthenticated) {
             return router.replace("/");
-        })
-        .catch(() => setError("root", { message: "حساب کاربری فعالی با مشخصات وارد شده یافت نشد." }))
-    };
+        }
+    }, [isAuthenticated, router])
 
     useEffect(() => {
         if (loginMessage) {
@@ -52,6 +38,28 @@ const Page = () => {
             return () => clearTimeout(id);
         }
     }, [loginMessage, setLoginMessage])
+
+    const {
+        register,
+        handleSubmit,
+        setError,
+        formState: { errors, isSubmitting }
+     } = useForm<InputTypes>();
+
+    const onSubmit: SubmitHandler<InputTypes>  = async(data) => {
+        try {
+            const response = await axios.post(INTERNAL_API, data, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            login();
+            setRule(response.data?.user_rule);
+            return router.replace("/");
+        } catch {
+            setError("root", { message: "حساب کاربری فعالی با مشخصات وارد شده یافت نشد." })
+        }
+    };
 
     return (
         <Fragment>
@@ -80,7 +88,7 @@ const Page = () => {
                         {errors.password && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.password.message}</span>}
                     </div>
                     {errors.root && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.root.message}</span>}
-                    <button disabled={isSubmitting} className="hover:bg-blue-200 transition duration-200 w-1/3 mx-auto rounded-md py-1">{isSubmitting ? <AiOutlineLoading3Quarters className="animate-spin" /> : "ورود"}</button>
+                    <button disabled={isSubmitting} className="hover:bg-blue-200 transition duration-200 w-1/3 mx-auto rounded-md py-1">{isSubmitting ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> : "ورود"}</button>
                     <Link className="mx-auto text-sm underline underline-offset-4 hover:text-blue-800 transition duration-200" href="/accounts/register/">حساب کاربری ندارید؟</Link>
                 </form>
             </div>

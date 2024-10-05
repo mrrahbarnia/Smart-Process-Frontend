@@ -5,6 +5,7 @@ import { Fragment, useEffect } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useAccountsStore } from "@/store/useAccountsStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { EXTERNAL_BASE_ENDPOINT } from "@/configs/default";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -18,27 +19,19 @@ const Page = () => {
     const verifyAccountMessage = useAccountsStore((state) => state.verifyAccountMessage)
     const setVerifyAccountMessage = useAccountsStore((state) => state.setVerifyAccountMessage)
     const setLoginMessage = useAccountsStore((state) => state.setLoginMessage)
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
     const { 
         register,
         handleSubmit,
         setError,
         formState: { errors, isSubmitting }
-     } = useForm<InputTypes>();
-
-    const onSubmit: SubmitHandler<InputTypes>  = async(data) => {
-        axios.post(`${EXTERNAL_BASE_ENDPOINT}/auth/verify-account/`, data, {
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        .then(() => {
-            setLoginMessage("حساب کاربری شما با موفقیت فعال شد.");
-            return router.replace("/accounts/login/");
-        })
-        .catch(() => {
-            setError("verificationCode", {message: "کد فعالسازی وارد شده نامعتبر است."})
-        })
-    };
+    } = useForm<InputTypes>();
+    
+    useEffect(() => {
+        if (isAuthenticated) {
+            return router.back()
+        }
+    }, [isAuthenticated, router])
 
     useEffect(() => {
         if (verifyAccountMessage) {
@@ -48,7 +41,22 @@ const Page = () => {
     
             return () => clearTimeout(id);
         }
-    }, [verifyAccountMessage])
+    }, [verifyAccountMessage, setVerifyAccountMessage])
+
+    const onSubmit: SubmitHandler<InputTypes>  = async(data) => {
+
+        try {
+            await axios.post(`${EXTERNAL_BASE_ENDPOINT}/auth/verify-account/`, data, {
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            setLoginMessage("حساب کاربری شما با موفقیت فعال شد.");
+            return router.replace("/accounts/login/");
+        } catch {
+            setError("verificationCode", {message: "کد فعالسازی وارد شده نامعتبر است."})
+        }
+    };
 
     return (
         <Fragment>
@@ -74,7 +82,7 @@ const Page = () => {
                         })} type="text" className="h-9 rounded-md px-2" dir="ltr" />
                         {errors.verificationCode && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.verificationCode.message}</span>}
                     </div>
-                    <button disabled={isSubmitting} className="hover:bg-blue-200 transition duration-200 w-1/3 mx-auto rounded-md py-1">{isSubmitting ? <AiOutlineLoading3Quarters className="animate-spin" /> : "فعالسازی"}</button>
+                    <button disabled={isSubmitting} className="hover:bg-blue-200 transition duration-200 w-1/3 mx-auto rounded-md py-1">{isSubmitting ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> : "فعالسازی"}</button>
                     <Link className="mx-auto text-sm underline underline-offset-4 hover:text-blue-800 transition duration-200" href="/accounts/verify-account/resend/">دریافت مجدد کد فعالسازی</Link>
                 </form>
             </div>

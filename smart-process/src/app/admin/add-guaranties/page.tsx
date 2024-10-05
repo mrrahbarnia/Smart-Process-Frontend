@@ -1,6 +1,6 @@
 "use client"
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -25,9 +25,11 @@ const Page = () => {
         formState: { errors, isSubmitting, isSubmitSuccessful }
     } = useForm<InputTypes>();
 
-    if (rule !== "admin") {
-        return router.replace("/accounts/login/")
-    }
+    useEffect(() => {
+        if (rule !== "admin") {
+            return router.replace("/accounts/login/")
+        }
+    }, [rule, router])
 
     const onSubmit: SubmitHandler<InputTypes>  = async(data) => {
         const formData = new FormData()

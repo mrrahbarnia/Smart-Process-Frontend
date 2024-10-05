@@ -1,6 +1,8 @@
 "use client"
 import axios from "axios";
+import { useEffect } from "react";
 import { useAccountsStore } from "@/store/useAccountsStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { EXTERNAL_BASE_ENDPOINT } from "@/configs/default";
@@ -16,37 +18,48 @@ type InputTypes = {
 
 const Page = () => {
     const router = useRouter();
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated)
     const setVerifyAccountMessage = useAccountsStore((state) => state.setVerifyAccountMessage)
     const { 
         register,
         handleSubmit,
         setError,
         formState: { errors, isSubmitting }
-     } = useForm<InputTypes>();
+    } = useForm<InputTypes>();
+    
+    useEffect(() => {
+        if (isAuthenticated) {
+            return router.replace("/");
+        }
+    }, [isAuthenticated, router])
 
     const onSubmit: SubmitHandler<InputTypes>  = async(data) => {
-        axios.post(
-            `${EXTERNAL_BASE_ENDPOINT}/auth/register/`, data, {
-                headers: {
-                    "Content-Type": "application/json"
+
+        try {
+            await axios.post(
+                `${EXTERNAL_BASE_ENDPOINT}/auth/register/`, data, {
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
                 }
-            }
-        )
-        .then(() => {
+            )
             setVerifyAccountMessage("شما با موفقیت ثبت نام شدید,لطفا حساب کاربری خود را فعال کنید.");
             return router.replace("/accounts/verify-account/");
-        })
-        .catch(error => {
-            if (error.response?.data && error.response.data?.detail === "Phone number already exists") {
-                setError("phoneNumber", {message: "شماره موبایل وارد شده تکراریست."})
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                if (error.response?.data && error.response.data?.detail === "Phone number already exists") {
+                    setError("phoneNumber", {message: "شماره موبایل وارد شده تکراریست."})
+                }
+                if (error.response?.data && error.response.data?.detail === "Username already exists") {
+                    setError("username", {message: "نام کاربری وارد شده تکراریست."})
+                }
+                if (error.response?.data && error.response.data?.detail && error.response.data?.detail[0]?.msg === "Value error, Passwords don't match!") {
+                    setError("confirmPassword", { message: "رمز های عبور مطابقت ندارند."})
+                }
+            } else {
+                setError("root", { message: "مشکلی در سرور بوجود آمده است." })
             }
-            if (error.response?.data && error.response.data?.detail === "Username already exists") {
-                setError("username", {message: "نام کاربری وارد شده تکراریست."})
-            }
-            if (error.response?.data && error.response.data?.detail && error.response.data?.detail[0]?.msg === "Value error, Passwords don't match!") {
-                setError("confirmPassword", { message: "رمز های عبور مطابقت ندارند."})
-            }
-        })
+        }
     };
 
     return (
@@ -95,7 +108,7 @@ const Page = () => {
                     })} type="password" className="h-9 rounded-md px-2" dir="ltr" />
                     {errors.confirmPassword && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.confirmPassword.message}</span>}
                 </div>
-                <button disabled={isSubmitting} className="hover:bg-blue-200 transition duration-200 w-1/3 mx-auto rounded-md py-1">{isSubmitting ? <AiOutlineLoading3Quarters className="animate-spin" /> : "ثبت نام"}</button>
+                <button disabled={isSubmitting} className="hover:bg-blue-200 transition duration-200 w-1/3 mx-auto rounded-md py-1">{isSubmitting ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> : "ثبت نام"}</button>
                 <Link className="mx-auto text-sm underline underline-offset-4 hover:text-blue-800 transition duration-200" href="/accounts/login/">حساب کاربری دارم</Link>
             </form>
         </div>

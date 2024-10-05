@@ -31,13 +31,13 @@ const Header = () => {
                     onClick={() => setShowAccountMobileMenu(!showAccountMobileMenu)} 
                 />
                 {showAccountMobileMenu && <div className="cursor-pointer flex flex-col gap-2 absolute bg-blue-100 w-40 p-2 rounded-md shadow-lg">
-                    <div className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 p-2 py-1">
+                    {!isAuthenticated && <div className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 p-2 py-1">
                         <FiLogIn size={18} />
                         <Link href="/accounts/login/" className="text-sm" >ورود</Link>
-                    </div>
+                    </div>}
                     <div className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 px-2 py-1">
                         <TbBrandGoogleBigQuery size={18} />
-                        <Link href="/accounts/login/" className="text-sm" >استعلام گارانتی</Link>
+                        <Link href="/inquiry-guaranty/" className="text-sm" >استعلام گارانتی</Link>
                     </div>
                     {rule === "admin" && isAuthenticated && <div className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 px-2 py-1">
                         <SiMicrosoftexcel size={18} />
