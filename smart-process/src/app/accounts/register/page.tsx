@@ -72,7 +72,7 @@ const Page = () => {
                         required: "لطفا شماره موبایل خود را وارد کنید.",
                         validate: (value) => {
                             if (value.length !== 11) {
-                                return "شماره موبایل بایستی دقیقا یازده عدد باشد."
+                                return "شماره موبایل باید دقیقا یازده عدد باشد."
                             }
                             return true
                         }

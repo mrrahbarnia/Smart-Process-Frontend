@@ -60,7 +60,7 @@ const Page = () => {
 
     return (
         <Fragment>
-            {verifyAccountMessage === "شما با موفقیت ثبت نام شدید,لطفا حساب کاربری خود را فعال کنید." && <p className="bg-gradient-to-l from-green-900 via-green-700 to-green-500 text-white text-xs pr-1 pb-2 pt-14 ">{verifyAccountMessage}</p>}
+            {verifyAccountMessage && <p className="bg-gradient-to-l from-green-900 via-green-700 to-green-500 text-white text-xs pr-1 pb-2 pt-14 ">{verifyAccountMessage}</p>}
             <div className="flex justify-center items-center w-5/6 min-[490px]:w-3/4 min-[600px]:w-3/5 min-[860px]:w-2/4 mx-auto min-h-screen">
                 <form onSubmit={handleSubmit(onSubmit)} className="p-4 flex flex-col gap-6 bg-gradient-to-b from-blue-100 to-blue-300 w-full rounded-md shadow-lg">
                     <h1 className="text-center text-xl">فرم فعالسازی حساب کاربری</h1>

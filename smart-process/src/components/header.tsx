@@ -1,4 +1,6 @@
 "use client"
+import { MdOutlinePassword } from "react-icons/md";
+import { MdLockReset } from "react-icons/md";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { SiMicrosoftexcel } from "react-icons/si"; 
 import { TbBrandGoogleBigQuery } from "react-icons/tb";
@@ -34,6 +36,14 @@ const Header = () => {
                     {!isAuthenticated && <div className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 p-2 py-1">
                         <FiLogIn size={18} />
                         <Link href="/accounts/login/" className="text-sm" >ورود</Link>
+                    </div>}
+                    {!isAuthenticated && <div className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 p-2 py-1">
+                        <MdLockReset size={18} />
+                        <Link href="/accounts/reset-password/" className="text-sm" >بازیابی رمز عبور</Link>
+                    </div>}
+                    {isAuthenticated && <div className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 p-2 py-1">
+                        <MdOutlinePassword size={18} />
+                        <Link href="/accounts/change-password/" className="text-sm" >تغییر رمز عبور</Link>
                     </div>}
                     <div className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 px-2 py-1">
                         <TbBrandGoogleBigQuery size={18} />
