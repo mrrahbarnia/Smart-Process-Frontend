@@ -1,5 +1,5 @@
 "use server"
-// @ts-ignore
+// @ts-expect-error Dont raise error
 import jwt from 'jsonwebtoken';
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
