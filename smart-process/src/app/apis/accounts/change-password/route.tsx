@@ -23,8 +23,7 @@ export const PUT = async (request: NextRequest) => {
         })
         deleteToken();
         return NextResponse.json({"Changed": true}, {status: 200})
-    } catch (error) {
-        console.log(error);
+    } catch {
         return NextResponse.json({"changed": false}, {status: 400})
     }
 }

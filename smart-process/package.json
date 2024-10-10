@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.59.0",
+    "@tanstack/react-query-devtools": "^5.59.8",
     "axios": "^1.7.7",
+    "jalaali-js": "^1.2.7",
     "jsonwebtoken": "^9.0.2",
     "next": "14.2.14",
     "react": "^18",

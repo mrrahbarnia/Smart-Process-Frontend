@@ -1,12 +1,14 @@
 "use client"
-import Header from "@/components/header";
+import Header from "@/components/headers/header";
 import { useEffect } from "react";
 // import Footer from "@/components/footer";
 import { useAuthStore } from "@/store/useAuthStore";
+import ReactQueryProvider from "@/store/reactQueryProvider";
 import "./globals.css";
 
-const localStorageLoginKey = "is-logged-in"
-const localStorageRuleKey = "rule"
+const localStorageLoginKey = "is-logged-in";
+const localStorageRuleKey = "rule";
+const localPhoneNumberKey = "phone-number";
 
 export default function RootLayout({
   children,
@@ -15,10 +17,12 @@ export default function RootLayout({
 }>) {
   const setIsAuthenticated = useAuthStore((state) => state.setIsAuthenticated);
   const setRule = useAuthStore((state) => state.setRule);
+  const setPhoneNumber = useAuthStore((state) => state.setPhoneNumber);
 
   useEffect(() => {
     const authState = localStorage.getItem(localStorageLoginKey);
     const rule = localStorage.getItem(localStorageRuleKey) as "user" | "admin" | null;
+    const phoneNumber = localStorage.getItem(localPhoneNumberKey);
     if (authState === "1") {
       setIsAuthenticated(true)
     } else {
@@ -27,16 +31,21 @@ export default function RootLayout({
     if (rule) {
       setRule(rule)
     }
-  }, [setIsAuthenticated, setRule])
+    if (phoneNumber) {
+      setPhoneNumber(phoneNumber)
+    }
+  }, [setIsAuthenticated, setRule, setPhoneNumber])
 
   return (
     <html lang="fa" dir="rtl" className="font-[Vazir-Medium]">
       <body
-        className=""
+        className="bg-custom-bg bg-cover bg-center"
       >
-        <Header />
-          {children}
-        {/* <Footer /> */}
+        <ReactQueryProvider>
+          <Header />
+            {children}
+          {/* <Footer /> */}
+        </ReactQueryProvider>
       </body>
     </html>
   );

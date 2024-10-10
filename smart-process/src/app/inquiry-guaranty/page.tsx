@@ -4,6 +4,8 @@ import { useState } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { EXTERNAL_BASE_ENDPOINT } from "@/configs/default";
+import { calculateDays } from "@/utils/calculateDays";
+import Link from "next/link";
 
 const EXTERNAL_API = `${EXTERNAL_BASE_ENDPOINT}/products/inquiry-guaranty`
 
@@ -15,7 +17,8 @@ type responseType = {
     productSerialNumber: string,
     guarantySerial: string,
     productName: string,
-    dateOfDocument: string
+    guarantyDays: number,
+    producedAt: string
 }
 
 
@@ -35,7 +38,7 @@ const Page = () => {
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 if (error.response?.data && error.response?.data.detail === "There is no guaranty with the provided info!") {
-                    setError("serialNumber", { message: "اطلاعاتی با شماره سریال وارد شده موجود نمیباشد." })
+                    setError("serialNumber", { message: "این کالا مشمول گارانتی پردازش هوشمند نمیباشد.☹️ " })
                     setResponseData(undefined);
                 }
             } else {
@@ -44,6 +47,11 @@ const Page = () => {
             }
         }
     };
+
+    let remainGuarantyDays;
+    if (responseData) {
+        remainGuarantyDays = responseData.guarantyDays - calculateDays(responseData.producedAt.split(" ")[0]);
+    }
 
     return (
         <div className="flex flex-col justify-center items-center w-5/6 min-[490px]:w-3/4 min-[600px]:w-3/5 min-[860px]:w-2/4 mx-auto min-h-screen">
@@ -54,18 +62,26 @@ const Page = () => {
                     <input {...register("serialNumber", { 
                         required: "شماره سریال گارانتی را وارد کنید.",
                     })} type="text" className="h-9 rounded-md px-2" dir="ltr" />
-                    {errors.serialNumber && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.serialNumber.message}</span>}
+                    {errors.serialNumber && <div className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">
+                        <span className="block">این کالا مشمول گارانتی پردازش هوشمند نمیباشد. ☹️</span>
+                        <span className="block">در صورتی که نیاز به کمک یا راهنمایی دارید با ما تماس بگیرید.🙂</span>
+                    </div>}
                 </div>
                 <button disabled={isSubmitting} className="hover:bg-blue-200 transition duration-200 w-1/3 mx-auto rounded-md py-1">{isSubmitting ? <AiOutlineLoading3Quarters className="animate-spin" /> : "استعلام"}</button>
                 {responseData && <div className="bg-violet-800 rounded-md">
                 <ul className="p-2 flex flex-col gap-2 text-white">
-                    <li>شماره سریال محصول:{responseData.productSerialNumber}</li>
+                    <li>شماره سریال محصول:{responseData.guarantySerial}</li>
                     <hr/>
-                    <li>شماره سریال گارانتی:{responseData.guarantySerial}</li>
+                    <li>مدل محصول:{responseData.productName}</li>
                     <hr/>
-                    <li>محصول:{responseData.productName}</li>
+                    {remainGuarantyDays && <li className="text-sm">
+                        {remainGuarantyDays > 0 ? `خوشحالیم که تا ${remainGuarantyDays} روز دیگر کالای شما نزد ما گارانتی دارد.🙂` : remainGuarantyDays <= 0 ? "متأسفانه گارانتی این کالا به پایان رسیده است.🙁" : undefined}
+                        {remainGuarantyDays <= 0 && <span className="block">ولی نگران نباشید، هنوز هم اگر کمکی از دستمان بر بیاد با کمال میل برایتان انجام میدهیم.🙂</span>}
+                    </li>}
                     <hr/>
-                    <li>تاریخ سند:{responseData.dateOfDocument.split(" ")[0]}</li>
+                    <li className="text-center underline-offset-2 underline">
+                        <Link href={`/products/${responseData.productSerialNumber}/`}>صفحه محصول شما</Link>
+                    </li>
                 </ul>
             </div>}
             </form>

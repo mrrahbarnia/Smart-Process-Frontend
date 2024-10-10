@@ -28,7 +28,8 @@ export const POST = async (request: NextRequest) => {
         const response = await axios.post<responseType>(EXTERNAL_API, formData)
         setToken(response.data.access_token)
         const jsonWebToken = jwt.decode(response.data.access_token)
-        return NextResponse.json(jsonWebToken, {status: 200})
+        const phoneNumber = response.data.username
+        return NextResponse.json({"deserializedToken": jsonWebToken, "phoneNumber": phoneNumber}, {status: 200})
     } catch {
         return NextResponse.json({"login": false}, {status: 400})
     }

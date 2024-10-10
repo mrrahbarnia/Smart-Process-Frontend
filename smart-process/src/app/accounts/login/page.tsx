@@ -15,6 +15,13 @@ type InputTypes = {
     password: string
 }
 
+type responseType = {
+    deserializedToken: {
+        user_rule: "user" | "admin"
+    },
+    phoneNumber: string
+}
+
 const Page = () => {
     const router = useRouter();
     const setLoginMessage = useAccountsStore((state) => state.setLoginMessage);
@@ -22,11 +29,10 @@ const Page = () => {
     const login = useAuthStore((state) => state.login);
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
     const setRule = useAuthStore((state) => state.setRule);
+    const setPhoneNumber = useAuthStore((state) => state.setPhoneNumber);
 
     useEffect(() => {
         if (isAuthenticated) {
-            // if (loginMessage != "رمز عبور شما با موفقیت تغییر یافت,لطفا مجددا وارد شوید.") {
-            // }
             return router.replace("/");
         }
     }, [isAuthenticated, loginMessage, router])
@@ -50,13 +56,14 @@ const Page = () => {
 
     const onSubmit: SubmitHandler<InputTypes>  = async(data) => {
         try {
-            const response = await axios.post(INTERNAL_API, data, {
+            const response = await axios.post<responseType>(INTERNAL_API, data, {
                 headers: {
                     "Content-Type": "application/json"
                 }
             })
             login();
-            setRule(response.data?.user_rule);
+            setRule(response.data.deserializedToken.user_rule);
+            setPhoneNumber(response.data.phoneNumber);
             return router.replace("/");
         } catch {
             setError("root", { message: "حساب کاربری فعالی با مشخصات وارد شده یافت نشد." })
