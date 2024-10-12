@@ -1,7 +1,6 @@
 "use client"
 import AdminHeader from "@/components/headers/adminHeader";
 import { useEffect } from "react";
-// import Footer from "@/components/footer";
 import { useAuthStore } from "@/store/useAuthStore";
 import "./../globals.css";
 
@@ -38,9 +37,7 @@ export default function AdminLayout({
   return (
     <div className="flex pt-12">
       <AdminHeader />
-        <div className="border border-spacing-2 border-black h-screen"></div>
           {children}
-        {/* <Footer /> */}
     </div>
   );
 }

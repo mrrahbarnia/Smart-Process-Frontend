@@ -78,7 +78,7 @@ const Page = () => {
                 {fileName && <span className="bg-green-700 text-white px-2 py-1 text-sm rounded-md w-fit mx-auto">{fileName}</span>}
                 {errors.file && !fileName && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.file.message}</span>}
                 {isSubmitSuccessful && <span className="bg-green-700 text-white text-sm px-2 py-1 rounded-md">فایل با موفقیت بارگذاری شد.</span>}
-                <button disabled={isSubmitting} className="hover:bg-blue-200 transition duration-200 w-1/3 mx-auto rounded-md py-1">{isSubmitting ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> : "باگذاری"}</button>
+                <button disabled={isSubmitting} className="hover:bg-blue-200 transition duration-200 w-1/3 mx-auto rounded-md py-1">{isSubmitting ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> : "بارگذاری"}</button>
             </form>
         </div>
     )

@@ -1,7 +1,7 @@
 "use client"
 import Header from "@/components/headers/header";
 import { useEffect } from "react";
-// import Footer from "@/components/footer";
+import Footer from "@/components/footer";
 import { useAuthStore } from "@/store/useAuthStore";
 import ReactQueryProvider from "@/store/reactQueryProvider";
 import "./globals.css";
@@ -44,7 +44,7 @@ export default function RootLayout({
         <ReactQueryProvider>
           <Header />
             {children}
-          {/* <Footer /> */}
+          <Footer />
         </ReactQueryProvider>
       </body>
     </html>

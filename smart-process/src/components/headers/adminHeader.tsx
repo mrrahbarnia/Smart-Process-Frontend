@@ -17,7 +17,7 @@ const AdminHeader = () => {
     }, [rule, router])
 
     return (
-        <ul className="w-12 h-screen p-3 pt-5 space-y-3">
+        <ul className="w-12 bg-white h-auto p-3 pt-5 space-y-3">
             <Link href="/" className="relative group flex items-center">
                 <AiOutlineHome className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20} />
                 <li className="absolute w-20 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm">صفحه اصلی</li>

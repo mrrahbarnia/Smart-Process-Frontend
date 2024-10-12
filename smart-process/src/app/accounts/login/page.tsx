@@ -30,6 +30,12 @@ const Page = () => {
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
     const setRule = useAuthStore((state) => state.setRule);
     const setPhoneNumber = useAuthStore((state) => state.setPhoneNumber);
+    const {
+        register,
+        handleSubmit,
+        setError,
+        formState: { errors, isSubmitting }
+    } = useForm<InputTypes>();
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -46,13 +52,6 @@ const Page = () => {
             return () => clearTimeout(id);
         }
     }, [loginMessage, setLoginMessage])
-
-    const {
-        register,
-        handleSubmit,
-        setError,
-        formState: { errors, isSubmitting }
-     } = useForm<InputTypes>();
 
     const onSubmit: SubmitHandler<InputTypes>  = async(data) => {
         try {
