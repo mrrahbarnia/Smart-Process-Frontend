@@ -6,7 +6,7 @@ import { useEffect, useState, Dispatch, SetStateAction } from "react";
 import useDebounced from "@/hooks/useDebounced";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {useUpdateCategory, requestType} from "@/hooks/useMutations/useUpdateCategory";
-import { categoryType } from "@/hooks/useQueries/useGetAllCategories";
+import { CategoryType } from "@/hooks/useQueries/useGetAllCategories";
 
 const EXTERNAL_CATEGORY_SEARCH_API = `${EXTERNAL_BASE_ENDPOINT}/products/search-categories/?category_name=`;
 
@@ -17,7 +17,7 @@ type InputTypes = {
 }
 
 
-const UpdateModal = ({category, closeModalHandler}: {category: categoryType, closeModalHandler: Dispatch<SetStateAction<boolean>>}) => {
+const UpdateModal = ({category, closeModalHandler}: {category: CategoryType, closeModalHandler: Dispatch<SetStateAction<boolean>>}) => {
     const [parentCategory, setParentCategory] = useState<string>("");
     const debounceValue = useDebounced(parentCategory);
     const [suggestedParentCategories, setSuggestedParentCategories] = useState<string[]>([]);

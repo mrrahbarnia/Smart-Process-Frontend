@@ -2,14 +2,14 @@
 import { RxCross1, RxUpdate } from "react-icons/rx";
 import UpdateModal from "./UpdateModal";
 import { AiOutlineCheck, AiOutlineDelete } from "react-icons/ai";
-import { brandType } from "@/hooks/useQueries/useGetAllBrands";
+import { BrandType } from "@/hooks/useQueries/useGetAllBrands";
 import useDeactivateBrand from "@/hooks/useMutations/useDeactivateBrand";
 import useActivateBrand from "@/hooks/useMutations/useActivateBrand";
 import { useState, Fragment } from "react";
 import DeleteModal from "./DeleteModal";
 
 
-const CategoryItem = (props: {brand: brandType}) => {
+const CategoryItem = (props: {brand: BrandType}) => {
     const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const {deactivateMutate} = useDeactivateBrand();

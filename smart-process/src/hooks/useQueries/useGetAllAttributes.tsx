@@ -2,29 +2,27 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 
-const INTERNAL_API = "/apis/admin/get-all-brands/";
+const INTERNAL_API = "/apis/admin/get-all-attributes/";
 
-export type BrandType = {
-    slug: string,
-    name: string,
-    description: string,
-    isActive: boolean,
+export type AttributeType = {
+    name: string
 }
 
 type ResponseType = {
     count: number,
-    items: BrandType[]
+    items: AttributeType[]
 }
 
 type ParamsType = {
-    page?: string | null
+    page?: string | null,
+    name__contain: string
 }
 
 
-const useGetAllBrands = (params?: ParamsType) => {
+const useGetAllAttributes = (params?: ParamsType) => {
     let itemsCount;
     const {data, isPending, isError} = useQuery({
-        queryKey: ["AllBrands", params],
+        queryKey: ["AllAttributes", params],
         staleTime: 10000,
         queryFn: async function() {
             const result = await axios.get<ResponseType>(INTERNAL_API, { params: params });
@@ -37,11 +35,11 @@ const useGetAllBrands = (params?: ParamsType) => {
     })
 
     return {
-        brandsCount: itemsCount,
-        brandsData: data,
-        brandsIsPending: isPending,
-        brandsIsError: isError
+        attributesCount: itemsCount,
+        attributesData: data,
+        attributesIsPending: isPending,
+        attributesIsError: isError
     }
 }
 
-export default useGetAllBrands;
+export default useGetAllAttributes;

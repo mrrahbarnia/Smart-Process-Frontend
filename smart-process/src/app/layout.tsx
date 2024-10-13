@@ -39,7 +39,7 @@ export default function RootLayout({
   return (
     <html lang="fa" dir="rtl" className="font-[Vazir-Medium]">
       <body
-        className="bg-custom-bg bg-cover bg-center"
+        className="min-h-screen bg-custom-bg bg-cover bg-center"
       >
         <ReactQueryProvider>
           <Header />

@@ -1,3 +1,4 @@
+import { TbBinaryTree2 } from "react-icons/tb"; 
 import { SiBrandfolder } from "react-icons/si";
 import { MdOutlineCategory } from "react-icons/md"; 
 import { AiOutlineHome } from "react-icons/ai"; 
@@ -36,6 +37,12 @@ const AdminHeader = () => {
             <Link href="/admin/brands/" className="relative group flex items-center">
                 <SiBrandfolder className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20} />
                 <li className="absolute w-14 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm">برند ها</li>
+            </Link>
+
+            {/* Attributes */}
+            <Link href="/admin/attributes/" className="relative group flex items-center">
+                <TbBinaryTree2 className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20} />
+                <li className="absolute w-14 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm">ویژگی ها</li>
             </Link>
 
             {/* Guaranty file */}

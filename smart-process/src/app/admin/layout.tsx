@@ -35,7 +35,7 @@ export default function AdminLayout({
   }, [setIsAuthenticated, setRule, setPhoneNumber])
 
   return (
-    <div className="flex pt-12">
+    <div className="flex pt-12 min-h-screen">
       <AdminHeader />
           {children}
     </div>

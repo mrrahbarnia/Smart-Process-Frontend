@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const INTERNAL_API = "/apis/admin/get-all-categories/";
 
-export type categoryType = {
+export type CategoryType = {
     id: number,
     name: string,
     description: string,
@@ -12,26 +12,26 @@ export type categoryType = {
     parentName?: string | null
 }
 
-type responseType = {
+type ResponseType = {
     count: number,
-    items: categoryType[]
+    items: CategoryType[]
 }
 
-type paramsType = {
+type ParamsType = {
     page?: string | null
 }
 
 
-const useGetAllCategories = (params?: paramsType) => {
+const useGetAllCategories = (params?: ParamsType) => {
     let itemsCount;
     const {data, isPending, isError} = useQuery({
         queryKey: ["AllCategories", params],
         staleTime: 10000,
         queryFn: async function() {
-            const result = await axios.get<responseType>(INTERNAL_API, { params: params });
+            const result = await axios.get<ResponseType>(INTERNAL_API, { params: params });
             return result.data;
         },
-        select: (result: responseType) => {
+        select: (result: ResponseType) => {
             itemsCount = result.count;
             return result.items;
         }
