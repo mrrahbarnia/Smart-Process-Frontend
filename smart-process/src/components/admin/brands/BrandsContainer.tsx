@@ -56,12 +56,12 @@ const BrandsContainer = () => {
     }
 
     const previousHandler = () => {
-        const url = `/admin/categories/?page=${searchParams.get("page") ? Number(searchParams.get("page")) -1  : "1"}`
+        const url = `/admin/brands/?page=${searchParams.get("page") ? Number(searchParams.get("page")) -1  : "1"}`
         return router.replace(url)
     };
 
     const nextHandler = () => {
-        const url = `/admin/categories/?page=${searchParams.get("page") ? Number(searchParams.get("page")) + 1  : "2"}`
+        const url = `/admin/brands/?page=${searchParams.get("page") ? Number(searchParams.get("page")) + 1  : "2"}`
         return router.replace(url);
     };
 

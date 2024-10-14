@@ -20,7 +20,7 @@ const AttributeItem = (props: {attribute: AttributeType}) => {
             {/* Update Modal */}
             {showUpdateModal && <UpdateModal closeModalHandler={setShowUpdateModal} attribute={props.attribute} />}
 
-            <div className="relative border-2 rounded-md border-blue-300 bg-blue-50 flex flex-col gap-2 h-24 w-full items-center">
+            <div className="border-2 rounded-md border-blue-300 bg-blue-50 flex flex-col gap-2 h-24 w-full items-center">
                 <p className="text-base " dir="rtl">ویژگی:{props.attribute.name}</p>
                 <hr className="border-1 border-gray-300 w-2/3"/>
                 <div className="flex items-center gap-2">
