@@ -80,7 +80,7 @@ const Page = () => {
                     </li>}
                     <hr/>
                     <li className="text-center underline-offset-2 underline">
-                        <Link href={`/products/${responseData.productSerialNumber}/`}>صفحه محصول شما</Link>
+                        <Link href={`/admin/products/${responseData.productSerialNumber}/`}>صفحه محصول شما</Link>
                     </li>
                 </ul>
             </div>}

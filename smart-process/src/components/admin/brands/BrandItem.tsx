@@ -9,7 +9,7 @@ import { useState, Fragment } from "react";
 import DeleteModal from "./DeleteModal";
 
 
-const CategoryItem = (props: {brand: BrandType}) => {
+const BrandItem = (props: {brand: BrandType}) => {
     const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const {deactivateMutate} = useDeactivateBrand();
@@ -58,4 +58,4 @@ const CategoryItem = (props: {brand: BrandType}) => {
     )
 };
 
-export default CategoryItem;
+export default BrandItem;

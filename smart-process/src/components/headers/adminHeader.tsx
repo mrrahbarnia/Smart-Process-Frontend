@@ -1,3 +1,4 @@
+import { GiCctvCamera } from "react-icons/gi"; 
 import { CgComment } from "react-icons/cg"; 
 import { TbBinaryTree2 } from "react-icons/tb"; 
 import { SiBrandfolder } from "react-icons/si";
@@ -26,6 +27,12 @@ const AdminHeader = () => {
             <Link href="/" className="relative group flex items-center z-10">
                 <AiOutlineHome className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20} />
                 <li className="absolute w-20 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">صفحه اصلی</li>
+            </Link>
+
+            {/* Products */}
+            <Link href="/admin/products/" className="relative group flex items-center z-10">
+                <GiCctvCamera className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20}/>
+                <li className="absolute w-18 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">محصولات</li>
             </Link>
 
             {/* Categories */}

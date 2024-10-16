@@ -53,7 +53,7 @@ const Header = () => {
                     </div>}
                     {rule === "admin" && isAuthenticated && <div className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 px-2 py-1">
                         <RiAdminLine size={18} />
-                        <Link href="/admin/" className="text-sm" >پنل ادمین</Link>
+                        <Link href="/admin/products/" className="text-sm" >پنل ادمین</Link>
                     </div>}
                     {isAuthenticated && <div onClick={logoutHandler} className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 px-2 py-1">
                         <RiLogoutBoxLine size={18} />

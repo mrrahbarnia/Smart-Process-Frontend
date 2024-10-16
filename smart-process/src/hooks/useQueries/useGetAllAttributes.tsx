@@ -15,7 +15,7 @@ type ResponseType = {
 
 type ParamsType = {
     page?: string | null,
-    name__contain: string
+    name__contain?: string | null
 }
 
 
