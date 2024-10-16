@@ -13,6 +13,7 @@ const useActivateProduct = () => {
         },
         onSuccess: () => {
             client.invalidateQueries({queryKey: ["AllProducts"]})
+            client.invalidateQueries({queryKey: ["ProductDetail"]})
         }
     })
 

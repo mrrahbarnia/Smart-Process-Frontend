@@ -1,18 +1,18 @@
 "use client"
 import { useState, Fragment } from "react";
-import { RiToolsLine } from "react-icons/ri";
+import { RiAccountCircleFill, RiToolsLine } from "react-icons/ri";
+import { AiOutlineDelete, AiOutlineLoading3Quarters } from "react-icons/ai";
 import { TbFileDescription } from "react-icons/tb";
-import { MdBalance } from "react-icons/md";
+import { MdBalance, MdDiscount } from "react-icons/md";
 import { BiCalendar } from "react-icons/bi";
-import { MdDiscount } from "react-icons/md";
 import { GiMoneyStack } from "react-icons/gi";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import useAdminGetProductDetail from "@/hooks/useQueries/useAdminGetProductDetail";
 import useGetComments from "@/hooks/useQueries/useGetComments";
 import ImageSliderModal from "./ImageSliderModal";
 import Image from "next/image";
 import TimeAgo from 'react-time-ago';
 import fa from 'javascript-time-ago/locale/fa.json';
+import { useAdminDeleteComment } from "@/hooks/useMutations/useAdminDeleteComment";
 import TimeAgoModule from 'javascript-time-ago';
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "next/navigation";
@@ -30,6 +30,7 @@ const ProductDetailContainer = ({productSerial}: {productSerial: string}) => {
         productIsPending
     } = useAdminGetProductDetail(productSerial);
     const {commentsData, commentsIsPending} = useGetComments(productData?.id || "", showComments);
+    const {deleteMutate} = useAdminDeleteComment();
 
     if (productIsError) {
         logout();
@@ -44,15 +45,8 @@ const ProductDetailContainer = ({productSerial}: {productSerial: string}) => {
         setShowComments(true);
     }
 
-    if (commentsData) {
-        commentsData.forEach(comment => {
-            console.log(comment.createdAt);
-        })
-    }
-
     return (
         <Fragment>
-            
             {/* Image Slider Modal */}
             {productData && showImageSlider && <ImageSliderModal 
                                                     closeModalHandler={setShowImageSlider}
@@ -61,7 +55,7 @@ const ProductDetailContainer = ({productSerial}: {productSerial: string}) => {
                                                 />}
 
             <div className="flex flex-col items-center gap-1 border-2 rounded-md border-blue-300 bg-blue-50 py-3 w-full min-[615px]:w-2/3 px-2 mx-2 my-16 min-[615px]:mx-auto">
-                {productData && <Image onClick={() => setShowImageSlider(true)} className="cursor-zoom-in rounded-md object-fill h-60" src={productData.imageUrls[0]} height={500} width={500} alt={`${productData.name} image`} />}
+                {productData && <Image onClick={() => setShowImageSlider(true)} className="cursor-zoom-in rounded-md object-contain bg-white h-60" src={productData.imageUrls[0]} height={500} width={500} alt={`${productData.name} image`} />}
                 <h1 className="text-left w-full lg:w-2/3  font-bold text-lg">{productData?.name}</h1>
                 <h2 className="text-left w-full lg:w-2/3  text-gray-500 text-sm">{productData?.serialNumber}</h2>
                 <div className="flex items-center justify-between w-full lg:w-2/3 text-xs bg-gray-50 rounded-md px-1 text-blue-800">
@@ -137,8 +131,14 @@ const ProductDetailContainer = ({productSerial}: {productSerial: string}) => {
                     ) : (
                         <div className="flex flex-col w-full lg:w-2/3 gap-3 mt-2">
                             {commentsData.map((comment) => (
-                                <div key={comment.id} className="flex flex-col bg-white rounded-md p-1 gap-1">
-                                    <h3>{comment.username}</h3>
+                                <div key={comment.id} className="relative flex flex-col bg-white rounded-md p-1 gap-1">
+                                    <button onClick={() => deleteMutate({id: comment.id})} className="absolute left-1 top-1 abg-red-100 p-1 rounded-md bg-red-50 text-red-800 hover:bg-red-200 transition-colors duration-300">
+                                        <AiOutlineDelete size={15}/>
+                                    </button>
+                                    <div className="flex items-center gap-1">
+                                        <RiAccountCircleFill size={18} />
+                                        <h3>{comment.username}</h3>
+                                    </div>
                                     <p className="text-xs text-gray-500">{comment.message}</p>
                                     <hr className="border-gray-300" />
                                     <TimeAgo className="text-xs" date={comment.createdAt} locale="fa" />

@@ -13,6 +13,7 @@ const useDeactivateProduct = () => {
         },
         onSuccess: () => {
             client.invalidateQueries({queryKey: ["AllProducts"]})
+            client.invalidateQueries({queryKey: ["ProductDetail"]})
         }
     })
 

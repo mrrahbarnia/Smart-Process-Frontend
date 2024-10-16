@@ -30,7 +30,7 @@ const Header = () => {
     }
 
     return (
-        <div className="flex justify-between items-center bg-white fixed z-50 left-0 right-0 h-12 lg:h-14 px-2 sm:px-6 py-3">
+        <div className="flex justify-between items-center bg-white fixed z-40 left-0 right-0 h-12 lg:h-14 px-2 sm:px-6 py-3">
             <div className="relative flex items-center gap-2" onClick={() => setShowAccountMobileMenu(!showAccountMobileMenu)} >
                 <div className={`relative hover:text-blue-800 transition-colors duration-300 cursor-pointer ${isAuthenticated && "shadow-lg flex items-end gap-1 bg-gray-200 rounded-md px-2 py-1"}`}>
                     <MdOutlineAccountCircle 

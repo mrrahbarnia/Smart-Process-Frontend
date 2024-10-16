@@ -22,7 +22,7 @@ type ResponseType = {
     items: ProductType[]
 }
 
-type ParamsType = {
+export type ProductSearchParams = {
     page?: string | null,
     categoryExact?: string | null,
     brandExact?: string | null
@@ -30,7 +30,7 @@ type ParamsType = {
 }
 
 
-const useAdminGetAllProducts = (params?: ParamsType) => {
+const useAdminGetAllProducts = (params?: ProductSearchParams) => {
     let itemsCount;
     const {data, isPending, isError} = useQuery({
         queryKey: ["AllProducts", params],
