@@ -40,7 +40,7 @@ const CategoryItem = (props: {category: CategoryType}) => {
             {showAddAttributeModal && <AddAttributeModal closeModalHandler={setShowAddAttributeModal} categoryId={props.category.id} />}
 
             {/* All Attributes Modal */}
-            {showCatAttributesModal && <AllAttributesModal closeModalHandler={setShowCatAttributeModal} categoryId={props.category.id} />}
+            {showCatAttributesModal && <AllAttributesModal closeModalHandler={setShowCatAttributeModal} categoryName={props.category.name} categoryId={props.category.id} />}
 
             <div className="relative border-2 rounded-md border-blue-300 bg-blue-50 flex flex-col gap-2 h-40 w-full items-center">
                 <div className={`absolute right-1 top-1 rounded-md p-1 ${props.category.isActive ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"}`}>

@@ -6,11 +6,14 @@ import useGetCatAttributes from "@/hooks/useQueries/useGetCatAttributes";
 import useUnassignCatAttr from "@/hooks/useMutations/useUnassignCatAttr";
 
 
-const AllAttributesModal = ({categoryId, closeModalHandler}: {categoryId: number, closeModalHandler: Dispatch<SetStateAction<boolean>>}) => {
+const AllAttributesModal = (
+    {categoryId, categoryName, closeModalHandler}:
+    {categoryId: number, categoryName: string, closeModalHandler: Dispatch<SetStateAction<boolean>>}
+) => {
     const {
         catAttributesData,
         catAttributesIsPending
-    } = useGetCatAttributes({categoryId: categoryId});
+    } = useGetCatAttributes({categoryName: categoryName});
     const {
         unassignMutate
     } = useUnassignCatAttr();
