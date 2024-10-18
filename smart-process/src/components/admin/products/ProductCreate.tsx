@@ -51,7 +51,7 @@ const ProductCreate = () => {
         formState: {errors}
     } = useForm<InputTypes>();
     const [categoryFetchedAttributes, setCategoryFetchedAttributes] = useState<string>("")
-    const {catAttributesData, catAttributesIsPending} = useGetCatAttributes({categoryName: categoryFetchedAttributes}, isFetchAttributes);
+    const {catAttributesData} = useGetCatAttributes({categoryName: categoryFetchedAttributes}, isFetchAttributes);
 
     const handleDateChanges = (date: DateObject) => {
         const gregorianDate = date.convert(gregorian);

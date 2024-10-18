@@ -1,9 +1,12 @@
 "use client"
+import { Suspense } from "react";
 import ProductsContainer from "@/components/admin/products/ProductContainer";
 
 const Page = () => {
     return (
-        <ProductsContainer />
+        <Suspense fallback={<div className="w-full mx-auto pt-20">در حال بارگذاری</div>}>
+            <ProductsContainer />
+        </Suspense>
     )
 };
 

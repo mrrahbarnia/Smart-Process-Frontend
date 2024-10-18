@@ -14,28 +14,28 @@ import TimeAgo from 'react-time-ago';
 import fa from 'javascript-time-ago/locale/fa.json';
 import { useAdminDeleteComment } from "@/hooks/useMutations/useAdminDeleteComment";
 import TimeAgoModule from 'javascript-time-ago';
-import { useAuthStore } from "@/store/useAuthStore";
-import { useRouter } from "next/navigation";
+// import { useAuthStore } from "@/store/useAuthStore";
+// import { useRouter } from "next/navigation";
 
 TimeAgoModule.addDefaultLocale(fa);
 
 const ProductDetailContainer = ({productSerial}: {productSerial: string}) => {
     const [showComments, setShowComments] = useState<boolean>(false);
     const [showImageSlider, setShowImageSlider] = useState<boolean>(false);
-    const logout = useAuthStore((state) => state.logout);
-    const router = useRouter();
+    // const logout = useAuthStore((state) => state.logout);
+    // const router = useRouter();
     const {
         productData,
-        productIsError,
+        // productIsError,
         productIsPending
     } = useAdminGetProductDetail(productSerial);
     const {commentsData, commentsIsPending} = useGetComments(productData?.id || "", showComments);
     const {deleteMutate} = useAdminDeleteComment();
 
-    if (productIsError) {
-        logout();
-        return router.replace("/accounts/login/")
-    }
+    // if (productIsError) {
+    //     logout();
+    //     return router.replace("/accounts/login/")
+    // }
 
     if (productIsPending) {
         return <AiOutlineLoading3Quarters className="text-blue-800 animate-spin w-12 h-12 m-auto flex items-center justify-center" />
