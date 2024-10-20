@@ -2,10 +2,12 @@
 import axios from "axios";
 import { AiOutlineLoading3Quarters, AiOutlineWarning } from "react-icons/ai";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { EXTERNAL_BASE_ENDPOINT } from "@/configs/default";
 import useGetCatAttributes from "@/hooks/useQueries/useGetCatAttributes";
-// import { useAuthStore } from "@/store/useAuthStore";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useRouter } from "next/navigation";
+import { useCreateProduct } from "@/hooks/useMutations/useCreateProduct";
 import useDebounced from "@/hooks/useDebounced";
 import DatePicker from "react-multi-date-picker";
 import { DateObject } from "react-multi-date-picker";
@@ -17,20 +19,24 @@ const EXTERNAL_CATEGORY_SEARCH = `${EXTERNAL_BASE_ENDPOINT}/products/search-cate
 const EXTERNAL_BRAND_SEARCH = `${EXTERNAL_BASE_ENDPOINT}/products/search-brands`
 
 type InputTypes = {
-    discount: number,
+    discount: string,
     categoryName: string,
     price: string,
     name: string,
     brandName: string,
     expiryDiscount: string,
-    stock: number,
+    stock: string,
     description: string,
     serialNumber: string,
+    image: File[],
     attributeValues: Record<string, string>[]
 }
 
 
 const ProductCreate = () => {
+    const router = useRouter();
+    const logout = useAuthStore((state) => state.logout);
+    const {createIsPending, createMutateAsync} = useCreateProduct();
     const [openSuggestedBrandMenu, setOpenSuggestedBrandMenu] = useState<boolean>(false);
     const [suggestedBrands, setSuggestedBrands] = useState<string[]>([]);
     const [brandIsLoading, setBrandIsLoading] = useState<boolean>(false);
@@ -40,18 +46,18 @@ const ProductCreate = () => {
     const [openSuggestedCategoryMenu, setOpenSuggestedCategoryMenu] = useState<boolean>(false);
     const [suggestedCategories, setSuggestedCategories] = useState<string[]>([]);
     const [categoryIsLoading, setCategoryIsLoading] = useState<boolean>(false);
+    const [selectedImageName, setSelectedImageName] = useState<string[]>([]);
     const debounceCategoryValue = useDebounced(categoryValue);
     const [isFetchAttributes, setIsFetchAttributes] = useState<boolean>(false);
     const {
         register,
-        // setError,
+        setError,
         setValue,
         handleSubmit,
-        // getValues,
         formState: {errors}
     } = useForm<InputTypes>();
     const [categoryFetchedAttributes, setCategoryFetchedAttributes] = useState<string>("")
-    const {catAttributesData} = useGetCatAttributes({categoryName: categoryFetchedAttributes}, isFetchAttributes);
+    const {catAttributesData, catAttributesIsLoading} = useGetCatAttributes({categoryName: categoryFetchedAttributes}, isFetchAttributes);
 
     const handleDateChanges = (date: DateObject) => {
         const gregorianDate = date.convert(gregorian);
@@ -66,7 +72,60 @@ const ProductCreate = () => {
     }
 
     const onSubmit: SubmitHandler<InputTypes> = async(data) => {
-        console.log(data);
+        if (data.image.length > 3) {
+            setError("image", { message: "حداکثر مجاز به بارگذاری سه عکس میباشید." });
+            return;
+        }
+        if (data.discount && !data.expiryDiscount) {
+            setError("expiryDiscount", { message: "برای وارد کردن تخفیف باید تاریخ انقضای آن هم انتخاب گردد." });
+            return;
+        }
+        if (!data.discount && data.expiryDiscount) {
+            setError("discount", { message: "تاریخ انقضای تخفیف باید همراه با مقدار تخفیف وارد شود." });
+            return;
+        }
+        if (!data.attributeValues) {
+            setError("attributeValues", { message: "ابتدا ویژگی های دسته بندی را اضافه کنید." })
+        }
+        const formData = new FormData();
+        formData.append("name", data.name)
+        formData.append("serialNumber", data.serialNumber)
+        formData.append("description", data.description)
+        formData.append("price", data.price)
+        formData.append("categoryName", data.categoryName)
+        formData.append("brandName", data.brandName)
+        formData.append("stock", data.stock)
+        formData.append("discount", data.discount)
+        formData.append("expiryDiscount", data.expiryDiscount)
+        formData.append("attributeValues", JSON.stringify(data.attributeValues))
+        for (let i = 0; i < data.image.length; i++) {
+            formData.append("images", data.image[i]);
+        }
+        createMutateAsync(formData)
+        .catch((error) => {
+            if (error.status === 403) {
+                logout();
+                router.replace("/accounts/login/")
+            }
+            if (error.response && error.response.data?.detail === "Image size limit is 400000 KB!") {
+                setError("image", { message: "حداکثر حجم عکس ها باید ۴۰۰ کیلوبایت شود." })
+            }
+            if (error.response && error.response.data?.detail === "There is no brand with the provided info!") {
+                setError("brandName", { message: "برند محصول باید از بین موارد پیشنهادی باشد." })
+            }
+            if (error.response && error.response.data?.detail === "There is no category with the provided ID!") {
+                setError("categoryName", { message: "دسته بندی محصول باید از بین موارد پیشنهادی باشد." })
+            }
+            if (error.response && error.response.data?.detail === "Unique serial number for products!") {
+                setError("serialNumber", { message: "کد محصول باید یکتا باشد." })
+            }
+            if (error.response && error.response.data?.detail === "Unique name for products!") {
+                setError("name", { message: "مدل محصول باید یکتا باشد." })
+            }
+        })
+        .then(() => {
+            return router.replace("/admin/products/")
+        })
     }
 
     useEffect(() => {
@@ -119,10 +178,15 @@ const ProductCreate = () => {
         setIsFetchAttributes(true)
         setCategoryFetchedAttributes(categoryName)
     }
-    console.log(catAttributesData);
+
+    const imageChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        const files = e.target.files ? Array.from(e.target.files) : [];
+        const fileNames = files.map((file) => file.name);
+        setSelectedImageName(fileNames)
+    }
 
     return (
-        <div className="border-2 rounded-md border-blue-300 bg-blue-50 w-3/4 mx-auto mt-16 py-10">
+        <div className="border-2 rounded-md border-blue-300 bg-blue-50 w-3/4 min-[650px]:w-2/3 min-[750px]:w-7/12 min-[850px]:w-6/12 min-[950px]:w-5/12 min-[1050px]:w-4/12 mx-auto mt-16 py-10">
             <h1 className="text-center text-lg text-blue-900">فرم ثبت محصول</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 pt-8 px-2">
                 <div className="flex flex-col w-full gap-1">
@@ -133,9 +197,9 @@ const ProductCreate = () => {
                     {errors.name && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.name.message}</span>}
                 </div>
                 <div className="flex flex-col gap-1">
-                    <label>شماره سریال محصول</label>
+                    <label>کد محصول</label>
                     <input {...register("serialNumber", {
-                        required: "لطفا شماره سریال محصول را وارد کنید."
+                        required: "لطفا کد محصول را وارد کنید."
                     })} className="h-10 rounded-md border-blue-100 px-2" type="text"/>
                     {errors.serialNumber && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.serialNumber.message}</span>}
                 </div>
@@ -166,6 +230,22 @@ const ProductCreate = () => {
                         hideYear
                         placeholder="Click here"
                     />
+                    {errors.expiryDiscount && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.expiryDiscount.message}</span>}
+                </div>
+                <div className="flex flex-col gap-1">
+                    <label className="bg-blue-200 hover:bg-blue-300 text-blue-950 p-1 rounded-md cursor-pointer w-fit transition-colors duration-300" htmlFor="imageInput">عکس های محصول</label>
+                    <input multiple id="imageInput" hidden className="h-10 rounded-md border-blue-100 px-2" type="file" dir="ltr" {...register("image", {
+                        required: "لطفا حداقل یک عکس را بارگذاری کنید.",
+                        onChange: imageChangeHandler
+                    })} />
+                    <div className="text-xs flex items-center gap-1 bg-yellow-400 rounded-md p-1">
+                        <AiOutlineWarning size={20} />
+                        <p>حداکثر مجاز به بارگذاری سه عکس میباشید.</p>
+                    </div>
+                    <div className="flex flex-col justify-start gap-1">
+                        {selectedImageName.map((imageName) => <span className="bg-green-700 text-white px-2 py-1 text-sm rounded-md w-fit mx-auto" key={imageName}>{imageName}</span>)}
+                    </div>
+                    {errors.image && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.image.message}</span>}
                 </div>
                 <div className="flex flex-col gap-1">
                     <label>برند</label>
@@ -202,10 +282,27 @@ const ProductCreate = () => {
                             setOpenSuggestedCategoryMenu(false);
                         }} className="cursor-pointer overflow-hidden hover:bg-gray-100 rounded-md px-2 py-1 transition-colors duration-300" key={category}>{category}</li>)}
                     </ul>}
-                    {errors.brandName && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.brandName.message}</span>}
+                    {errors.categoryName && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.categoryName.message}</span>}
                 </div>
-                {/* {catAttributesIsPending && <AiOutlineLoading3Quarters className="animate-spin mx-auto" />} */}
-                <button>ارسال</button>
+                {catAttributesIsLoading && <AiOutlineLoading3Quarters className="animate-spin mx-auto" />}
+                {catAttributesData && <div className="w-2/3 mx-auto flex flex-col gap-1 bg-white rounded-md p-1">
+                        <h2 className="text-center pb-2">ویژگی ها</h2>
+                        {catAttributesData && catAttributesData.length === 0 ? <p className="text-xs rounded-md text-red-800 bg-red-200 p-1">برای این دسته بندی ویژگی موجود نمیباشد.</p> : catAttributesData && catAttributesData.map((attribute, index) => <div className="w-full flex items-center justify-between" key={attribute}>
+                            <label className="text-sm">{attribute}</label>
+                            <input className="h-10 w-28 rounded-md bg-blue-100 border-blue-200 px-2" type="text" {...register(`attributeValues.${index}.value`)} />
+                            <input type="hidden" value={attribute} {...register(`attributeValues.${index}.attribute`)} />
+                        </div>)
+                        }
+                    </div>}
+                    {errors.attributeValues && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.attributeValues.message}</span>}
+                <div className="flex flex-col gap-1">
+                    <label>توضیحات</label>
+                    <textarea rows={6} className="rounded-md border-blue-100 px-2 resize-none p-1" {...register("description", {
+                        required: "لطفا توضیحات محصول را وارد کنید."
+                    })}  />
+                    {errors.description && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.description.message}</span>}
+                </div>
+                <button disabled={createIsPending} className="w-2/3 mx-auto bg-blue-200 hover:bg-blue-300 text-blue-950 p-1 rounded-md transition-colors duration-300">{createIsPending ? <AiOutlineLoading3Quarters className="mx-auto animate-spin"/> : "تأیید"}</button>
             </form>
         </div>
     )

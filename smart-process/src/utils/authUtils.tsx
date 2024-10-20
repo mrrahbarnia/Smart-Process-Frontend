@@ -14,7 +14,7 @@ export const setToken = (authToken: string) => {
         name: AUTH_COOKIE_NAME,
         value: authToken,
         httpOnly: true,
-        sameSite: 'strict',
+        sameSite: "strict",
         secure: process.env.NODE_ENV !== 'development',
         maxAge: TOKEN_MAX_AGE
     })

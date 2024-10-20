@@ -14,28 +14,28 @@ import TimeAgo from 'react-time-ago';
 import fa from 'javascript-time-ago/locale/fa.json';
 import { useAdminDeleteComment } from "@/hooks/useMutations/useAdminDeleteComment";
 import TimeAgoModule from 'javascript-time-ago';
-// import { useAuthStore } from "@/store/useAuthStore";
-// import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useRouter } from "next/navigation";
 
 TimeAgoModule.addDefaultLocale(fa);
 
 const ProductDetailContainer = ({productSerial}: {productSerial: string}) => {
     const [showComments, setShowComments] = useState<boolean>(false);
     const [showImageSlider, setShowImageSlider] = useState<boolean>(false);
-    // const logout = useAuthStore((state) => state.logout);
-    // const router = useRouter();
+    const logout = useAuthStore((state) => state.logout);
+    const router = useRouter();
     const {
         productData,
-        // productIsError,
+        productIsError,
         productIsPending
     } = useAdminGetProductDetail(productSerial);
     const {commentsData, commentsIsPending} = useGetComments(productData?.id || "", showComments);
     const {deleteMutate} = useAdminDeleteComment();
 
-    // if (productIsError) {
-    //     logout();
-    //     return router.replace("/accounts/login/")
-    // }
+    if (productIsError) {
+        logout();
+        return router.replace("/accounts/login/")
+    }
 
     if (productIsPending) {
         return <AiOutlineLoading3Quarters className="text-blue-800 animate-spin w-12 h-12 m-auto flex items-center justify-center" />
@@ -44,6 +44,9 @@ const ProductDetailContainer = ({productSerial}: {productSerial: string}) => {
     const showCommentsHandler = () => {
         setShowComments(true);
     }
+
+    const productValidAttributes = productData && Object.entries(productData.attributeValues)
+    .filter(([, value]) => value != null && value != undefined && value != "")
 
     return (
         <Fragment>
@@ -110,7 +113,8 @@ const ProductDetailContainer = ({productSerial}: {productSerial: string}) => {
                         <h3>ویژگی های محصول</h3>
                     </div>
                     <div className="flex flex-col gap-1">
-                        {productData && Object.entries(productData?.attributeValues).map(([key, value]) => {
+                        {productValidAttributes && productValidAttributes.length === 0 ? <p className="text-xs rounded-md text-red-800 bg-red-200 p-1 w-fit mx-auto">محصول ویژگی ندارد.</p> : productValidAttributes && productValidAttributes
+                        .map(([key, value]) => {
                             return (
                                 <div className="flex items-center justify-between w-full mx-auto bg-blue-200 rounded-md p-1" key={key}>
                                     <p>{key}</p>
@@ -127,7 +131,7 @@ const ProductDetailContainer = ({productSerial}: {productSerial: string}) => {
                 )}
                 {showComments && commentsData && (
                     commentsData.length === 0 ? (
-                        <p className="tex-sm rounded-md text-red-800 bg-red-200 p-1">برای این محصول نظری ثبت نشده است.</p>
+                        <p className="text-xs rounded-md text-red-800 bg-red-200 p-1">برای این محصول نظری ثبت نشده است.</p>
                     ) : (
                         <div className="flex flex-col w-full lg:w-2/3 gap-3 mt-2">
                             {commentsData.map((comment) => (

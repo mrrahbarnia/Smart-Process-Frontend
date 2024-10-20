@@ -9,7 +9,7 @@ type ParamsType = {
 }
 
 const useGetCatAttributes = (params: ParamsType, enabled: boolean = true) => {
-    const {data, isPending} = useQuery({
+    const {data, isLoading} = useQuery({
         queryKey: ["CategoryAttributes", params],
         staleTime: 10000,
         enabled,
@@ -21,7 +21,7 @@ const useGetCatAttributes = (params: ParamsType, enabled: boolean = true) => {
 
     return {
         catAttributesData: data,
-        catAttributesIsPending: isPending
+        catAttributesIsLoading: isLoading
     }
 }
 
