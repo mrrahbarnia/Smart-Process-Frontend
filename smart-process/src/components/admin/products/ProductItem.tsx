@@ -44,7 +44,7 @@ const ProductItem = (props: {product: ProductType}) => {
                     <Image width={250} height={250} className="w-44 h-28 object-fill rounded-md" src={props.product.imageUrl} alt={`${props.product.name} image`} />
                     <div className="flex flex-col gap-1 text-xs w-full">
                         <div className="flex items-center justify-between">
-                            <p>سریال محصول</p>
+                            <p>کد محصول</p>
                             <span>{props.product.serialNumber}</span>
                         </div>
                         <hr className="border-gray-300" />

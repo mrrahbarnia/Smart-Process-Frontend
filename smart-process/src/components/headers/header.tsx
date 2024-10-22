@@ -28,7 +28,7 @@ const Header = () => {
     }
 
     return (
-        <div className="flex justify-between items-center bg-white fixed z-40 left-0 right-0 h-12 lg:h-14 px-2 sm:px-6 py-3">
+        <div className="flex justify-between items-center bg-white fixed z-40 left-0 top-0 right-0 h-12 lg:h-14 px-2 sm:px-6 py-3">
             <div className="relative flex items-center gap-2" onClick={() => setShowAccountMobileMenu(!showAccountMobileMenu)} >
                 <div className={`relative hover:text-blue-800 transition-colors duration-300 cursor-pointer ${isAuthenticated && "shadow-lg bg-gray-200 rounded-md px-2 py-1"}`}>
                     {isAuthenticated && <BiCheck size={13} className="text-green-600 absolute right-0 top-0" />}
@@ -67,6 +67,8 @@ const Header = () => {
                         <Link onClick={() => setShowMobileMenu(false)} href="/ticket/" className="text-sm font-[Vazir-Bold] hover:text-gray-600 transition-colors duration-100">فرم نظرسنجی و شکایات</Link>
                         <hr className="border border-blue-200" />
                         <Link onClick={() => setShowMobileMenu(false)} href="/inquiry-guaranty/" className="text-sm font-[Vazir-Bold] hover:text-gray-600 transition-colors duration-100">استعلام گارانتی</Link>
+                        <hr className="border border-blue-200" />
+                        <Link onClick={() => setShowMobileMenu(false)} href="/products/" className="text-sm font-[Vazir-Bold] hover:text-gray-600 transition-colors duration-100">محصولات</Link>
                         <hr className="border border-blue-200" />
                         <Link onClick={() => setShowMobileMenu(false)} href="/brands/" className="text-sm font-[Vazir-Bold] hover:text-gray-600 transition-colors duration-100">برند ها</Link>
                     </div>
