@@ -64,9 +64,11 @@ const Header = () => {
                 <div className={`z-50 fixed right-0 top-0 h-full w-full md:w-2/3 lg:w-3/5 transform transition-transform bg-gradient-to-l from-blue-50 to-blue-200 duration-500 ${showMobileMenu ? "translate-x-0" : "translate-x-full"}`}>
                     <button className="absolute right-2 top-2 hover:text-red-600" onClick={() => setShowMobileMenu(false)}>X</button>
                     <div className="pt-12 pr-5 flex flex-col gap-3">
-                        <Link onClick={() => setShowMobileMenu(false)} href="/ticket/" className="bg-white w-fit p-2 rounded-md hover:bg-blue-50 transition-colors duration-100 text-sm font-[Vazir-Bold]">فرم نظرسنجی و شکایات</Link>
+                        <Link onClick={() => setShowMobileMenu(false)} href="/ticket/" className="text-sm font-[Vazir-Bold] hover:text-gray-600 transition-colors duration-100">فرم نظرسنجی و شکایات</Link>
                         <hr className="border border-blue-200" />
-                        <Link onClick={() => setShowMobileMenu(false)} href="/inquiry-guaranty/" className="bg-white w-fit p-2 rounded-md hover:bg-blue-50 transition-colors duration-100 text-sm font-[Vazir-Bold]">استعلام گارانتی</Link>
+                        <Link onClick={() => setShowMobileMenu(false)} href="/inquiry-guaranty/" className="text-sm font-[Vazir-Bold] hover:text-gray-600 transition-colors duration-100">استعلام گارانتی</Link>
+                        <hr className="border border-blue-200" />
+                        <Link onClick={() => setShowMobileMenu(false)} href="/brands/" className="text-sm font-[Vazir-Bold] hover:text-gray-600 transition-colors duration-100">برند ها</Link>
                     </div>
                 </div>
             </div>
@@ -75,7 +77,7 @@ const Header = () => {
             <div className="hidden lg:flex items-center w-1/3 justify-between">
                 <Link href="/ticket/">فرم نظرسنجی و شکایات</Link>
                 <Link href="/inquiry-guaranty/">استعلام گارانتی</Link>
-
+                <Link href="/brands/">برند ها</Link>
             </div>
 
             {/* Logo */}
