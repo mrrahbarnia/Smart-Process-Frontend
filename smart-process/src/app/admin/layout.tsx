@@ -14,25 +14,25 @@ export default function AdminLayout({
   children: React.ReactNode;
 }>) {
   const setIsAuthenticated = useAuthStore((state) => state.setIsAuthenticated);
-  const setRule = useAuthStore((state) => state.setRule);
+  const setRole = useAuthStore((state) => state.setRole);
   const setPhoneNumber = useAuthStore((state) => state.setPhoneNumber);
 
   useEffect(() => {
     const authState = localStorage.getItem(localStorageLoginKey);
-    const rule = localStorage.getItem(localStorageRuleKey) as "user" | "admin" | null;
+    const role = localStorage.getItem(localStorageRuleKey) as "user" | "admin" | null;
     const phoneNumber = localStorage.getItem(localPhoneNumberKey);
     if (authState === "1") {
       setIsAuthenticated(true)
     } else {
       setIsAuthenticated(false)
     }
-    if (rule) {
-      setRule(rule)
+    if (role) {
+      setRole(role)
     }
     if (phoneNumber) {
       setPhoneNumber(phoneNumber)
     }
-  }, [setIsAuthenticated, setRule, setPhoneNumber])
+  }, [setIsAuthenticated, setRole, setPhoneNumber])
 
   return (
     <div className="flex pt-12 min-h-screen">

@@ -16,7 +16,7 @@ import Link from "next/link";
 const INTERNAL_LOGOUT_API = "/apis/accounts/logout/"
 
 const Header = () => {
-    const rule = useAuthStore((state) => state.rule);
+    const role = useAuthStore((state) => state.role);
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
     const logout = useAuthStore((state) => state.logout);
     const [showAccountMobileMenu, setShowAccountMobileMenu] = useState<boolean>(false);
@@ -49,7 +49,7 @@ const Header = () => {
                         <MdOutlinePassword size={18} />
                         <p className="text-sm" >تغییر رمز عبور</p>
                     </Link>}
-                    {rule === "admin" && isAuthenticated && <Link href="/admin/products/" className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 px-2 py-1">
+                    {role === "admin" && isAuthenticated && <Link href="/admin/products/" className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 px-2 py-1">
                         <RiAdminLine size={18} />
                         <p className="text-sm" >پنل ادمین</p>
                     </Link>}
@@ -74,7 +74,7 @@ const Header = () => {
                     </div>
                 </div>
             </div>
-            
+
             {/* Desktop header */}
             <div className="hidden lg:flex items-center w-1/3 justify-between">
                 <Link href="/ticket/">فرم نظرسنجی و شکایات</Link>

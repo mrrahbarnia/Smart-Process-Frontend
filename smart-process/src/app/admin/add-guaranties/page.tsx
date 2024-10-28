@@ -1,6 +1,6 @@
 "use client"
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -14,7 +14,6 @@ type InputTypes = {
 
 
 const Page = () => {
-    const rule = useAuthStore((state) => state.rule)
     const logout = useAuthStore((state) => state.logout);
     const [fileName, setFileName] = useState<string>("");
     const router = useRouter();
@@ -24,12 +23,6 @@ const Page = () => {
         setError,
         formState: { errors, isSubmitting, isSubmitSuccessful }
     } = useForm<InputTypes>();
-
-    useEffect(() => {
-        if (rule !== "admin") {
-            return router.replace("/accounts/login/")
-        }
-    }, [rule, router])
 
     const onSubmit: SubmitHandler<InputTypes>  = async(data) => {
         const formData = new FormData()

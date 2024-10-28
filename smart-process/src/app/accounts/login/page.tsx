@@ -17,7 +17,7 @@ type InputTypes = {
 
 type responseType = {
     deserializedToken: {
-        user_rule: "user" | "admin"
+        user_role: "user" | "admin"
     },
     phoneNumber: string
 }
@@ -28,7 +28,7 @@ const Page = () => {
     const loginMessage = useAccountsStore((state) => state.loginMessage);
     const login = useAuthStore((state) => state.login);
     const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-    const setRule = useAuthStore((state) => state.setRule);
+    const setRole = useAuthStore((state) => state.setRole);
     const setPhoneNumber = useAuthStore((state) => state.setPhoneNumber);
     const {
         register,
@@ -61,7 +61,7 @@ const Page = () => {
                 }
             })
             login();
-            setRule(response.data.deserializedToken.user_rule);
+            setRole(response.data.deserializedToken.user_role);
             setPhoneNumber(response.data.phoneNumber);
             return router.replace("/");
         } catch {

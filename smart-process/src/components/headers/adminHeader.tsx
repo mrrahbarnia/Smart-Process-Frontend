@@ -12,13 +12,13 @@ import Link from "next/link";
 
 const AdminHeader = () => {
     const router = useRouter();
-    const rule = useAuthStore((state) => state.rule)
+    const role = useAuthStore((state) => state.role)
 
     useEffect(() => {
-        if (rule !== "admin") {
+        if (role !== "admin") {
             router.back()
         }
-    }, [rule, router])
+    }, [role, router])
 
     return (
         <ul className="w-12 bg-white h-auto p-3 pt-5 space-y-3">

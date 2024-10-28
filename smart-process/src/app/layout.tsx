@@ -7,7 +7,7 @@ import ReactQueryProvider from "@/store/reactQueryProvider";
 import "./globals.css";
 
 const localStorageLoginKey = "is-logged-in";
-const localStorageRuleKey = "rule";
+const localStorageRoleKey = "role";
 const localPhoneNumberKey = "phone-number";
 
 export default function RootLayout({
@@ -16,25 +16,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const setIsAuthenticated = useAuthStore((state) => state.setIsAuthenticated);
-  const setRule = useAuthStore((state) => state.setRule);
+  const setRole = useAuthStore((state) => state.setRole);
   const setPhoneNumber = useAuthStore((state) => state.setPhoneNumber);
 
   useEffect(() => {
     const authState = localStorage.getItem(localStorageLoginKey);
-    const rule = localStorage.getItem(localStorageRuleKey) as "user" | "admin" | null;
+    const role = localStorage.getItem(localStorageRoleKey) as "user" | "admin" | null;
     const phoneNumber = localStorage.getItem(localPhoneNumberKey);
     if (authState === "1") {
       setIsAuthenticated(true)
     } else {
       setIsAuthenticated(false)
     }
-    if (rule) {
-      setRule(rule)
+    if (role) {
+      setRole(role)
     }
     if (phoneNumber) {
       setPhoneNumber(phoneNumber)
     }
-  }, [setIsAuthenticated, setRule, setPhoneNumber])
+  }, [setIsAuthenticated, setRole, setPhoneNumber])
 
   return (
     <html lang="fa" dir="rtl" className="font-[Vazir-Medium]">
