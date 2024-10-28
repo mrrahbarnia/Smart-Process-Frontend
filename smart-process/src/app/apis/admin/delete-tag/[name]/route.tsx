@@ -4,30 +4,25 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken, deleteToken } from "@/utils/authUtils";
 import { EXTERNAL_BASE_ENDPOINT } from '@/configs/default';
 
-const EXTERNAL_API = `${EXTERNAL_BASE_ENDPOINT}/admin/update-attribute`;
+const EXTERNAL_API = `${EXTERNAL_BASE_ENDPOINT}/admin/delete-tag`;
 
-export const PUT = async (request: NextRequest, {params}: {params: {name: string}}) => {
-    const attributeName = params.name;
-    const data = await request.json()
-
+export const DELETE = async (request: NextRequest, {params}: {params: {name: string}}) => {
+    const tagName = params.name;
     try {
         const accessToken = await getToken();
-        await axios.put(`${EXTERNAL_API}/${attributeName}/`, data, {
+        await axios.delete(`${EXTERNAL_API}/${tagName}/`, {
             headers: {
                 "Authorization": `Bearer ${accessToken}`
             }
         })
-        return NextResponse.json({"updated": true}, {status: 200})
+        return NextResponse.json({"deleted": true}, {status: 200})
     } catch (error) {
         let errorMessage: string;
         if (axios.isAxiosError(error)) {
             if (error.response?.data && error.response?.data.detail === 'Could not validate credentials' ) {
                 deleteToken();
                 errorMessage = 'Could not validate credentials';
-                return NextResponse.json({"updated": false}, {status: 403})
-            }
-            if (error.response?.data && error.response?.data.detail) {
-                return NextResponse.json({"detail": error.response?.data && error.response?.data.detail}, {status: 400})
+                return NextResponse.json({"deactivated": false}, {status: 403})
             }
         } else {
             errorMessage = "Something went wrong";

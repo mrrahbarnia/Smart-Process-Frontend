@@ -1,3 +1,5 @@
+import { TiTags } from "react-icons/ti"; 
+import { HiDocumentSearch } from "react-icons/hi"; 
 import { GiCctvCamera } from "react-icons/gi"; 
 import { CgComment } from "react-icons/cg"; 
 import { TbBinaryTree2 } from "react-icons/tb"; 
@@ -51,6 +53,18 @@ const AdminHeader = () => {
             <Link href="/admin/attributes/" className="relative group flex items-center z-10">
                 <TbBinaryTree2 className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20} />
                 <li className="absolute w-16 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">ویژگی ها</li>
+            </Link>
+
+            {/* Articles */}
+            <Link href="/admin/articles/" className="relative group flex items-center z-10">
+                <HiDocumentSearch className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20} />
+                <li className="absolute w-12 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">مقالات</li>
+            </Link>
+
+            {/* Tags */}
+            <Link href="/admin/tags/" className="relative group flex items-center z-10">
+                <TiTags className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20} />
+                <li className="absolute w-12 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">تگ ها</li>
             </Link>
 
             {/* Tickets */}
