@@ -2,17 +2,17 @@
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const INTERNAL_API = "/apis/admin/assign-attributes"
+const INTERNAL_API = "/apis/admin/unassign-tags"
 
 type RequestType = {
-    attributeName: string,
-    categoryId: number
+    articleId: string,
+    tagName: string
 };
 
 
-const useAssignCatAttr = () => {
+const useUnassignTags = () => {
     const client = useQueryClient();
-    const {mutateAsync, isSuccess, isPending} = useMutation({
+    const {mutateAsync} = useMutation({
         mutationFn: (data: RequestType) => {
             return axios.post(`${INTERNAL_API}/`, data, {
                 headers: {
@@ -21,15 +21,13 @@ const useAssignCatAttr = () => {
             })
         },
         onSuccess: () => {
-            client.invalidateQueries({queryKey: ["CategoryAttributes"]})
+            client.invalidateQueries({queryKey: ["Articles"]})
         }
     })
 
     return {
-        assignMutateAsync: mutateAsync,
-        isSuccess,
-        isPending
+        unassignMutateAsync: mutateAsync,
     }
 };
 
-export default useAssignCatAttr;
+export default useUnassignTags;

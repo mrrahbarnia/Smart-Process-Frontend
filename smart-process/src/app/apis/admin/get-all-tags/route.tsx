@@ -10,7 +10,7 @@ export const GET = async (request: NextRequest) => {
     try {
         const url = new URL(request.url);
         const page = url.searchParams.get("page") || "1";
-        const name__contain = url.searchParams.get("name__contain") || "";
+        const name__contain = url.searchParams.get("nameContain") || "";
         const accessToken = await getToken();
         const result = await axios.get(`${EXTERNAL_API}?page=${page}&name__contain=${name__contain}`, {
             headers: {

@@ -49,7 +49,7 @@ const CategoryContainer = () => {
         hasPreviousPage = false;
     }
 
-    if (categoriesCount && (Number(searchParams.get("page")) ? Number(searchParams.get("page")) : 1 ) * 10 <= categoriesCount) {
+    if (categoriesCount && (Number(searchParams.get("page")) ? Number(searchParams.get("page")) : 1 ) * 10 < categoriesCount) {
         hasNextPage = true;
     } else {
         hasNextPage = false;

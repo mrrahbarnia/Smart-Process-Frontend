@@ -2,15 +2,15 @@
 import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const INTERNAL_API = "/apis/admin/assign-attributes"
+const INTERNAL_API = "/apis/admin/assign-tags"
 
 type RequestType = {
-    attributeName: string,
-    categoryId: number
+    tagName: string,
+    articleId: string
 };
 
 
-const useAssignCatAttr = () => {
+const useAssignArticleTag = () => {
     const client = useQueryClient();
     const {mutateAsync, isSuccess, isPending} = useMutation({
         mutationFn: (data: RequestType) => {
@@ -21,7 +21,7 @@ const useAssignCatAttr = () => {
             })
         },
         onSuccess: () => {
-            client.invalidateQueries({queryKey: ["CategoryAttributes"]})
+            client.invalidateQueries({queryKey: ["Articles"]})
         }
     })
 
@@ -32,4 +32,4 @@ const useAssignCatAttr = () => {
     }
 };
 
-export default useAssignCatAttr;
+export default useAssignArticleTag;

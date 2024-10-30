@@ -49,7 +49,7 @@ const BrandsContainer = () => {
         hasPreviousPage = false;
     }
 
-    if (brandsCount && (Number(searchParams.get("page")) ? Number(searchParams.get("page")) : 1 ) * 10 <= brandsCount) {
+    if (brandsCount && (Number(searchParams.get("page")) ? Number(searchParams.get("page")) : 1 ) * 10 < brandsCount) {
         hasNextPage = true;
     } else {
         hasNextPage = false;

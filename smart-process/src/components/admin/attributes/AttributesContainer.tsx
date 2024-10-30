@@ -10,25 +10,30 @@ import { useRef } from "react";
 import CreateModal from "./CreateModal";
 import useGetAllAttributes from "@/hooks/useQueries/useGetAllAttributes";
 
+type AttributeSearchType = {
+    page?: string | null,
+    nameContain?: string | null
+}
+
 const AttributesContainer = () => {
     const router = useRouter();
     const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
     const logout = useAuthStore((state) => state.logout);
-    const [pageNumber, setPageNumber] = useState<string | null>();
     const searchParams = useSearchParams();
-    const [nameContain, setNameContain] = useState<string>("");
+    const [searchFilterParams, setSearchFilterParams] = useState<AttributeSearchType>();
     const ref = useRef<HTMLInputElement>(null);
     const {
         attributesCount,
         attributesData,
         attributesIsError,
         attributesIsPending
-    } = useGetAllAttributes({page: pageNumber, name__contain: nameContain});
+    } = useGetAllAttributes(searchFilterParams);
 
     useEffect(() => {
-        if (searchParams.get("page")) {
-            setPageNumber(searchParams.get("page"));
-        }
+        setSearchFilterParams({
+            "page": searchParams.get("page"),
+            "nameContain": searchParams.get("nameContain")
+        })
     }, [searchParams])
 
     if (attributesIsError) {
@@ -42,7 +47,8 @@ const AttributesContainer = () => {
 
     const searchClickHandler = () => {
         if (ref.current) {
-            setNameContain(ref.current.value);
+            const url = `/admin/attributes?page=1&nameContain=${ref.current.value}`
+            return router.replace(url)
         }
     }
 
@@ -59,19 +65,19 @@ const AttributesContainer = () => {
         hasPreviousPage = false;
     }
 
-    if (attributesCount && (Number(searchParams.get("page")) ? Number(searchParams.get("page")) : 1 ) * 10 <= attributesCount) {
+    if (attributesCount && (Number(searchParams.get("page")) ? Number(searchParams.get("page")) : 1 ) * 10 < attributesCount) {
         hasNextPage = true;
     } else {
         hasNextPage = false;
     }
 
     const previousHandler = () => {
-        const url = `/admin/attributes/?page=${searchParams.get("page") ? Number(searchParams.get("page")) -1  : "1"}`
+        const url = `/admin/attributes/?page=${searchParams.get("page") ? Number(searchParams.get("page")) -1  : "1"}${searchParams.get("nameContain") ? `&nameContain=${searchParams.get("nameContain")}` : ""}`
         return router.replace(url)
     };
 
     const nextHandler = () => {
-        const url = `/admin/attributes/?page=${searchParams.get("page") ? Number(searchParams.get("page")) + 1  : "2"}`
+        const url = `/admin/attributes/?page=${searchParams.get("page") ? Number(searchParams.get("page")) + 1  : "2"}${searchParams.get("nameContain") ? `&nameContain=${searchParams.get("nameContain")}` : ""}`
         return router.replace(url);
     };
 

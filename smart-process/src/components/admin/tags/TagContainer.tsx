@@ -10,25 +10,30 @@ import { useRef } from "react";
 import CreateModal from "./CreateModal";
 import useGetAllTags from "@/hooks/useQueries/useGetAllTags";
 
+type TagSearchType = {
+    page?: string | null,
+    nameContain?: string | null
+}
+
 const TagsContainer = () => {
     const router = useRouter();
     const [showCreateModal, setShowCreateModal] = useState<boolean>(false);
     const logout = useAuthStore((state) => state.logout);
-    const [pageNumber, setPageNumber] = useState<string | null>();
     const searchParams = useSearchParams();
-    const [nameContain, setNameContain] = useState<string>("");
+    const [searchFilterParams, setSearchFilterParams] = useState<TagSearchType>();
     const ref = useRef<HTMLInputElement>(null);
     const {
         tagsCount,
         tagsData,
         tagsIsError,
         tagsIsPending
-    } = useGetAllTags({page: pageNumber, name__contain: nameContain});
+    } = useGetAllTags(searchFilterParams);
 
     useEffect(() => {
-        if (searchParams.get("page")) {
-            setPageNumber(searchParams.get("page"));
-        }
+        setSearchFilterParams({
+            "page": searchParams.get("page"),
+            "nameContain": searchParams.get("nameContain")
+        })
     }, [searchParams])
 
     if (tagsIsError) {
@@ -42,7 +47,8 @@ const TagsContainer = () => {
 
     const searchClickHandler = () => {
         if (ref.current) {
-            setNameContain(ref.current.value);
+            const url = `/admin/tags?page=1&nameContain=${ref.current.value}`
+            return router.replace(url)
         }
     }
 
@@ -59,19 +65,19 @@ const TagsContainer = () => {
         hasPreviousPage = false;
     }
 
-    if (tagsCount && (Number(searchParams.get("page")) ? Number(searchParams.get("page")) : 1 ) * 10 <= tagsCount) {
+    if (tagsCount && (Number(searchParams.get("page")) ? Number(searchParams.get("page")) : 1 ) * 10 < tagsCount) {
         hasNextPage = true;
     } else {
         hasNextPage = false;
     }
 
     const previousHandler = () => {
-        const url = `/admin/tags/?page=${searchParams.get("page") ? Number(searchParams.get("page")) -1  : "1"}`
+        const url = `/admin/tags/?page=${searchParams.get("page") ? Number(searchParams.get("page")) -1  : "1"}${searchParams.get("nameContain") ? `&nameContain=${searchParams.get("nameContain")}` : ""}`
         return router.replace(url)
     };
 
     const nextHandler = () => {
-        const url = `/admin/tags/?page=${searchParams.get("page") ? Number(searchParams.get("page")) + 1  : "2"}`
+        const url = `/admin/tags/?page=${searchParams.get("page") ? Number(searchParams.get("page")) + 1  : "2"}${searchParams.get("nameContain") ? `&nameContain=${searchParams.get("nameContain")}` : ""}`
         return router.replace(url);
     };
 

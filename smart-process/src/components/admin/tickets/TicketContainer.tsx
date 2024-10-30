@@ -47,7 +47,7 @@ const TicketsContainer = () => {
         hasPreviousPage = false;
     }
 
-    if (ticketsCount && (Number(searchParams.get("page")) ? Number(searchParams.get("page")) : 1 ) * 10 <= ticketsCount) {
+    if (ticketsCount && (Number(searchParams.get("page")) ? Number(searchParams.get("page")) : 1 ) * 10 < ticketsCount) {
         hasNextPage = true;
     } else {
         hasNextPage = false;

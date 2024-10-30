@@ -97,6 +97,12 @@ const ProductsContainer = () => {
         return <AiOutlineLoading3Quarters className="text-blue-800 animate-spin w-12 h-12 m-auto" />
     }
 
+    const onSubmit: SubmitHandler<InputTypes> = async(data) => {
+        const url = `/admin/products/?nameContain=${data.nameContain}&brandExact=${data.brandExact}&categoryExact=${data.categoryExact}`;
+        setShowSearchMenu(false);
+        return router.replace(url);
+    }
+
     let hasPreviousPage;
     let hasNextPage;
 
@@ -110,16 +116,10 @@ const ProductsContainer = () => {
         hasPreviousPage = false;
     }
 
-    if (productsCount && (Number(searchParams.get("page")) ? Number(searchParams.get("page")) : 1 ) * 10 <= productsCount) {
+    if (productsCount && (Number(searchParams.get("page")) ? Number(searchParams.get("page")) : 1 ) * 10 < productsCount) {
         hasNextPage = true;
     } else {
         hasNextPage = false;
-    }
-
-    const onSubmit: SubmitHandler<InputTypes> = async(data) => {
-        const url = `/admin/products/?nameContain=${data.nameContain}&brandExact=${data.brandExact}&categoryExact=${data.categoryExact}`;
-        setShowSearchMenu(false);
-        return router.replace(url);
     }
 
     const previousHandler = () => {

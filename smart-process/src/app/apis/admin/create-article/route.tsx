@@ -4,37 +4,22 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken, deleteToken } from "@/utils/authUtils";
 import { EXTERNAL_BASE_ENDPOINT } from '@/configs/default';
 
-const EXTERNAL_API = `${EXTERNAL_BASE_ENDPOINT}/admin/create-product/`;
+const EXTERNAL_API = `${EXTERNAL_BASE_ENDPOINT}/admin/create-article/`;
 
 type PayloadType = {
-    discount?: string | null,
-    categoryName: string,
-    price: string,
-    name: string,
-    brandName: string,
-    expiryDiscount?: string | null,
-    stock: string,
+    title: string,
     description: string,
-    serialNumber: string,
-    attributeValues: Record<string, string>[]
 }
 
 export const POST = async (request: NextRequest) => {
     const data = await request.formData()
     const formData = new FormData;
-    const priceNumber = (data.get("price") as string).replaceAll(",", "")
+    
+
     
     const payload: PayloadType = {
-        name: data.get("name") as string,
-        serialNumber: data.get("serialNumber") as string,
-        discount: data.get("discount") ? (data.get("discount") as string) : null,
-        categoryName: data.get("categoryName") as string,
-        brandName: data.get("brandName") as string,
-        price: priceNumber,
-        expiryDiscount: data.get("expiryDiscount") ? (data.get("expiryDiscount") as string) : null,
-        stock: data.get("stock") as string,
+        title: data.get("title") as string,
         description: data.get("description") as string,
-        attributeValues: JSON.parse(data.get("attributeValues") as string) as Record<string, string>[]
     };
     formData.append("payload", JSON.stringify(payload))
     const images = Array.from(data.entries())
