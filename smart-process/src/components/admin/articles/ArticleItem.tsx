@@ -21,6 +21,7 @@ import DeleteModal from "./DeleteModal";
 
 TimeAgoModule.addDefaultLocale(fa);
 
+
 const ArticleItem = (props: {article: ArticleType}) => {
     const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
@@ -60,7 +61,7 @@ const ArticleItem = (props: {article: ArticleType}) => {
                 <hr className="border-1 border-gray-300 w-2/3"/>
                 <Image width={500} height={500} className="w-72 h-40 object-fill rounded-md" src={props.article.image} alt={`${props.article.title} image`} />
                 {props.article.tags[0] !== null && <div className="flex items-center gap-3 w-5/6 flex-wrap">
-                    {props.article.tags.map(tag => <Link href="#" key={tag} className="relative flex items-center bg-sky-200 hover:bg-sky-300 transition-colors duration-300 text-sky-900 rounded-md p-1 text-xs">
+                    {props.article.tags.map(tag => <Link href={`/admin/articles?tag_name=${tag}`} key={tag} className="relative flex items-center bg-sky-200 hover:bg-sky-300 transition-colors duration-300 text-sky-900 rounded-md p-1 text-xs">
                         <span onClick={(e) => {
                             e.preventDefault()
                             e.stopPropagation()

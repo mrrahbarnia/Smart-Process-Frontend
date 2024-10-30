@@ -9,7 +9,8 @@ import Link from "next/link";
 import useGetAllArticles from "@/hooks/useQueries/useGetAllArticles";
 
 type ArticleSearchType = {
-    page?: string | null
+    page?: string | null,
+    tag_name?: string | null
 }
 
 const ArticlesContainer = () => {
@@ -26,7 +27,8 @@ const ArticlesContainer = () => {
 
     useEffect(() => {
         setSearchFilterParams({
-            "page": searchParams.get("page")
+            "page": searchParams.get("page"),
+            "tag_name": searchParams.get("tag_name")
         })
     }, [searchParams])
 

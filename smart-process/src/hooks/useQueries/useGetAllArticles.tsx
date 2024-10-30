@@ -21,7 +21,8 @@ type ResponseType = {
 }
 
 type ParamsType = {
-    page?: string | null
+    page?: string | null,
+    tag_name?: string | null
 }
 
 

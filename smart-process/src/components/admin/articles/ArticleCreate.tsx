@@ -61,7 +61,7 @@ const ArticleCreate = () => {
     }
 
     return (
-        <div className="border-2 rounded-md border-blue-300 bg-blue-50 w-3/4 min-[650px]:w-2/3 min-[750px]:w-7/12 min-[850px]:w-6/12 min-[950px]:w-5/12 min-[1050px]:w-4/12 mx-auto mt-16 pt-10">
+        <div className="border-2 rounded-md border-blue-300 bg-blue-50 w-3/4 min-[650px]:w-2/3 min-[750px]:w-7/12 min-[850px]:w-6/12 min-[950px]:w-5/12 min-[1050px]:w-4/12 mx-auto mt-16 py-10 h-auto">
             <h1 className="text-center text-lg text-blue-900">فرم ثبت مقاله</h1>
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 pt-8 px-2">
                 <div className="flex flex-col w-full gap-1">

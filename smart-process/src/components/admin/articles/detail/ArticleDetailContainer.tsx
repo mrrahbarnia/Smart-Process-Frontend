@@ -97,13 +97,13 @@ const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
                 <div className="w-full flex items-center justify-between">
                     {articleData?.averageRating && <StarRating rating={Math.floor(articleData.averageRating)} />}
                     {articleData && articleData.tags[0] !== null && <div className="flex items-center gap-1 flex-wrap">
-                        {articleData.tags.map(tag => <Link href="#" key={tag} className="flex items-center bg-sky-200 hover:bg-sky-300 transition-colors duration-300 text-sky-900 rounded-md p-1 text-xs">
+                        {articleData.tags.map(tag => <Link href={`/admin/articles?tag_name=${tag}`} key={tag} className="flex items-center bg-sky-200 hover:bg-sky-300 transition-colors duration-300 text-sky-900 rounded-md p-1 text-xs">
                             <FaHashtag size={13} />
                             <span>{tag}</span>
                         </Link>)}
                     </div>}
                 </div>
-                
+
                 <div className="flex flex-col items-start gap-1 px-2 py-1 bg-blue-100 rounded-md m-2">
                     <div className="flex items-center gap-1 text-blue-900">
                         <HiDocumentText size={20} />
