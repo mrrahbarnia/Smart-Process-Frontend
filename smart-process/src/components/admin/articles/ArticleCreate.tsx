@@ -37,19 +37,21 @@ const ArticleCreate = () => {
             formData.append("images", data.images[i]);
         }
         createMutateAsync(formData)
+        .then(() => {
+            return router.replace("/admin/articles/")
+        })
         .catch((error) => {
-            console.log(error);
+            console.log(error.response.data?.detail);
             if (error.status === 403) {
                 logout();
                 router.replace("/accounts/login/")
             }
             if (error.response && error.response.data?.detail === 'Unique title for articles!') {
                 setError("title", { message: "عنوان مقاله تکراریست." })
+                return;
             }
         })
-        .then(() => {
-            return router.replace("/admin/articles/")
-        })
+        
     }
 
     const imageChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {

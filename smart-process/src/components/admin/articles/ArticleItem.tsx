@@ -1,4 +1,5 @@
 "use client"
+import { FaHashtag } from "react-icons/fa";
 import { TbCodePlus } from "react-icons/tb";
 import { AiOutlineDelete } from "react-icons/ai";
 import { CgTimelapse } from "react-icons/cg";
@@ -50,35 +51,52 @@ const ArticleItem = (props: {article: ArticleType}) => {
             {/* Add Tag Modal */}
             {showAssignTagModal && <AddTagModal articleId={props.article.id} closeModalHandler={setShowAssignTagModal} />}
 
-            <Link href="#" className="relative border-2 rounded-md border-blue-300 bg-blue-50 hover:bg-blue-100 active:bg-blue-100 transition-colors duration-300 flex flex-col gap-2 w-full items-center">
+            <Link href={`/admin/articles/${props.article.id}/`} className="relative border-2 rounded-md border-blue-300 bg-blue-50 hover:bg-blue-100 active:bg-blue-100 transition-colors duration-300 flex flex-col gap-2 w-full items-center">
                 <div className="absolute left-1 top-1 flex items-center gap-1 bg-sky-200 rounded-md text-sky-900 p-1">
                     <CgTimelapse size={13} />
                     <TimeAgo className="text-xs" date={props.article.createdAt} locale="fa" />
                 </div>
-                <h2 className="text-base " dir="rtl">{props.article.title}</h2>
+                <h2 className="text-lg text-blue-900" dir="rtl">{props.article.title}</h2>
                 <hr className="border-1 border-gray-300 w-2/3"/>
                 <Image width={500} height={500} className="w-72 h-40 object-fill rounded-md" src={props.article.image} alt={`${props.article.title} image`} />
-                {props.article.tags[0] !== null && <div className="flex items-center gap-3">
-                    {props.article.tags.map(tag => <div key={tag} className="relative">
-                        <span onClick={() => unassignHandler(tag)} className="absolute -top-2 -left-1 text-red-500 text-sm hover:scale-150 transition-transform duration-300">x</span>
-                        <Link className="bg-sky-200 hover:bg-sky-300 transition-colors duration-300 text-sky-900 rounded-md p-1 text-xs"  href="#">{tag}</Link>
-                    </div>)}
+                {props.article.tags[0] !== null && <div className="flex items-center gap-3 w-5/6 flex-wrap">
+                    {props.article.tags.map(tag => <Link href="#" key={tag} className="relative flex items-center bg-sky-200 hover:bg-sky-300 transition-colors duration-300 text-sky-900 rounded-md p-1 text-xs">
+                        <span onClick={(e) => {
+                            e.preventDefault()
+                            e.stopPropagation()
+                            unassignHandler(tag)
+                        }} className="absolute -top-2 -left-1 text-red-500 text-sm hover:scale-150 transition-transform duration-300">x</span>
+                        <FaHashtag size={13} />
+                        <span>{tag}</span>
+                    </Link>)}
                 </div>}
                 <div className="flex flex-col items-start gap-1 px-2 py-1 bg-blue-100 rounded-md m-2">
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 text-blue-900">
                         <HiDocumentText size={20} />
                         <h2>توضیحات</h2>
                     </div>
-                    <p className="text-gray-600 text-xs">{props.article.description}</p>
+                    <p className="text-gray-600 text-xs leading-4">{props.article.description}</p>
                 </div>
                 <div className="flex items-center gap-2 py-1">
-                    <button onClick={() => setShowDeleteModal(true)} className="bg-red-100 p-1 rounded-md text-red-800 hover:bg-red-200 transition-colors duration-300">
+                    <button onClick={(e) => {
+                        e.stopPropagation()
+                        e.preventDefault()
+                        setShowDeleteModal(true)
+                    }} className="bg-red-100 p-1 rounded-md text-red-800 hover:bg-red-200 transition-colors duration-300">
                         <AiOutlineDelete size={20}/>
                     </button>
-                    <button onClick={() => setShowUpdateModal(true)} className="bg-yellow-100 p-1 rounded-md text-yellow-700 hover:bg-yellow-200 transition-colors duration-300">
+                    <button onClick={(e) => {
+                        e.stopPropagation()
+                        e.preventDefault()
+                        setShowUpdateModal(true)
+                    }} className="bg-yellow-100 p-1 rounded-md text-yellow-700 hover:bg-yellow-200 transition-colors duration-300">
                         <RxUpdate size={18} />
                     </button>
-                    <div onClick={() => setShowAssignTagModal(true)} className="flex items-center text-sm bg-green-100 p-1 rounded-md text-green-800 hover:bg-green-200 transition-colors duration-300">
+                    <div onClick={(e) => {
+                        e.stopPropagation()
+                        e.preventDefault()
+                        setShowAssignTagModal(true)
+                    }} className="flex items-center text-sm bg-green-100 p-1 rounded-md text-green-800 hover:bg-green-200 transition-colors duration-300">
                         <TbCodePlus size={20} />
                         <p>تگ جدید</p>
                     </div>
