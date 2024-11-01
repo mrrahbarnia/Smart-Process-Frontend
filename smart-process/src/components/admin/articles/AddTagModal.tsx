@@ -61,12 +61,9 @@ const AddTagModal = ({articleId, closeModalHandler}: {articleId: string, closeMo
                     logout();
                     return router.replace("/accounts/login/")
                 }
-                // if (error.response?.data && error.response?.data.detail === "There is no attribute with the provided info!") {
-                //     setError("name", { message: "ویژگی باید از بین موارد پیشنهاد شده باشد."})
-                // }
-                // if (error.response?.data && error.response?.data.detail === "category_id and attribute_id are unique together!") {
-                //     setError("name", { message: "ویژگی برای این دسته بندی تکراریست."})
-                // }
+                if (error.response?.data && error.response?.data.detail === 'There is no tag with the provided info!') {
+                    setError("name", { message: "تگ باید از بین موارد پیشنهاد شده باشد."})
+                }
             } else {
                 setError("name", { message: "مشکلی در شبکه بوجود آمده است." })
             }

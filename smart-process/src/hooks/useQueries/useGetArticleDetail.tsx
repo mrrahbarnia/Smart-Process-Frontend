@@ -12,7 +12,6 @@ export type ArticleDetailType = {
     tags: (string | null)[],
     images: string[],
     averageRating: number | null,
-    views: number,
     createdAt: Date
 }
 
@@ -23,8 +22,6 @@ const useGetArticleDetail = (articleId: string) => {
         staleTime: 10000,
         queryFn: async function() {
             const result = await axios.get<ArticleDetailType>(`${INTERNAL_API}/${articleId}/`);
-            console.log(result.data);
-            
             return result.data;
         }
     })

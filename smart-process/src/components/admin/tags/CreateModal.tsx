@@ -3,6 +3,8 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { Dispatch, SetStateAction } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useCreateTag } from "@/hooks/useMutations/useCreateTag";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useRouter } from "next/navigation";
 
 type InputTypes = {
     name: string
@@ -10,6 +12,8 @@ type InputTypes = {
 
 
 const CreateModal = ({closeModalHandler}: {closeModalHandler: Dispatch<SetStateAction<boolean>>}) => {
+    const logout = useAuthStore(state => state.logout);
+    const router = useRouter();
     const {createIsPending, createMutateAsync} = useCreateTag();
     const {
         register,
@@ -24,6 +28,10 @@ const CreateModal = ({closeModalHandler}: {closeModalHandler: Dispatch<SetStateA
             closeModalHandler(false);
         })
         .catch(error => {
+            if (error.status === 403) {
+                logout();
+                return router.replace("/accounts/login/")
+            }
             if (error.response && error.response.data?.detail === "Unique name for tags!") {
                 setError("name", { message: "تگ تکراریست." })
             }

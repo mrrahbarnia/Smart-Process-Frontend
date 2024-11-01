@@ -6,7 +6,7 @@ import { CgTimelapse } from "react-icons/cg";
 import { HiDocumentText } from "react-icons/hi";
 import { RxUpdate } from "react-icons/rx";
 // import UpdateModal from "./UpdateModal";
-import AddTagModal from "../attributes/AddTagModal";
+import AddTagModal from "./AddTagModal";
 import { ArticleType } from "@/hooks/useQueries/useGetAllArticles";
 import { useState, Fragment } from "react";
 import Link from "next/link";

@@ -6,6 +6,8 @@ import { useEffect, useState, Dispatch, SetStateAction } from "react";
 import useDebounced from "@/hooks/useDebounced";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useCreateCategory } from "@/hooks/useMutations/useCreateCategory";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useRouter } from "next/router";
 
 const EXTERNAL_CATEGORY_SEARCH_API = `${EXTERNAL_BASE_ENDPOINT}/products/search-categories/?category_name=`;
 
@@ -17,6 +19,8 @@ type InputTypes = {
 
 
 const CreateModal = ({closeModalHandler}: {closeModalHandler: Dispatch<SetStateAction<boolean>>}) => {
+    const logout = useAuthStore(state => state.logout);
+    const router = useRouter();
     const [parentCategory, setParentCategory] = useState<string>("");
     const debounceValue = useDebounced(parentCategory);
     const [suggestedParentCategories, setSuggestedParentCategories] = useState<string[]>([]);
@@ -51,6 +55,10 @@ const CreateModal = ({closeModalHandler}: {closeModalHandler: Dispatch<SetStateA
             closeModalHandler(false);
         })
         .catch(error => {
+            if (error.status === 403) {
+                logout();
+                return router.replace("/accounts/login/")
+            }
             if (error.response && error.response.data?.detail === 'Invalid parent category name!') {
                 setError("parentCategoryName", { message: "دسته بندی والد حتما باید از موارد پیشنهاد شده باشد." })
             }

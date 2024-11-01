@@ -1,12 +1,13 @@
 "use client"
-import { FaRegEye } from "react-icons/fa";
+import { RxUpdate } from "react-icons/rx";
+import { AiFillPlusCircle } from "react-icons/ai";
+import { CgPlayListSearch, CgTimelapse } from "react-icons/cg";
 import { AiFillStar } from "react-icons/ai";
 import { HiDocumentText } from "react-icons/hi";
 import { FaHashtag } from "react-icons/fa";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination } from 'swiper/modules';
-import { CgTimelapse } from "react-icons/cg";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -19,9 +20,14 @@ import TimeAgo from 'react-time-ago';
 import fa from 'javascript-time-ago/locale/fa.json';
 import { useAdminDeleteArticleComment } from "@/hooks/useMutations/useAdminDeleteArticleComment";
 import TimeAgoModule from 'javascript-time-ago';
-// import { useAuthStore } from "@/store/useAuthStore";
-// import { useRouter } from "next/navigation";
+import { useDeleteGlossary } from "@/hooks/useMutations/useDeleteGlossary";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useRouter } from "next/navigation";
+import useGetGlossaries from "@/hooks/useQueries/useGetGlossaries";
 import { RiAccountCircleFill } from "react-icons/ri";
+import CreateGlossaryModal from "../CreateGlossaryModal";
+import UpdateGlossaryModal from "./UpdateGlossaryModal";
+import { GlossaryType } from "@/hooks/useQueries/useGetGlossaries";
 
 TimeAgoModule.addDefaultLocale(fa);
 
@@ -42,15 +48,26 @@ function StarRating({ rating }: {rating: number}) {
 
 const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
     const [showComments, setShowComments] = useState<boolean>(false);
-    // const logout = useAuthStore((state) => state.logout);
-    // const router = useRouter();
+    const [showCreateGlossaryModal, setShowCreateGlossaryModal] = useState<boolean>(false);
+    const [showGlossaries, setShowGlossaries] = useState<boolean>(false);
+    const logout = useAuthStore((state) => state.logout);
+    const router = useRouter();
+    const [isFetchGlossaries, setIsFetchGlossaries] = useState<boolean>(false);
+    const {glossariesData, glossariesIsPending} = useGetGlossaries({articleId: articleId}, isFetchGlossaries);
     const {
         articleData,
         // articleIsError,
         articleIsPending
     } = useGetArticleDetail(articleId);
     const {commentsData, commentsIsPending} = useGetArticleComments(articleId, showComments);
+    const {deleteMutateAsync} = useDeleteGlossary();
     const {deleteMutate} = useAdminDeleteArticleComment();
+    const [showUpdateGlossaryModal, setShowUpdateGlossaryModal] = useState<boolean>(false);
+    const [selectedGlossary, setSelectedGlossary] = useState<GlossaryType>({
+        id: 1,
+        term: "",
+        definition: ""
+    });
 
     // if (articleIsError) {
     //     logout();
@@ -61,16 +78,39 @@ const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
         return <AiOutlineLoading3Quarters className="text-blue-800 animate-spin w-12 h-12 m-auto flex items-center justify-center" />
     }
 
-    const showCommentsHandler = () => {
-        setShowComments(true);
+    const showCommentsHandler = () => setShowComments(true);
+
+    const deleteHandler = (glossaryId: number) => {
+        deleteMutateAsync({glossaryId: glossaryId})
+        .catch(error => {
+            if (error.status === 403) {
+                logout();
+                return router.replace("/accounts/login/")
+            }
+        })
     }
 
     return (
-            <div className="relative flex flex-col items-center gap-3 border-2 rounded-md border-blue-300 bg-blue-50 py-3 w-full min-[615px]:w-2/3 px-2 mx-2 my-16 min-[615px]:mx-auto">
-                {articleData && <div className="absolute right-1 top-1 flex items-center gap-1 bg-sky-200 rounded-md text-sky-900 p-1">
-                    <FaRegEye size={15} />
-                    <span className="text-xs">{articleData.views}</span>
-                </div>}
+        <Fragment>
+
+            {/* Update glossary Modal */}
+            {showUpdateGlossaryModal && <UpdateGlossaryModal glossary={selectedGlossary} closeModalHandler={setShowUpdateGlossaryModal} />}
+
+            {/* Delete Modal */}
+            {showCreateGlossaryModal && <CreateGlossaryModal articleId={articleId} closeModalHandler={setShowCreateGlossaryModal} />}
+
+            <div className={`relative flex flex-col items-center gap-3 border-2 rounded-md border-blue-300 bg-blue-50 py-3 w-full min-[615px]:w-2/3 px-2 mx-2 my-16 min-[615px]:mx-auto`}>
+                <div className="absolute right-1 top-1 flex items-center gap-1">
+                    <button onClick={() => {
+                        setIsFetchGlossaries(true)
+                        setShowGlossaries(true)
+                    }} className="flex items-center gap-1 text-xs bg-sky-200 rounded-md text-sky-900 p-1">
+                        <CgPlayListSearch size={20} />
+                        پاورقی
+                    </button>
+                    <AiFillPlusCircle onClick={() => setShowCreateGlossaryModal(true)} size={20} color="green" className="cursor-pointer"/>
+                </div>
+                
                 {articleData && <div className="absolute left-1 top-1 flex items-center gap-1 bg-sky-200 rounded-md text-sky-900 p-1">
                     <CgTimelapse size={13} />
                     <TimeAgo className="text-xs" date={articleData.createdAt} locale="fa" />
@@ -122,7 +162,7 @@ const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
                         <div className="flex flex-col w-full lg:w-2/3 gap-3 mt-2">
                             {commentsData.map((comment) => (
                                 <div key={comment.id} className="relative flex flex-col bg-white rounded-md p-1 gap-1">
-                                    <button onClick={() => deleteMutate({id: comment.id})} className="absolute left-1 top-1 abg-red-100 p-1 rounded-md bg-red-50 text-red-800 hover:bg-red-200 transition-colors duration-300">
+                                    <button onClick={() => deleteMutate({id: comment.id})} className="absolute left-1 top-1 p-1 rounded-md bg-red-50 text-red-800 hover:bg-red-200 transition-colors duration-300">
                                         <AiOutlineDelete size={15}/>
                                     </button>
                                     <div className="flex items-center gap-1">
@@ -137,7 +177,40 @@ const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
                         </div>
                     )
                 )}
+
+                <div className={`overflow-y-scroll absolute z-10 top-0 w-full backdrop-blur-md transform transition-transform duration-500 ${showGlossaries ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
+                    <div className="w-full p-4"> {/* Added background color to prevent blur */}
+                        <button
+                            onClick={() => setShowGlossaries(false)}
+                            className="absolute right-2 top-2 text-sm hover:text-red-600"
+                        >
+                            X
+                        </button>
+                        {glossariesIsPending && <AiOutlineLoading3Quarters className="mx-auto animate-spin" />}
+                        <ul className="flex flex-col gap-2 pt-4">
+                            {glossariesData?.map(glossary => <li className="bg-gray-200 p-2 rounded-md relative" key={glossary.id}>
+                                <div className="absolute left-1 top-1 flex items-center gap-1">
+                                    <button onClick={() => deleteHandler(glossary.id)} className="p-1 rounded-md bg-red-50 text-red-800 hover:bg-red-200 transition-colors duration-300">
+                                        <AiOutlineDelete size={15}/>
+                                    </button>
+                                    <button onClick={() => {
+                                        setShowUpdateGlossaryModal(true)
+                                        setSelectedGlossary(glossary)
+                                    }} className="bg-yellow-100 p-1 rounded-md text-yellow-700 hover:bg-yellow-200 transition-colors duration-300">
+                                        <RxUpdate size={15} />
+                                    </button>
+                                </div>
+                                <h2 className="text-md text-blue-900">{glossary.term}</h2>
+                                <hr className="border-gray-400 py-1"/>
+                                <p className="text-xs text-gray-700">{glossary.definition}</p>
+                            </li>)}
+                        </ul>
+                    </div>
+                </div>
             </div>
+            {showCreateGlossaryModal || showUpdateGlossaryModal ? <div className="fixed left-0 top-0 z-40 bg-black h-full w-full opacity-85"></div> : undefined}
+            
+        </Fragment>
     )
 };
 

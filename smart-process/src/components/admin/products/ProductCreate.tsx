@@ -105,7 +105,7 @@ const ProductCreate = () => {
         .catch((error) => {
             if (error.status === 403) {
                 logout();
-                router.replace("/accounts/login/")
+                return router.replace("/accounts/login/")
             }
             if (error.response && error.response.data?.detail === "Image size limit is 400000 KB!") {
                 setError("image", { message: "حداکثر حجم عکس ها باید ۴۰۰ کیلوبایت شود." })
