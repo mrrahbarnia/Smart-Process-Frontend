@@ -1,7 +1,7 @@
 "use client"
 import { useState, Fragment } from "react";
 import { RiAccountCircleFill, RiToolsLine } from "react-icons/ri";
-import { AiOutlineDelete, AiOutlineLoading3Quarters } from "react-icons/ai";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { TbFileDescription } from "react-icons/tb";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { MdBalance, MdDiscount } from "react-icons/md";

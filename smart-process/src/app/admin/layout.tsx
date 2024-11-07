@@ -5,7 +5,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 import "./../globals.css";
 
 const localStorageLoginKey = "is-logged-in";
-const localStorageRuleKey = "rule";
+const localStorageRuleKey = "role";
 const localPhoneNumberKey = "phone-number";
 
 export default function AdminLayout({

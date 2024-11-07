@@ -27,9 +27,15 @@ import useGetGlossaries from "@/hooks/useQueries/useGetGlossaries";
 import { RiAccountCircleFill } from "react-icons/ri";
 import CreateGlossaryModal from "../CreateGlossaryModal";
 import UpdateGlossaryModal from "./UpdateGlossaryModal";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { GlossaryType } from "@/hooks/useQueries/useGetGlossaries";
+import { useCreateArticleComment } from "@/hooks/useMutations/useCreateArticleComment";
 
 TimeAgoModule.addDefaultLocale(fa);
+
+type CommentInputType = {
+    message: string
+}
 
 function StarRating({ rating }: {rating: number}) {
     return (
@@ -46,7 +52,7 @@ function StarRating({ rating }: {rating: number}) {
     );
 }
 
-const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
+const ArticleDetailContainer = ({articleId, isAdminRoute}: {articleId: string, isAdminRoute:boolean}) => {
     const [showComments, setShowComments] = useState<boolean>(false);
     const [showCreateGlossaryModal, setShowCreateGlossaryModal] = useState<boolean>(false);
     const [showGlossaries, setShowGlossaries] = useState<boolean>(false);
@@ -59,6 +65,7 @@ const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
         // articleIsError,
         articleIsPending
     } = useGetArticleDetail(articleId);
+    const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
     const {commentsData, commentsIsPending} = useGetArticleComments(articleId, showComments);
     const {deleteMutateAsync} = useDeleteGlossary();
     const {deleteMutate} = useAdminDeleteArticleComment();
@@ -68,6 +75,13 @@ const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
         term: "",
         definition: ""
     });
+    const {createIsPending, createMutateAsync, createIsSuccess} = useCreateArticleComment();
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        formState: { errors }
+    } = useForm<CommentInputType>();
 
     // if (articleIsError) {
     //     logout();
@@ -90,6 +104,21 @@ const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
         })
     }
 
+    const onSubmit: SubmitHandler<CommentInputType> = async(data) => {
+        createMutateAsync({articleId: articleId, message: data.message})
+        .then(() => {
+            setValue("message", "");
+        })
+        .catch((error) => {
+            if (error.status === 403) {
+                logout();
+                return router.replace("/accounts/login/")
+            }
+        })
+    };
+
+    const tagHref = isAdminRoute ? "/admin/articles/" : "/articles/";
+
     return (
         <Fragment>
 
@@ -99,7 +128,7 @@ const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
             {/* Delete Modal */}
             {showCreateGlossaryModal && <CreateGlossaryModal articleId={articleId} closeModalHandler={setShowCreateGlossaryModal} />}
 
-            <div className={`relative flex flex-col items-center gap-3 border-2 rounded-md border-blue-300 bg-blue-50 py-3 w-full min-[615px]:w-2/3 px-2 mx-2 my-16 min-[615px]:mx-auto`}>
+            <div className={`relative flex flex-col items-center gap-3 border-2 rounded-md border-blue-300 bg-blue-50 py-3 w-full min-[615px]:w-2/3 px-2 mx-2 my-16 min-[615px]:mx-auto ${!isAdminRoute && "mt-32"}`}>
                 <div className="absolute right-1 top-1 flex items-center gap-1">
                     <button onClick={() => {
                         setIsFetchGlossaries(true)
@@ -108,7 +137,7 @@ const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
                         <CgPlayListSearch size={20} />
                         پاورقی
                     </button>
-                    <AiFillPlusCircle onClick={() => setShowCreateGlossaryModal(true)} size={20} color="green" className="cursor-pointer"/>
+                    {isAdminRoute && <AiFillPlusCircle onClick={() => setShowCreateGlossaryModal(true)} size={20} color="green" className="cursor-pointer"/>}
                 </div>
                 
                 {articleData && <div className="absolute left-1 top-1 flex items-center gap-1 bg-sky-200 rounded-md text-sky-900 p-1">
@@ -137,7 +166,7 @@ const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
                 <div className="w-full flex items-center justify-between">
                     {articleData?.averageRating && <StarRating rating={Math.floor(articleData.averageRating)} />}
                     {articleData && articleData.tags[0] !== null && <div className="flex items-center gap-1 flex-wrap">
-                        {articleData.tags.map(tag => <Link href={`/admin/articles?tag_name=${tag}`} key={tag} className="flex items-center bg-sky-200 hover:bg-sky-300 transition-colors duration-300 text-sky-900 rounded-md p-1 text-xs">
+                        {articleData.tags.map(tag => <Link href={`${tagHref}?tag_name=${tag}`} key={tag} className="flex items-center bg-sky-200 hover:bg-sky-300 transition-colors duration-300 text-sky-900 rounded-md p-1 text-xs">
                             <FaHashtag size={13} />
                             <span>{tag}</span>
                         </Link>)}
@@ -151,6 +180,18 @@ const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
                     </div>
                     <p className="text-xs text-gray-500 leading-5">{articleData?.description}</p>
                 </div>
+                <hr className="border-gray-300 w-full"/>
+                {isAuthenticated && <form className="w-full flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
+                    <div className="flex flex-col gap-1">
+                        <label className="text-sm text-blue-800" >لطفا نظر خود را برای ما ثبت کنید.</label>
+                        <textarea rows={4} className="rounded-md text-sm border-blue-100 px-2 resize-none p-1" {...register("message", {
+                            required: "لطفا نظر خود را بنویسید."
+                        })} />
+                        {errors.message && <span className="bg-red-600 text-white text-xs px-2 py-1 rounded-md">{errors.message.message}</span>}
+                    </div>
+                    {createIsSuccess && <p className="bg-green-700 text-white px-2 py-1 rounded-md text-xs">از شما ممنونیم که نظر خود را با دیگران به اشتراک میگذارید.</p>}
+                    <button disabled={createIsPending} className="bg-blue-100 text-blue-800 rounded-md duration-300 hover:bg-blue-200 transition-colors p-1" type="submit">{createIsPending ? <AiOutlineLoading3Quarters className="animate-spin mx-auto"/> : "ثبت"}</button>
+                </form>}
                 {showComments ? <span className="bg-blue-100 mt-1 text-blue-800 rounded-md text-sm p-1">نظرات</span> : <button onClick={showCommentsHandler} className="bg-blue-100 mt-1 text-blue-800 rounded-md text-sm p-1 hover:bg-blue-200 transition-colors duration-300">مشاهده نظرات</button>}
                 {showComments && commentsIsPending && (
                     <AiOutlineLoading3Quarters className="text-blue-800 animate-spin w-6 h-6 m-auto" />
@@ -162,9 +203,9 @@ const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
                         <div className="flex flex-col w-full lg:w-2/3 gap-3 mt-2">
                             {commentsData.map((comment) => (
                                 <div key={comment.id} className="relative flex flex-col bg-white rounded-md p-1 gap-1">
-                                    <button onClick={() => deleteMutate({id: comment.id})} className="absolute left-1 top-1 p-1 rounded-md bg-red-50 text-red-800 hover:bg-red-200 transition-colors duration-300">
+                                    {isAdminRoute && <button onClick={() => deleteMutate({id: comment.id})} className="absolute left-1 top-1 p-1 rounded-md bg-red-50 text-red-800 hover:bg-red-200 transition-colors duration-300">
                                         <AiOutlineDelete size={15}/>
-                                    </button>
+                                    </button>}
                                     <div className="flex items-center gap-1">
                                         <RiAccountCircleFill size={18} />
                                         <h3>{comment.username}</h3>
@@ -178,7 +219,7 @@ const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
                     )
                 )}
 
-                <div className={`overflow-y-scroll absolute z-10 top-0 w-full backdrop-blur-md transform transition-transform duration-500 ${showGlossaries ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'}`}>
+                <div className={`overflow-y-scroll absolute z-10 bottom-0 w-full h-full backdrop-blur-md transform transition-transform duration-500 ${showGlossaries ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'}`}>
                     <div className="w-full p-4"> {/* Added background color to prevent blur */}
                         <button
                             onClick={() => setShowGlossaries(false)}
@@ -189,7 +230,7 @@ const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
                         {glossariesIsPending && <AiOutlineLoading3Quarters className="mx-auto animate-spin" />}
                         <ul className="flex flex-col gap-2 pt-4">
                             {glossariesData?.map(glossary => <li className="bg-gray-200 p-2 rounded-md relative" key={glossary.id}>
-                                <div className="absolute left-1 top-1 flex items-center gap-1">
+                                {isAdminRoute && <div className="absolute left-1 top-1 flex items-center gap-1">
                                     <button onClick={() => deleteHandler(glossary.id)} className="p-1 rounded-md bg-red-50 text-red-800 hover:bg-red-200 transition-colors duration-300">
                                         <AiOutlineDelete size={15}/>
                                     </button>
@@ -199,7 +240,7 @@ const ArticleDetailContainer = ({articleId}: {articleId: string}) => {
                                     }} className="bg-yellow-100 p-1 rounded-md text-yellow-700 hover:bg-yellow-200 transition-colors duration-300">
                                         <RxUpdate size={15} />
                                     </button>
-                                </div>
+                                </div>}
                                 <h2 className="text-md text-blue-900">{glossary.term}</h2>
                                 <hr className="border-gray-400 py-1"/>
                                 <p className="text-xs text-gray-700">{glossary.definition}</p>

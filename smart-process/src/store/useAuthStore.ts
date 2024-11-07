@@ -2,7 +2,7 @@
 import { create } from "zustand";
 
 const localStorageLoginKey = "is-logged-in";
-const localStorageRoleKey = "rule";
+const localStorageRoleKey = "role";
 const localPhoneNumberKey = "phone-number";
 
 type AuthStoreType = {

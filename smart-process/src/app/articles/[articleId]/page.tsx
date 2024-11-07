@@ -3,7 +3,7 @@ import ArticleDetailContainer from "@/components/admin/articles/detail/ArticleDe
 
 const Page = ({params}: {params: {articleId: string}}) => {
     return (
-        <ArticleDetailContainer isAdminRoute={true} articleId={params.articleId}/>
+        <ArticleDetailContainer isAdminRoute={false} articleId={params.articleId}/>
     )
 };
 

@@ -64,6 +64,8 @@ const Header = () => {
                 <div className={`z-50 fixed right-0 top-0 h-full w-full md:w-2/3 lg:w-3/5 transform transition-transform bg-gradient-to-l from-blue-50 to-blue-200 duration-500 ${showMobileMenu ? "translate-x-0" : "translate-x-full"}`}>
                     <button className="absolute right-2 top-2 hover:text-red-600" onClick={() => setShowMobileMenu(false)}>X</button>
                     <div className="pt-12 pr-5 flex flex-col gap-3">
+                        <Link onClick={() => setShowMobileMenu(false)} href="/articles/" className="text-sm font-[Vazir-Bold] hover:text-gray-600 transition-colors duration-100">مقالات</Link>
+                        <hr className="border border-blue-200" />
                         <Link onClick={() => setShowMobileMenu(false)} href="/ticket/" className="text-sm font-[Vazir-Bold] hover:text-gray-600 transition-colors duration-100">فرم نظرسنجی و شکایات</Link>
                         <hr className="border border-blue-200" />
                         <Link onClick={() => setShowMobileMenu(false)} href="/inquiry-guaranty/" className="text-sm font-[Vazir-Bold] hover:text-gray-600 transition-colors duration-100">استعلام گارانتی</Link>

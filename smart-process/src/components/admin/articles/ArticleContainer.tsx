@@ -1,7 +1,7 @@
 "use client"
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { AiOutlinePlusCircle, AiOutlineLoading3Quarters } from "react-icons/ai";
-// import { useAuthStore } from "@/store/useAuthStore";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter, useSearchParams } from "next/navigation";
 import ArticleList from "./ArticleList";
 import { useState, useEffect } from "react";
@@ -13,9 +13,9 @@ type ArticleSearchType = {
     tag_name?: string | null
 }
 
-const ArticlesContainer = () => {
+const ArticlesContainer = (props: {isAdminRoute: boolean}) => {
     const router = useRouter();
-    // const logout = useAuthStore((state) => state.logout);
+    const role = useAuthStore((state) => state.role);
     const searchParams = useSearchParams();
     const [searchFilterParams, setSearchFilterParams] = useState<ArticleSearchType>();
     const {
@@ -60,27 +60,34 @@ const ArticlesContainer = () => {
         hasNextPage = false;
     }
 
+    
+    let pageNumbers: number = 0;
+    if (articlesCount) {
+        pageNumbers = Math.ceil(articlesCount / 10);
+    }
+
     const previousHandler = () => {
-        const url = `/admin/articles/?page=${searchParams.get("page") ? Number(searchParams.get("page")) -1  : "1"}`
+        const url = `${props.isAdminRoute && "/admin"}/articles/?page=${searchParams.get("page") ? Number(searchParams.get("page")) -1  : "1"}`
         return router.replace(url)
     };
 
     const nextHandler = () => {
-        const url = `/admin/articles/?page=${searchParams.get("page") ? Number(searchParams.get("page")) + 1  : "2"}`
+        const url = `${props.isAdminRoute && "/admin"}/articles/?page=${searchParams.get("page") ? Number(searchParams.get("page")) + 1  : "2"}`
         return router.replace(url);
     };
 
     return (
-        <div className="w-full flex flex-col gap-4 min-h-screen px-2 md:px-6 min-[950px]:px-40 pt-16">
-            <h1 className="text-center text-lg">مدیریت مقالات</h1>
+        <div className={`w-full flex flex-col gap-4 min-h-screen px-2 md:px-6 min-[950px]:px-40 pt-16 ${!props.isAdminRoute && "mt-14"}`}>
+            <h1 className="text-center text-lg">{role === "admin" ? "مدیریت مقالات" : "مقالات"}</h1>
             <div className="text-sm bg-blue-300 rounded-md py-1 px-4 flex items-center justify-between">
-                <Link href="/admin/articles/create/" className="text-green-900 flex items-center gap-1 bg-green-200 cursor-pointer hover:bg-green-300 rounded-md px-2 py-1 transition-colors duration-300">
+                {role === "admin" && <Link href="/admin/articles/create/" className="text-green-900 flex items-center gap-1 bg-green-200 cursor-pointer hover:bg-green-300 rounded-md px-2 py-1 transition-colors duration-300">
                     <AiOutlinePlusCircle size={20} />
                     <span>افزودن</span>
-                </Link>
+                </Link>}
+                {role === "user" && <span>تعداد صفحات: {pageNumbers}</span>}
                 <span>تعداد مقالات: {articlesCount}</span>
             </div>
-            {articlesData && <ArticleList articles={articlesData}/>}
+            {articlesData && <ArticleList isAdminRoute={props.isAdminRoute} articles={articlesData}/>}
 
                 {/* Pagination */}
                 <div className="flex items-center gap-4 mx-auto pt-8">

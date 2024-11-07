@@ -14,15 +14,15 @@ import Image from "next/image";
 import TimeAgo from 'react-time-ago';
 import TimeAgoModule from 'javascript-time-ago';
 import fa from 'javascript-time-ago/locale/fa.json';
+import { useAuthStore } from "@/store/useAuthStore";
 import useUnassignTags from "@/hooks/useMutations/useUnassignTags";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/store/useAuthStore";
 import DeleteModal from "./DeleteModal";
 
 TimeAgoModule.addDefaultLocale(fa);
 
 
-const ArticleItem = (props: {article: ArticleType}) => {
+const ArticleItem = (props: {isAdminRoute: boolean, article: ArticleType}) => {
     const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const [showAssignTagModal, setShowAssignTagModal] = useState<boolean>(false);
@@ -40,6 +40,9 @@ const ArticleItem = (props: {article: ArticleType}) => {
         }
     }
 
+    const hrefLink = props.isAdminRoute ? "/admin/articles/" : "/articles/";
+    const tagHref = props.isAdminRoute ? "/admin/articles/" : "/articles/";
+
     return (
         <Fragment>
 
@@ -52,7 +55,7 @@ const ArticleItem = (props: {article: ArticleType}) => {
             {/* Add Tag Modal */}
             {showAssignTagModal && <AddTagModal articleId={props.article.id} closeModalHandler={setShowAssignTagModal} />}
 
-            <Link href={`/admin/articles/${props.article.id}/`} className="relative border-2 rounded-md border-blue-300 bg-blue-50 hover:bg-blue-100 active:bg-blue-100 transition-colors duration-300 flex flex-col gap-2 w-full items-center">
+            <Link href={`${hrefLink}${props.article.id}/`} className="relative border-2 rounded-md border-blue-300 bg-blue-50 hover:bg-blue-100 active:bg-blue-100 transition-colors duration-300 flex flex-col gap-2 w-full items-center">
                 <div className="absolute left-1 top-1 flex items-center gap-1 bg-sky-200 rounded-md text-sky-900 p-1">
                     <CgTimelapse size={13} />
                     <TimeAgo className="text-xs" date={props.article.createdAt} locale="fa" />
@@ -61,12 +64,12 @@ const ArticleItem = (props: {article: ArticleType}) => {
                 <hr className="border-1 border-gray-300 w-2/3"/>
                 <Image width={500} height={500} className="w-72 h-40 object-fill rounded-md" src={props.article.image} alt={`${props.article.title} image`} />
                 {props.article.tags[0] !== null && <div className="flex items-center gap-3 w-5/6 flex-wrap">
-                    {props.article.tags.map(tag => <Link href={`/admin/articles?tag_name=${tag}`} key={tag} className="relative flex items-center bg-sky-200 hover:bg-sky-300 transition-colors duration-300 text-sky-900 rounded-md p-1 text-xs">
-                        <span onClick={(e) => {
+                    {props.article.tags.map(tag => <Link href={`${tagHref}?tag_name=${tag}`} key={tag} className="relative flex items-center bg-sky-200 hover:bg-sky-300 transition-colors duration-300 text-sky-900 rounded-md p-1 text-xs">
+                        {props.isAdminRoute && <span onClick={(e) => {
                             e.preventDefault()
                             e.stopPropagation()
                             unassignHandler(tag)
-                        }} className="absolute -top-2 -left-1 text-red-500 text-sm hover:scale-150 transition-transform duration-300">x</span>
+                        }} className="absolute -top-2 -left-1 text-red-500 text-sm hover:scale-150 transition-transform duration-300">x</span>}
                         <FaHashtag size={13} />
                         <span>{tag}</span>
                     </Link>)}
@@ -78,7 +81,7 @@ const ArticleItem = (props: {article: ArticleType}) => {
                     </div>
                     <p className="text-gray-600 text-xs leading-4">{props.article.description}</p>
                 </div>
-                <div className="flex items-center gap-2 py-1">
+                {props.isAdminRoute && <div className="flex items-center gap-2 py-1">
                     <button onClick={(e) => {
                         e.stopPropagation()
                         e.preventDefault()
@@ -101,7 +104,7 @@ const ArticleItem = (props: {article: ArticleType}) => {
                         <TbCodePlus size={20} />
                         <p>تگ جدید</p>
                     </div>
-                </div>
+                </div>}
             </Link>
             {showAssignTagModal || showUpdateModal || showDeleteModal ? <div className="fixed left-0 top-0 z-40 bg-black h-full w-full opacity-85"></div> : undefined}
         </Fragment>
