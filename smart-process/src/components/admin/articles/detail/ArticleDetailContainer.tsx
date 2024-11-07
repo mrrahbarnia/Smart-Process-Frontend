@@ -144,7 +144,7 @@ const ArticleDetailContainer = ({articleId, isAdminRoute}: {articleId: string, i
                     <CgTimelapse size={13} />
                     <TimeAgo className="text-xs" date={articleData.createdAt} locale="fa" />
                 </div>}
-                <h1 className="text-lg text-blue-900">{articleData?.title}</h1>
+                <h1 className="text-blue-900 text-xl font-[YekanBakh-Bold]">{articleData?.title}</h1>
                 <Swiper
                     navigation
                     pagination={{type: "fraction"}}
@@ -178,7 +178,7 @@ const ArticleDetailContainer = ({articleId, isAdminRoute}: {articleId: string, i
                         <HiDocumentText size={20} />
                         <h2>توضیحات</h2>
                     </div>
-                    <p className="text-xs text-gray-500 leading-5">{articleData?.description}</p>
+                    <p className="text-xs text-gray-500 leading-5 font-[YekanBakh-Light]">{articleData?.description}</p>
                 </div>
                 <hr className="border-gray-300 w-full"/>
                 {isAuthenticated && <form className="w-full flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>

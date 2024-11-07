@@ -144,7 +144,7 @@ const ProductsContainer = () => {
     return (
         <Fragment>
             <div className="w-full flex flex-col gap-4 min-h-screen px-2 md:px-6 min-[950px]:px-40 pt-32">
-                <h1 className="text-center text-lg">محصولات</h1>
+                <h1 className="text-center text-lg text-blue-900 font-[YekanBakh-Black]">محصولات</h1>
                 <div className="text-sm bg-blue-300 rounded-md py-1 px-4 flex items-center justify-between">
                     <div onClick={() => setShowSearchMenu(true)} className="cursor-pointer flex items-center gap-1 bg-blue-100 rounded-md w-fit p-1 text-blue-900 hover:bg-blue-200 transition-colors duration-300">
                         <FcSearch />

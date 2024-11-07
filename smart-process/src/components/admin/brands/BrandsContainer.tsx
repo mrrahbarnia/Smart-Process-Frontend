@@ -72,7 +72,7 @@ const BrandsContainer = () => {
             {showCreateModal && <CreateModal closeModalHandler={setShowCreateModal} />}
 
             <div className="w-full flex flex-col gap-4 min-h-screen px-2 md:px-6 min-[950px]:px-40 pt-16">
-                <h1 className="text-center text-lg">مدیریت برند ها</h1>
+                <h1 className="text-center text-lg text-blue-900 font-[YekanBakh-Black]">مدیریت برند ها</h1>
                 <div className="text-sm bg-blue-300 rounded-md py-1 px-4 flex items-center justify-between">
                     <div onClick={() => setShowCreateModal(true)} className="text-green-900 flex items-center gap-1 bg-green-200 cursor-pointer hover:bg-green-300 rounded-md px-2 py-1 transition-colors duration-300">
                         <AiOutlinePlusCircle size={20} />

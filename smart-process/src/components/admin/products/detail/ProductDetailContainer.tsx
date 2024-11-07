@@ -69,7 +69,7 @@ const ProductDetailContainer = ({productSerial}: {productSerial: string}) => {
 
             <div className="flex flex-col items-center gap-1 border-2 rounded-md border-blue-300 bg-blue-50 py-3 w-full min-[615px]:w-2/3 px-2 mx-2 my-16 min-[615px]:mx-auto">
                 {productData && <Image onClick={() => setShowImageSlider(true)} className="cursor-zoom-in rounded-md object-contain bg-white h-60" src={productData.imageUrls[0]} height={500} width={500} alt={`${productData.name} image`} />}
-                <h1 className="text-left w-full lg:w-2/3  font-bold text-lg">{productData?.name}</h1>
+                <h1 className="text-left w-full lg:w-2/3 text-blue-900 text-xl font-[YekanBakh-Bold]">{productData?.name}</h1>
                 <h2 className="text-left w-full lg:w-2/3  text-gray-500 text-sm">{productData?.serialNumber}</h2>
                 <div className="flex items-center justify-between w-full lg:w-2/3 text-xs bg-gray-50 rounded-md px-1 text-blue-800">
                     <h3>دسته بندی:<span className="text-lg">{productData?.categoryName}</span></h3>

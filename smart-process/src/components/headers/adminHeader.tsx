@@ -28,55 +28,55 @@ const AdminHeader = () => {
             {/* Home Page */}
             <Link href="/" className="relative group flex items-center z-10">
                 <AiOutlineHome className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20} />
-                <li className="absolute w-20 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">صفحه اصلی</li>
+                <li className="font-[YekanBakh-Bold] absolute w-[85px] bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">صفحه اصلی</li>
             </Link>
 
             {/* Products */}
             <Link href="/admin/products/" className="relative group flex items-center z-10">
                 <GiCctvCamera className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20}/>
-                <li className="absolute w-18 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">محصولات</li>
+                <li className="font-[YekanBakh-Bold] absolute w-18 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">محصولات</li>
             </Link>
 
             {/* Categories */}
             <Link href="/admin/categories/" className="relative group flex items-center z-10">
                 <MdOutlineCategory className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20}/>
-                <li className="absolute w-24 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">دسته بندی ها</li>
+                <li className="font-[YekanBakh-Bold] absolute w-24 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">دسته بندی ها</li>
             </Link>
 
             {/* Brands */}
             <Link href="/admin/brands/" className="relative group flex items-center z-10">
                 <SiBrandfolder className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20} />
-                <li className="absolute w-14 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">برند ها</li>
+                <li className="font-[YekanBakh-Bold] absolute w-14 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">برند ها</li>
             </Link>
 
             {/* Attributes */}
             <Link href="/admin/attributes/" className="relative group flex items-center z-10">
                 <TbBinaryTree2 className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20} />
-                <li className="absolute w-16 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">ویژگی ها</li>
+                <li className="font-[YekanBakh-Bold] absolute w-[71px] bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">ویژگی ها</li>
             </Link>
 
             {/* Articles */}
             <Link href="/admin/articles/" className="relative group flex items-center z-10">
                 <HiDocumentSearch className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20} />
-                <li className="absolute w-12 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">مقالات</li>
+                <li className="font-[YekanBakh-Bold] absolute w-12 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">مقالات</li>
             </Link>
 
             {/* Tags */}
             <Link href="/admin/tags/" className="relative group flex items-center z-10">
                 <TiTags className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20} />
-                <li className="absolute w-12 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">تگ ها</li>
+                <li className="font-[YekanBakh-Bold] absolute w-12 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">تگ ها</li>
             </Link>
 
             {/* Tickets */}
             <Link href="/admin/tickets/" className="relative group flex items-center z-10">
                 <CgComment className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20}/>
-                <li className="absolute w-12 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">نظرات</li>
+                <li className="font-[YekanBakh-Bold] absolute w-12 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">نظرات</li>
             </Link>
 
             {/* Guaranty file */}
             <Link href="/admin/add-guaranties/" className="relative group flex items-center z-10">
                 <SiMicrosoftexcel className="cursor-pointer hover:text-blue-800 transition-colors duration-300" size={20}/>
-                <li className="absolute w-32 bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">بارگذاری فایل گارانتی</li>
+                <li className="font-[YekanBakh-Bold] absolute w-[135px] bg-blue-100 rounded-md p-1 right-7 hidden group-hover:block text-sm shadow-lg border-blue-600 border-2">بارگذاری فایل گارانتی</li>
             </Link>
 
         </ul>

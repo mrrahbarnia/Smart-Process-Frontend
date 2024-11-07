@@ -37,7 +37,7 @@ export default function RootLayout({
   }, [setIsAuthenticated, setRole, setPhoneNumber])
 
   return (
-    <html lang="fa" dir="rtl" className="font-[Vazir-Medium]">
+    <html lang="fa" dir="rtl" className="font-[YekanBakh-SemiBold]">
       <body
         className="min-h-screen bg-custom-bg bg-cover bg-center"
       >

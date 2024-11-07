@@ -4,27 +4,23 @@
 
 @layer base {
     @font-face {
-        font-family: "Vazir-Black";
-        src: url(/fonts/Vazir-Black.woff) format("woff");
+        font-family: "YekanBakh-Regular";
+        src: url(/fonts/YekanBakh-Regular.woff) format("woff");
     }
     @font-face {
-        font-family: "Vazir-Bold";
-        src: url(/fonts/Vazir-Bold.woff) format("woff");
+        font-family: "YekanBakh-Black";
+        src: url(/fonts/YekanBakh-Black.woff) format("woff");
     }
     @font-face {
-        font-family: "Vazir-Light";
-        src: url(/fonts/Vazir-Light.woff) format("woff");
+        font-family: "YekanBakh-Bold";
+        src: url(/fonts/YekanBakh-Bold.woff) format("woff");
     }
     @font-face {
-        font-family: "Vazir-Medium";
-        src: url(/fonts/Vazir-Medium.woff) format("woff");
+        font-family: "YekanBakh-SemiBold";
+        src: url(/fonts/YekanBakh-SemiBold.woff) format("woff");
     }
     @font-face {
-        font-family: "Vazir-Regular";
-        src: url(/fonts/Vazir-Regular.woff) format("woff");
-    }
-    @font-face {
-        font-family: "Vazir-Thin";
-        src: url(/fonts/Vazir-Thin.woff) format("woff");
+        font-family: "YekanBakh-Light";
+        src: url(/fonts/YekanBakh-Light.woff) format("woff");
     }
 }

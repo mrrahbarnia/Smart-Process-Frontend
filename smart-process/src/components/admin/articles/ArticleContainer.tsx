@@ -78,7 +78,7 @@ const ArticlesContainer = (props: {isAdminRoute: boolean}) => {
 
     return (
         <div className={`w-full flex flex-col gap-4 min-h-screen px-2 md:px-6 min-[950px]:px-40 pt-16 ${!props.isAdminRoute && "mt-14"}`}>
-            <h1 className="text-center text-lg">{role === "admin" ? "مدیریت مقالات" : "مقالات"}</h1>
+            <h1 className="text-center text-lg text-blue-900 font-[YekanBakh-Black]">{props.isAdminRoute ? "مدیریت مقالات" : "مقالات"}</h1>
             <div className="text-sm bg-blue-300 rounded-md py-1 px-4 flex items-center justify-between">
                 {role === "admin" && <Link href="/admin/articles/create/" className="text-green-900 flex items-center gap-1 bg-green-200 cursor-pointer hover:bg-green-300 rounded-md px-2 py-1 transition-colors duration-300">
                     <AiOutlinePlusCircle size={20} />

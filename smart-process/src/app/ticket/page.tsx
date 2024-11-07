@@ -58,7 +58,7 @@ const Page = () => {
     return (
         <div className="flex justify-center items-center w-5/6 min-[490px]:w-3/4 min-[600px]:w-3/5 min-[860px]:w-2/4 mx-auto py-36">
             <form onSubmit={handleSubmit(onSubmit)} className="p-4 flex flex-col gap-6 bg-gradient-to-b from-blue-100 to-blue-300 w-full rounded-md shadow-lg">
-                <h1 className="text-center text-xl">فرم نظر سنجی و شکایات</h1>
+                <h1 className="text-center text-xl text-blue-900 font-[YekanBakh-Black]">فرم نظر سنجی و شکایات</h1>
                 <div className="flex flex-col gap-1">
                     <label>نام و نام خانوادگی \ نام شرکت<span className="text-red-600">*</span></label>
                     <input {...register("name", { 

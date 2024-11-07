@@ -60,7 +60,7 @@ const ArticleItem = (props: {isAdminRoute: boolean, article: ArticleType}) => {
                     <CgTimelapse size={13} />
                     <TimeAgo className="text-xs" date={props.article.createdAt} locale="fa" />
                 </div>
-                <h2 className="text-lg text-blue-900" dir="rtl">{props.article.title}</h2>
+                <h2 className="text-blue-900 text-lg font-[YekanBakh-SemiBold]" dir="rtl">{props.article.title}</h2>
                 <hr className="border-1 border-gray-300 w-2/3"/>
                 <Image width={500} height={500} className="w-72 h-40 object-fill rounded-md" src={props.article.image} alt={`${props.article.title} image`} />
                 {props.article.tags[0] !== null && <div className="flex items-center gap-3 w-5/6 flex-wrap">
@@ -79,7 +79,7 @@ const ArticleItem = (props: {isAdminRoute: boolean, article: ArticleType}) => {
                         <HiDocumentText size={20} />
                         <h2>توضیحات</h2>
                     </div>
-                    <p className="text-gray-600 text-xs leading-4">{props.article.description}</p>
+                    <p className="text-gray-600 text-xs leading-4 font-[YekanBakh-Light]">{props.article.description}</p>
                 </div>
                 {props.isAdminRoute && <div className="flex items-center gap-2 py-1">
                     <button onClick={(e) => {

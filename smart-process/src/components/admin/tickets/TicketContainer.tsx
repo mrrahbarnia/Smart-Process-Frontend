@@ -65,7 +65,7 @@ const TicketsContainer = () => {
 
     return (
         <div className="w-full flex flex-col gap-4 min-h-screen px-2 md:px-6 min-[950px]:px-40 pt-16">
-            <h1 className="text-center text-lg">مدیریت نظرات و انتقادات</h1>
+            <h1 className="text-center text-lg text-blue-900 font-[YekanBakh-Black]">مدیریت نظرات و انتقادات</h1>
             <div className="text-sm bg-blue-300 rounded-md py-1 px-4 flex items-center justify-between">
                 {ticketsCount && <span>تعداد صفحات: {Math.ceil(ticketsCount / 10)}</span>}
                 <span>تعداد نظرات: {ticketsCount}</span>

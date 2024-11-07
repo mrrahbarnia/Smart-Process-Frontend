@@ -38,7 +38,7 @@ const ProductItem = (props: {product: ProductType}) => {
                 <div className={`absolute right-1 top-1 rounded-md p-1 ${props.product.isActive ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"}`}>
                     {props.product.isActive ? <AiOutlineCheck /> : <RxCross1 />}
                 </div>
-                <p className="text-lg text-blue-900" dir="rtl">{props.product.name}</p>
+                <p className="text-lg text-blue-900 font-[YekanBakh-SemiBold]" dir="rtl">{props.product.name}</p>
                 <hr className="border-1 border-gray-300 w-2/3"/>
                 <div className="flex gap-1 w-full px-1">
                     <Image width={250} height={250} className="w-44 h-28 object-fill rounded-md" src={props.product.imageUrl} alt={`${props.product.name} image`} />
