@@ -2,7 +2,6 @@
 import { RxUpdate } from "react-icons/rx";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { CgPlayListSearch, CgTimelapse } from "react-icons/cg";
-import { AiFillStar } from "react-icons/ai";
 import { HiDocumentText } from "react-icons/hi";
 import { FaHashtag } from "react-icons/fa";
 import { Fragment, useState } from "react";
@@ -30,6 +29,7 @@ import UpdateGlossaryModal from "./UpdateGlossaryModal";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { GlossaryType } from "@/hooks/useQueries/useGetGlossaries";
 import { useCreateArticleComment } from "@/hooks/useMutations/useCreateArticleComment";
+import StarRating from "@/utils/showArticleRating";
 
 TimeAgoModule.addDefaultLocale(fa);
 
@@ -37,20 +37,20 @@ type CommentInputType = {
     message: string
 }
 
-function StarRating({ rating }: {rating: number}) {
-    return (
-        <div className="flex">
-        {Array.from({ length: 5 }, (_, index) => (
-            <AiFillStar
-            key={index}
-            size={20}
-            color={index < rating ? '#ffc133' : 'gray'}
-            className="mr-1"
-            />
-        ))}
-        </div>
-    );
-}
+// function StarRating({ rating }: {rating: number}) {
+//     return (
+//         <div className="flex">
+//         {Array.from({ length: 5 }, (_, index) => (
+//             <AiFillStar
+//             key={index}
+//             size={20}
+//             color={index < rating ? '#ffc133' : 'gray'}
+//             className="mr-1"
+//             />
+//         ))}
+//         </div>
+//     );
+// }
 
 const ArticleDetailContainer = ({articleId, isAdminRoute}: {articleId: string, isAdminRoute:boolean}) => {
     const [showComments, setShowComments] = useState<boolean>(false);

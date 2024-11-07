@@ -6,7 +6,7 @@ import { EXTERNAL_BASE_ENDPOINT } from "@/configs/default";
 const EXTERNAL_API = `${EXTERNAL_BASE_ENDPOINT}/articles/newest-articles`
 
 export type NewestArticleType = {
-    id: number,
+    id: string,
     title: string,
     image: string
     createdAt: Date
