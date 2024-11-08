@@ -67,11 +67,11 @@ const ProductItem = (props: {product: ProductType}) => {
                             <p>موجودی</p>
                             <span>{props.product.stock}</span>
                         </div>
-                        <hr className="border-gray-300" />
-                        <div className="flex items-center justify-between">
+                        {props.product.discount && <hr className="border-gray-300" />}
+                        {props.product.discount && <div className="flex items-center justify-between">
                             <p>تخفیف(درصد)</p>
                             <span>{props.product.discount}</span>
-                        </div>
+                        </div>}
                     </div>
                 </div>
                 <div className="flex items-center gap-2 pt-4">

@@ -33,7 +33,7 @@ const TicketItem = (props: {ticket: TicketType}) => {
                 <div className="absolute left-1 top-1 p-1 rounded-md text-blue-800 bg-blue-200">
                     <div className="relative group">
                         {callRequest ? <BsTelephoneFill /> : <BsFillTelephoneXFill/> }
-                        <span className="absolute hidden bg-blue-100 text-blue-800 p-1 top-6 left-1 w-28 rounded-md text-xs  group-hover:block">{callRequest ? "درخواست تماس دارد" : "درخواست تماس ندارد" }</span>
+                        <span className="absolute hidden bg-blue-100 text-blue-800 p-1 top-6 left-1 w-[117px] rounded-md text-xs  group-hover:block">{callRequest ? "درخواست تماس دارد" : "درخواست تماس ندارد" }</span>
                     </div>
                 </div>
                 <hr className="border-1 border-gray-300 w-2/3"/>

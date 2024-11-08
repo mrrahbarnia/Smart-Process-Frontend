@@ -48,7 +48,7 @@ const ProductDetailContainer = ({productSerial}: {productSerial: string}) => {
 
     let discountExpiryJalaliDate = "";
 
-    if (productData) {
+    if (productData && productData.expiryDiscount) {
         const [year, month, day] = productData.expiryDiscount.split('-').map(Number);
         const jalaliDateObj = jalaali.toJalaali(year, month, day);
         discountExpiryJalaliDate = `${jalaliDateObj.jy}/${jalaliDateObj.jm}/${jalaliDateObj.jd}` 
@@ -121,22 +121,22 @@ const ProductDetailContainer = ({productSerial}: {productSerial: string}) => {
                             <span>{productData.priceAfterDiscount}</span>
                         </div>}
                     </div>
-                    <hr className="border-gray-300"/>
-                    <div className="flex items-center justify-between">
+                    {productData && productData.discount && <hr className="border-gray-300"/>}
+                    {productData && productData.discount && <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1">
                             <MdDiscount size={16} />
                             <p>تخفیف(درصد)</p>
                         </div>
                         <span>{productData?.discount}</span>
-                    </div>
-                    <hr className="border-gray-300"/>
-                    <div className="flex items-center justify-between">
+                    </div>}
+                    {productData && productData.expiryDiscount && <hr className="border-gray-300"/>}
+                    {productData && productData.expiryDiscount && <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1">
                             <BiCalendar size={16} />
                             <p>تاریخ انقضای تخفیف</p>
                         </div>
                         {discountExpiryJalaliDate && <span>{discountExpiryJalaliDate}</span>}
-                    </div>
+                    </div>}
                     <hr className="border-gray-300"/>
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-1">

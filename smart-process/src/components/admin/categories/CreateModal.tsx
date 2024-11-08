@@ -7,7 +7,7 @@ import useDebounced from "@/hooks/useDebounced";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useCreateCategory } from "@/hooks/useMutations/useCreateCategory";
 import { useAuthStore } from "@/store/useAuthStore";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const EXTERNAL_CATEGORY_SEARCH_API = `${EXTERNAL_BASE_ENDPOINT}/products/search-categories/?category_name=`;
 

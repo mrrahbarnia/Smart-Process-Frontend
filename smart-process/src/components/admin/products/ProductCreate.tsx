@@ -57,7 +57,10 @@ const ProductCreate = () => {
         formState: {errors}
     } = useForm<InputTypes>();
     const [categoryFetchedAttributes, setCategoryFetchedAttributes] = useState<string>("")
-    const {catAttributesData, catAttributesIsLoading} = useGetCatAttributes({categoryName: categoryFetchedAttributes}, isFetchAttributes);
+    const {catAttributesData, catAttributesIsLoading} = useGetCatAttributes(
+        {categoryName: categoryFetchedAttributes},
+        isFetchAttributes
+    );
 
     const handleDateChanges = (date: DateObject) => {
         const gregorianDate = date.convert(gregorian);
@@ -72,6 +75,8 @@ const ProductCreate = () => {
     }
 
     const onSubmit: SubmitHandler<InputTypes> = async(data) => {
+        console.log(data);
+        
         if (data.image.length > 3) {
             setError("image", { message: "حداکثر مجاز به بارگذاری سه عکس میباشید." });
             return;
@@ -84,9 +89,6 @@ const ProductCreate = () => {
             setError("discount", { message: "تاریخ انقضای تخفیف باید همراه با مقدار تخفیف وارد شود." });
             return;
         }
-        if (!data.attributeValues) {
-            setError("attributeValues", { message: "ابتدا ویژگی های دسته بندی را اضافه کنید." })
-        }
         const formData = new FormData();
         formData.append("name", data.name)
         formData.append("serialNumber", data.serialNumber)
@@ -96,35 +98,47 @@ const ProductCreate = () => {
         formData.append("brandName", data.brandName)
         formData.append("stock", data.stock)
         formData.append("discount", data.discount)
-        formData.append("expiryDiscount", data.expiryDiscount)
-        formData.append("attributeValues", JSON.stringify(data.attributeValues))
+        if (data.expiryDiscount) {
+            formData.append("expiryDiscount", data.expiryDiscount)
+        }
+        if (data.attributeValues) {
+            formData.append("attributeValues", JSON.stringify(data.attributeValues))
+        }
         for (let i = 0; i < data.image.length; i++) {
             formData.append("images", data.image[i]);
         }
+        
         createMutateAsync(formData)
+        .then(() => {
+            return router.replace("/admin/products/")
+        })
         .catch((error) => {
+            console.log(error);
+
             if (error.status === 403) {
                 logout();
                 return router.replace("/accounts/login/")
             }
             if (error.response && error.response.data?.detail === "Image size limit is 400000 KB!") {
                 setError("image", { message: "حداکثر حجم عکس ها باید ۴۰۰ کیلوبایت شود." })
+                return;
             }
             if (error.response && error.response.data?.detail === "There is no brand with the provided info!") {
                 setError("brandName", { message: "برند محصول باید از بین موارد پیشنهادی باشد." })
+                return;
             }
             if (error.response && error.response.data?.detail === "There is no category with the provided ID!") {
                 setError("categoryName", { message: "دسته بندی محصول باید از بین موارد پیشنهادی باشد." })
+                return;
             }
             if (error.response && error.response.data?.detail === "Unique serial number for products!") {
                 setError("serialNumber", { message: "کد محصول باید یکتا باشد." })
+                return;
             }
             if (error.response && error.response.data?.detail === "Unique name for products!") {
                 setError("name", { message: "مدل محصول باید یکتا باشد." })
+                return;
             }
-        })
-        .then(() => {
-            return router.replace("/admin/products/")
         })
     }
 
@@ -213,7 +227,9 @@ const ProductCreate = () => {
                 </div>
                 <div className="flex flex-col gap-1">
                     <label>موجودی</label>
-                    <input {...register("stock")} className="h-10 rounded-md border-blue-100 px-2" type="number" min={0}/>
+                    <input {...register("stock", {
+                        required: "لطفا موجودی محصول را وارد کنید.",
+                    })} className="h-10 rounded-md border-blue-100 px-2" type="number" min={0}/>
                     {errors.stock && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.stock.message}</span>}
                 </div>
                 <div className="flex flex-col gap-1">

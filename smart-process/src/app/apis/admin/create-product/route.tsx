@@ -16,14 +16,15 @@ type PayloadType = {
     stock: string,
     description: string,
     serialNumber: string,
-    attributeValues: Record<string, string>[]
+    attributeValues?: Record<string, string>[]
 }
 
 export const POST = async (request: NextRequest) => {
     const data = await request.formData()
+
     const formData = new FormData;
     const priceNumber = (data.get("price") as string).replaceAll(",", "")
-    
+
     const payload: PayloadType = {
         name: data.get("name") as string,
         serialNumber: data.get("serialNumber") as string,
@@ -31,11 +32,15 @@ export const POST = async (request: NextRequest) => {
         categoryName: data.get("categoryName") as string,
         brandName: data.get("brandName") as string,
         price: priceNumber,
-        expiryDiscount: data.get("expiryDiscount") ? (data.get("expiryDiscount") as string) : null,
         stock: data.get("stock") as string,
         description: data.get("description") as string,
-        attributeValues: JSON.parse(data.get("attributeValues") as string) as Record<string, string>[]
     };
+    if (data.get("expiryDiscount")) {
+        payload.expiryDiscount = (data.get("expiryDiscount") as string)
+    }
+    if (data.get("attributeValues")) {
+        payload.attributeValues = JSON.parse(data.get("attributeValues")as string) as Record<string, string>[]
+    }
     formData.append("payload", JSON.stringify(payload))
     const images = Array.from(data.entries())
     .filter(([key, ]) => key === "images").map(([, value]) => value)
