@@ -1,4 +1,6 @@
 "use client"
+import { IoMdArrowDropup } from "react-icons/io";
+import { IoMdArrowDropdown } from "react-icons/io";
 import { BiCheck } from "react-icons/bi";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { BiMenu } from "react-icons/bi";
@@ -21,16 +23,26 @@ const Header = () => {
     const logout = useAuthStore((state) => state.logout);
     const [showAccountMobileMenu, setShowAccountMobileMenu] = useState<boolean>(false);
     const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
+    const [serviceMenuStatus, setServiceMenuStatus] = useState<"open" | "close">("close");
 
     const logoutHandler = async() => {
         logout();
         await axios.delete(INTERNAL_LOGOUT_API)
     }
 
+    const changeServiceIconHandler = () => {
+        if (serviceMenuStatus === "close") {
+            setServiceMenuStatus("open")
+        }
+        if (serviceMenuStatus === "open") {
+            setServiceMenuStatus("close")
+        }
+    }
+
     return (
         <div className="flex justify-between items-center bg-white fixed z-40 left-0 top-0 right-0 h-12 lg:h-14 px-2 sm:px-6 py-3">
-            <div className="relative flex items-center gap-2" onClick={() => setShowAccountMobileMenu(!showAccountMobileMenu)} >
-                <div className={`relative hover:text-blue-800 transition-colors duration-300 cursor-pointer ${isAuthenticated && "shadow-lg bg-gray-200 rounded-md px-2 py-1"}`}>
+            <div className="relative flex items-center gap-2" >
+                <div onClick={() => setShowAccountMobileMenu(!showAccountMobileMenu)} className={`relative hover:text-blue-800 transition-colors duration-300 cursor-pointer ${isAuthenticated && "shadow-lg bg-gray-200 rounded-md px-2 py-1"}`}>
                     {isAuthenticated && <BiCheck size={13} className="text-green-600 absolute right-0 top-0" />}
                     <MdOutlineAccountCircle 
                         size={25}
@@ -62,26 +74,68 @@ const Header = () => {
 
                 {/* Mobile header */}
                 <div className={`z-50 fixed right-0 top-0 h-full w-full md:w-2/3 lg:w-3/5 transform transition-transform bg-gradient-to-l from-blue-50 to-blue-200 duration-500 ${showMobileMenu ? "translate-x-0" : "translate-x-full"}`}>
-                    <button className="absolute right-2 top-2 hover:text-red-600" onClick={() => setShowMobileMenu(false)}>X</button>
+                    <button className="absolute right-2 top-2 hover:text-red-600" onClick={() => {
+                        setShowMobileMenu(false)
+                        setServiceMenuStatus("close")
+                    }}>X</button>
                     <div className="pt-12 pr-5 flex flex-col gap-3 font-[YekanBakh-Black]">
-                        <Link onClick={() => setShowMobileMenu(false)} href="/articles/" className="text-sm hover:text-gray-600 transition-colors duration-100">مقالات</Link>
-                        <hr className="border border-blue-200" />
-                        <Link onClick={() => setShowMobileMenu(false)} href="/ticket/" className="text-sm hover:text-gray-600 transition-colors duration-100">فرم نظرسنجی و شکایات</Link>
-                        <hr className="border border-blue-200" />
-                        <Link onClick={() => setShowMobileMenu(false)} href="/inquiry-guaranty/" className="text-sm hover:text-gray-600 transition-colors duration-100">استعلام گارانتی</Link>
-                        <hr className="border border-blue-200" />
                         <Link onClick={() => setShowMobileMenu(false)} href="/products/" className="text-sm hover:text-gray-600 transition-colors duration-100">محصولات</Link>
                         <hr className="border border-blue-200" />
                         <Link onClick={() => setShowMobileMenu(false)} href="/brands/" className="text-sm hover:text-gray-600 transition-colors duration-100">برند ها</Link>
+                        <hr className="border border-blue-200" />
+                        <Link onClick={() => setShowMobileMenu(false)} href="/articles/" className="text-sm hover:text-gray-600 transition-colors duration-100">مقالات</Link>
+                        <hr className="border border-blue-200" />
+                        <div className="relative flex flex-col gap-2">
+                            <button onClick={changeServiceIconHandler} className="flex items-center hover:text-gray-600 transition-colors duration-100">
+                                <span className="text-sm">خدمات پس از فروش</span>
+                                {serviceMenuStatus === "close" && <IoMdArrowDropdown size={18} />}
+                                {serviceMenuStatus === "open" && <IoMdArrowDropup size={18} />}
+                            </button>
+                            <div className={`absolute top-8 flex flex-col gap-2 p-3 rounded-md w-fit bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 text-black transform transition-transform duration-500 ${serviceMenuStatus === "close" && "translate-y-10 opacity-0"}`}>
+                                <Link onClick={() => {
+                                    setShowMobileMenu(false)
+                                    setServiceMenuStatus("close")
+                                }} href="/service/ticket/" className="hover:text-blue-900 transition-colors duration-200 text-sm">فرم نظرسنجی و شکایات</Link>
+                                <Link onClick={() => {
+                                    setShowMobileMenu(false)
+                                    setServiceMenuStatus("close")
+                                }} href="/service/inquiry-guaranty/" className="hover:text-blue-900 transition-colors duration-200 text-sm">استعلام گارانتی</Link>
+                                <Link onClick={() => {
+                                    setShowMobileMenu(false)
+                                    setServiceMenuStatus("close")
+                                }} href="/service/guaranty-page/" className="hover:text-blue-900 transition-colors duration-200 text-sm">برگه شرایط گارانتی</Link>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             {/* Desktop header */}
-            <div className="hidden lg:flex items-center w-1/3 justify-between font-[YekanBakh-Bold]">
-                <Link href="/ticket/">فرم نظرسنجی و شکایات</Link>
-                <Link href="/inquiry-guaranty/">استعلام گارانتی</Link>
-                <Link href="/brands/">برند ها</Link>
+            <div className="hidden lg:flex items-center w-1/3 justify-between font-[YekanBakh-Bold] text-sm">
+                <Link className="hover:text-blue-900 transition-colors duration-100" href="/products/">محصولات</Link>
+                <Link className="hover:text-blue-900 transition-colors duration-100" href="/brands/">برند ها</Link>
+                <Link className="hover:text-blue-900 transition-colors duration-100" href="/articles/">مقالات</Link>
+                <div className="relative flex flex-col gap-2">
+                    <button onClick={changeServiceIconHandler} className="flex items-center hover:text-blue-900 transition-colors duration-100">
+                        <span>خدمات پس از فروش</span>
+                        {serviceMenuStatus === "close" && <IoMdArrowDropdown size={18} />}
+                        {serviceMenuStatus === "open" && <IoMdArrowDropup size={18} />}
+                    </button>
+                    <div className={`absolute top-8 flex flex-col gap-2 p-3 rounded-md w-fit md:w-44 bg-gradient-to-r bg-blue-300 text-black transform transition-transform duration-500 ${serviceMenuStatus === "close" && "translate-y-10 opacity-0"}`}>
+                        <Link onClick={() => {
+                            setShowMobileMenu(false)
+                            setServiceMenuStatus("close")
+                        }} href="/service/ticket/" className="hover:text-blue-900 transition-colors duration-200 text-sm">فرم نظرسنجی و شکایات</Link>
+                        <Link onClick={() => {
+                            setShowMobileMenu(false)
+                            setServiceMenuStatus("close")
+                        }} href="/service/inquiry-guaranty/" className="hover:text-blue-900 transition-colors duration-200 text-sm">استعلام گارانتی</Link>
+                        <Link onClick={() => {
+                            setShowMobileMenu(false)
+                            setServiceMenuStatus("close")
+                        }} href="/service/guaranty-page/" className="hover:text-blue-900 transition-colors duration-200 text-sm">برگه شرایط گارانتی</Link>
+                    </div>
+                </div>
             </div>
 
             {/* Logo */}

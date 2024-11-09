@@ -37,20 +37,6 @@ type CommentInputType = {
     message: string
 }
 
-// function StarRating({ rating }: {rating: number}) {
-//     return (
-//         <div className="flex">
-//         {Array.from({ length: 5 }, (_, index) => (
-//             <AiFillStar
-//             key={index}
-//             size={20}
-//             color={index < rating ? '#ffc133' : 'gray'}
-//             className="mr-1"
-//             />
-//         ))}
-//         </div>
-//     );
-// }
 
 const ArticleDetailContainer = ({articleId, isAdminRoute}: {articleId: string, isAdminRoute:boolean}) => {
     const [showComments, setShowComments] = useState<boolean>(false);
@@ -89,7 +75,7 @@ const ArticleDetailContainer = ({articleId, isAdminRoute}: {articleId: string, i
     // }
 
     if (articleIsPending) {
-        return <AiOutlineLoading3Quarters className="text-blue-800 animate-spin w-12 h-12 m-auto flex items-center justify-center" />
+        return <AiOutlineLoading3Quarters className="text-blue-800 animate-spin w-12 h-12 mx-auto mt-20 flex items-center justify-center" />
     }
 
     const showCommentsHandler = () => setShowComments(true);
