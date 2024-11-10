@@ -16,16 +16,12 @@ import fa from 'javascript-time-ago/locale/fa.json';
 import jalaali from "jalaali-js";
 import { useAdminDeleteComment } from "@/hooks/useMutations/useAdminDeleteComment";
 import TimeAgoModule from 'javascript-time-ago';
-import { useAuthStore } from "@/store/useAuthStore";
-import { useRouter } from "next/navigation";
 
 TimeAgoModule.addDefaultLocale(fa);
 
 const ProductDetailContainer = ({productSerial}: {productSerial: string}) => {
     const [showComments, setShowComments] = useState<boolean>(false);
     const [showImageSlider, setShowImageSlider] = useState<boolean>(false);
-    const logout = useAuthStore((state) => state.logout);
-    const router = useRouter();
     const {
         productData,
         productIsError,
@@ -43,12 +39,11 @@ const ProductDetailContainer = ({productSerial}: {productSerial: string}) => {
     }
 
     if (productIsError) {
-        logout();
-        return router.replace("/accounts/login/")
+        return <h1 className="mt-36 mx-auto bg-red-600 rounded-md p-1 text-white">محصولی یافت نشد</h1>
     }
 
     if (productIsPending) {
-        return <AiOutlineLoading3Quarters className="text-blue-800 animate-spin w-12 h-12 m-auto flex items-center justify-center" />
+        return <AiOutlineLoading3Quarters className="text-blue-800 animate-spin w-12 h-12 m-auto flex items-center justify-center mt-36" />
     }
 
     const showCommentsHandler = () => {

@@ -12,7 +12,7 @@ const AllAttributesModal = (
 ) => {
     const {
         catAttributesData,
-        catAttributesIsPending
+        catAttributesIsLoading
     } = useGetCatAttributes({categoryName: categoryName});
     const {
         unassignMutate
@@ -25,7 +25,7 @@ const AllAttributesModal = (
     return (
         <div className="px-5 bg-gradient-to-b from-blue-100 to-blue-200 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col z-50 rounded-lg py-10 items-center justify-center gap-7 w-80">
             <div className="w-full flex flex-col gap-2 bg-gray-100 rounded-md p-1">
-                {catAttributesIsPending ? <AiOutlineLoading3Quarters className="mx-auto animate-spin" /> :
+                {catAttributesIsLoading ? <AiOutlineLoading3Quarters className="mx-auto animate-spin" /> :
                 catAttributesData?.length === 0 ? <p className="text-sm text-red-600">هنوز ویژگی وصل نشده است.</p> :
                 catAttributesData?.map((attribute) => {
                     return (

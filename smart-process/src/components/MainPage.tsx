@@ -59,7 +59,7 @@ const MainPage = () => {
                 {newestProductsData && <div className="flex items-center p-2 gap-3 overflow-x-auto w-full">
                     {newestProductsData.map(product =>
                         <Link href={`/products/${product.serialNumber}/`} key={product.serialNumber} className="group hover:scale-105 transition-transform duration-300 flex flex-col gap-2 w-64 md:w-80 h-52 md:h-56 flex-shrink-0 bg-gradient-to-bl from-blue-300 via-blue-200 to-blue-50 rounded-md p-2">
-                            <h3 className="font-[YekanBakh-SemiBold] text-md">{product.name}</h3>
+                            <h3 className="font-[YekanBakh-SemiBold] text-sm">{product.name}</h3>
                             <div className="w-full bg-white rounded-md">
                                 <Image className="w-40 mx-auto h-32 md:h-36" src={product.image} alt={`${product.name} image`} height={500} width={500} />
                             </div>
@@ -79,7 +79,7 @@ const MainPage = () => {
                 {mostViewedProductsData && <div className="flex items-center p-2 gap-3 overflow-x-auto w-full">
                     {mostViewedProductsData.map(product =>
                         <Link href={`/products/${product.serialNumber}/`} key={product.serialNumber} className="hover:scale-105 transition-transform duration-300 flex flex-col gap-2 w-64 md:w-80 h-48 md:h-52 flex-shrink-0 bg-gradient-to-bl from-blue-300 via-blue-200 to-blue-50 rounded-md p-2">
-                            <h3 className="font-[YekanBakh-SemiBold] text-md">{product.name}</h3>
+                            <h3 className="font-[YekanBakh-SemiBold] text-sm">{product.name}</h3>
                             <div className="relative">
                                 <div className="w-full bg-white rounded-md">
                                     <Image className="w-40 mx-auto h-32 md:h-36" src={product.image} alt={`${product.name} image`} height={500} width={500} />
@@ -101,7 +101,7 @@ const MainPage = () => {
                 {newestArticlesData && <div className="flex items-center p-2 gap-3 overflow-x-auto w-full">
                     {newestArticlesData.map(article =>
                         <Link href={`/articles/${article.id}/`} key={article.id} className="group hover:scale-105 transition-transform duration-300 flex flex-col gap-2 w-64 md:w-80 h-56 md:h-60 flex-shrink-0 bg-gradient-to-bl from-blue-300 via-blue-200 to-blue-50 rounded-md p-2">
-                            <h3 className="font-[YekanBakh-SemiBold] text-md">{article.title}</h3>
+                            <h3 className="font-[YekanBakh-SemiBold] text-sm">{article.title}</h3>
                             <Image className="rounded-md w-full h-32 md:h-36" src={article.image} alt={`${article.title} image`} height={500} width={500} />
                             <div className="flex items-center gap-1 bg-blue-100 p-1 rounded-md text-sky-900">
                                 <CgTimelapse size={15} className="group-hover:animate-spin" />
@@ -119,7 +119,7 @@ const MainPage = () => {
                 {mostViewedArticlesData && <div className="flex items-center p-2 gap-3 overflow-x-auto w-full">
                     {mostViewedArticlesData.map(article =>
                         <Link href={`/articles/${article.id}/`} key={article.id} className="hover:scale-105 transition-transform duration-300 flex flex-col gap-2 w-64 md:w-80 h-48 md:h-52 flex-shrink-0 bg-gradient-to-bl from-blue-300 via-blue-200 to-blue-50 rounded-md p-2">
-                            <h3 className="font-[YekanBakh-SemiBold] text-md">{article.title}</h3>
+                            <h3 className="font-[YekanBakh-SemiBold] text-sm">{article.title}</h3>
                             <div className="relative">
                                 <Image className="rounded-md w-full h-32 md:h-36" src={article.image} alt={`${article.title} image`} height={500} width={500} />
                                 <div className="absolute bottom-1 left-1 flex items-center gap-1 bg-blue-200 rounded-md p-1 text-blue-900">
@@ -140,7 +140,7 @@ const MainPage = () => {
                 {popularArticlesData && <div className="flex items-center p-2 gap-3 overflow-x-auto w-full">
                     {popularArticlesData.map(article =>
                         <Link href={`/articles/${article.id}/`} key={article.id} className="hover:scale-105 transition-transform duration-300 flex flex-col gap-2 w-64 md:w-80 h-48 md:h-52 flex-shrink-0 bg-gradient-to-bl from-blue-300 via-blue-200 to-blue-50 rounded-md p-2">
-                            <h3 className="font-[YekanBakh-SemiBold] text-md">{article.title}</h3>
+                            <h3 className="font-[YekanBakh-SemiBold] text-sm">{article.title}</h3>
                             <div className="relative">
                                 <Image className="rounded-md w-full h-32 md:h-36" src={article.image} alt={`${article.title} image`} height={500} width={500} />
                                 <div className="absolute bottom-1 left-1 flex items-center gap-1 bg-blue-200 rounded-md p-1 text-blue-900">
