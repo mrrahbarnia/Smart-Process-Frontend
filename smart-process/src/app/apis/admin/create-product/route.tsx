@@ -48,6 +48,9 @@ export const POST = async (request: NextRequest) => {
         formData.append("images", image)
     })
 
+    console.log("SEND DATA");
+    
+
     try {
         const accessToken = await getToken();
         await axios.post(EXTERNAL_API, formData, {

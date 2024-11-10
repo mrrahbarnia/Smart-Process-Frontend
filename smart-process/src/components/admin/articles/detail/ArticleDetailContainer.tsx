@@ -114,7 +114,7 @@ const ArticleDetailContainer = ({articleId, isAdminRoute}: {articleId: string, i
             {/* Delete Modal */}
             {showCreateGlossaryModal && <CreateGlossaryModal articleId={articleId} closeModalHandler={setShowCreateGlossaryModal} />}
 
-            <div className={`relative flex flex-col items-center gap-3 border-2 rounded-md border-blue-300 bg-blue-50 py-3 w-full min-[615px]:w-2/3 px-2 mx-2 my-16 min-[615px]:mx-auto ${!isAdminRoute && "mt-32"}`}>
+            <div className={`relative flex flex-col items-center gap-3 border-2 rounded-md border-blue-300 bg-blue-50 py-3 mx-auto w-11/12 min-[615px]:w-2/3 min-[850px]:w-3/6 lg:w-1/2 px-2 my-16 min-[615px]:mx-auto ${!isAdminRoute && "mt-32"}`}>
                 <div className="absolute right-1 top-1 flex items-center gap-1">
                     <button onClick={() => {
                         setIsFetchGlossaries(true)

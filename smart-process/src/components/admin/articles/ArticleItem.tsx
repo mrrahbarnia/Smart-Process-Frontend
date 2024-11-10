@@ -4,7 +4,7 @@ import { TbCodePlus } from "react-icons/tb";
 import { AiOutlineDelete } from "react-icons/ai";
 import { CgTimelapse } from "react-icons/cg";
 import { HiDocumentText } from "react-icons/hi";
-import { RxUpdate } from "react-icons/rx";
+// import { RxUpdate } from "react-icons/rx";
 // import UpdateModal from "./UpdateModal";
 import AddTagModal from "./AddTagModal";
 import { ArticleType } from "@/hooks/useQueries/useGetAllArticles";
@@ -23,7 +23,7 @@ TimeAgoModule.addDefaultLocale(fa);
 
 
 const ArticleItem = (props: {isAdminRoute: boolean, article: ArticleType}) => {
-    const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
+    // const [showUpdateModal, setShowUpdateModal] = useState<boolean>(false);
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
     const [showAssignTagModal, setShowAssignTagModal] = useState<boolean>(false);
     const {unassignMutateAsync} = useUnassignTags();
@@ -89,13 +89,13 @@ const ArticleItem = (props: {isAdminRoute: boolean, article: ArticleType}) => {
                     }} className="bg-red-100 p-1 rounded-md text-red-800 hover:bg-red-200 transition-colors duration-300">
                         <AiOutlineDelete size={20}/>
                     </button>
-                    <button onClick={(e) => {
+                    {/* <button onClick={(e) => {
                         e.stopPropagation()
                         e.preventDefault()
                         setShowUpdateModal(true)
                     }} className="bg-yellow-100 p-1 rounded-md text-yellow-700 hover:bg-yellow-200 transition-colors duration-300">
                         <RxUpdate size={18} />
-                    </button>
+                    </button> */}
                     <div onClick={(e) => {
                         e.stopPropagation()
                         e.preventDefault()
@@ -106,7 +106,8 @@ const ArticleItem = (props: {isAdminRoute: boolean, article: ArticleType}) => {
                     </div>
                 </div>}
             </Link>
-            {showAssignTagModal || showUpdateModal || showDeleteModal ? <div className="fixed left-0 top-0 z-40 bg-black h-full w-full opacity-85"></div> : undefined}
+            {/* showUpdateModal ||  */}
+            {showAssignTagModal || showDeleteModal ? <div className="fixed left-0 top-0 z-40 bg-black h-full w-full opacity-85"></div> : undefined}
         </Fragment>
     )
 };

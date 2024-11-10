@@ -75,20 +75,18 @@ const ProductCreate = () => {
     }
 
     const onSubmit: SubmitHandler<InputTypes> = async(data) => {
-        console.log(data);
-        
         if (data.image.length > 3) {
             setError("image", { message: "حداکثر مجاز به بارگذاری سه عکس میباشید." });
             return;
         }
-        if (data.discount && !data.expiryDiscount) {
-            setError("expiryDiscount", { message: "برای وارد کردن تخفیف باید تاریخ انقضای آن هم انتخاب گردد." });
-            return;
-        }
-        if (!data.discount && data.expiryDiscount) {
-            setError("discount", { message: "تاریخ انقضای تخفیف باید همراه با مقدار تخفیف وارد شود." });
-            return;
-        }
+        // if (data.discount && !data.expiryDiscount) {
+        //     setError("expiryDiscount", { message: "برای وارد کردن تخفیف باید تاریخ انقضای آن هم انتخاب گردد." });
+        //     return;
+        // }
+        // if (!data.discount && data.expiryDiscount) {
+        //     setError("discount", { message: "تاریخ انقضای تخفیف باید همراه با مقدار تخفیف وارد شود." });
+        //     return;
+        // }
         const formData = new FormData();
         formData.append("name", data.name)
         formData.append("serialNumber", data.serialNumber)
@@ -107,13 +105,14 @@ const ProductCreate = () => {
         for (let i = 0; i < data.image.length; i++) {
             formData.append("images", data.image[i]);
         }
-        
+
         createMutateAsync(formData)
         .then(() => {
             return router.replace("/admin/products/")
         })
         .catch((error) => {
             console.log(error);
+            
 
             if (error.status === 403) {
                 logout();
@@ -138,6 +137,9 @@ const ProductCreate = () => {
             if (error.response && error.response.data?.detail === "Unique name for products!") {
                 setError("name", { message: "مدل محصول باید یکتا باشد." })
                 return;
+            }
+            if (error.response && error.response.data?.detail && error.response.data.detail[0] && error.response.data.detail[0].msg === "Value error, Discount and expiry_discount must used together!") {
+                setError("root", { message: "درصد تخفیف و تاریخ انقضای تخفیف باید همراه با هم استفاده شوند." })
             }
         })
     }
@@ -318,6 +320,7 @@ const ProductCreate = () => {
                     })}  />
                     {errors.description && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.description.message}</span>}
                 </div>
+                {errors.root && <span className="bg-red-600 text-white text-sm px-2 py-1 rounded-md">{errors.root.message}</span>}
                 <button disabled={createIsPending} className="w-2/3 mx-auto bg-blue-200 hover:bg-blue-300 text-blue-950 p-1 rounded-md transition-colors duration-300">{createIsPending ? <AiOutlineLoading3Quarters className="mx-auto animate-spin"/> : "تأیید"}</button>
             </form>
         </div>

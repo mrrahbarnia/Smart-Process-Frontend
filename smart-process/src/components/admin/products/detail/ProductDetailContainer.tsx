@@ -67,7 +67,7 @@ const ProductDetailContainer = ({productSerial}: {productSerial: string}) => {
                                                     imageUrls={productData.imageUrls}
                                                 />}
 
-            <div className="flex flex-col items-center gap-1 border-2 rounded-md border-blue-300 bg-blue-50 py-3 w-full min-[615px]:w-2/3 px-2 mx-2 my-16 min-[615px]:mx-auto">
+            <div className="flex flex-col items-center gap-1 border-2 rounded-md border-blue-300 bg-blue-50 py-3 mx-auto w-11/12 min-[615px]:w-2/3 min-[850px]:w-3/6 lg:w-1/2 px-2 my-16 min-[615px]:mx-auto">
                 {productData && <Image onClick={() => setShowImageSlider(true)} className="cursor-zoom-in rounded-md object-contain bg-white h-60" src={productData.imageUrls[0]} height={500} width={500} alt={`${productData.name} image`} />}
                 <h1 className="text-left w-full lg:w-2/3 text-blue-900 text-xl font-[YekanBakh-Bold]">{productData?.name}</h1>
                 <h2 className="text-left w-full lg:w-2/3  text-gray-500 text-sm">{productData?.serialNumber}</h2>

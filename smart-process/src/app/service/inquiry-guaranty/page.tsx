@@ -67,7 +67,7 @@ const Page = () => {
                         <span className="block">در صورتی که نیاز به کمک یا راهنمایی دارید با ما تماس بگیرید.🙂</span>
                     </div>}
                 </div>
-                <button disabled={isSubmitting} className="hover:bg-blue-200 transition duration-200 w-1/3 mx-auto rounded-md py-1">{isSubmitting ? <AiOutlineLoading3Quarters className="animate-spin" /> : "استعلام"}</button>
+                <button disabled={isSubmitting} className="hover:bg-blue-200 transition duration-200 w-1/3 mx-auto rounded-md py-1">{isSubmitting ? <AiOutlineLoading3Quarters className="animate-spin mx-auto" /> : "استعلام"}</button>
                 {responseData && <div className="bg-violet-800 rounded-md">
                 <ul className="p-2 flex flex-col gap-2 text-white">
                     <li>شماره سریال محصول:{responseData.guarantySerial}</li>
@@ -80,7 +80,7 @@ const Page = () => {
                     </li>}
                     <hr/>
                     <li className="text-center underline-offset-2 underline">
-                        <Link href={`/admin/products/${responseData.productSerialNumber}/`}>صفحه محصول شما</Link>
+                        <Link href={`/products/${responseData.productSerialNumber}`}>صفحه محصول شما</Link>
                     </li>
                 </ul>
             </div>}
