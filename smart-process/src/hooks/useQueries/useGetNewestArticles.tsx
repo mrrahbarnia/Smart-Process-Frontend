@@ -3,7 +3,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { EXTERNAL_BASE_ENDPOINT } from "@/configs/default";
 
-const EXTERNAL_API = `${EXTERNAL_BASE_ENDPOINT}/articles/newest-articles`
+const EXTERNAL_API = `${EXTERNAL_BASE_ENDPOINT}/articles/newest-articles/`
 
 export type NewestArticleType = {
     id: string,
