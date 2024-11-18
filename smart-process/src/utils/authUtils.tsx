@@ -15,7 +15,7 @@ export const setToken = (authToken: string) => {
         value: authToken,
         httpOnly: true,
         sameSite: "strict",
-        secure: process.env.NODE_ENV !== 'development',
+        secure: true,
         maxAge: TOKEN_MAX_AGE
     })
 }

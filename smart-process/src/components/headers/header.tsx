@@ -89,6 +89,7 @@ const Header = () => {
         }
     }, [subCategoriesData, subCategoriesState.layer])
 
+<<<<<<< Updated upstream
     const rootCategoriesHandleMouseEnter = () => {
         if (hideRootCategories.current) {
             clearTimeout(hideRootCategories.current)
@@ -238,11 +239,46 @@ const Header = () => {
                                         setServiceMenuStatus("close")
                                     }} href="/service/guaranty-page/" className="hover:text-blue-900 transition-colors duration-200 text-sm">برگه شرایط گارانتی</Link>
                                 </div>
+=======
+                {/* Mobile header */}
+                <div className={`z-50 fixed right-0 top-0 h-full w-full md:w-2/3 lg:w-3/5 transform transition-transform bg-gradient-to-l from-blue-50 to-blue-200 duration-500 ${showMobileMenu ? "translate-x-0" : "translate-x-full"}`}>
+                    <button className="absolute right-2 top-2 hover:text-red-600" onClick={() => {
+                        setShowMobileMenu(false)
+                        setServiceMenuStatus("close")
+                    }}>X</button>
+                    <div className="pt-12 pr-5 flex flex-col gap-3 font-[YekanBakh-Black]">
+                        <Link onClick={() => setShowMobileMenu(false)} href="/products/" className="text-sm hover:text-gray-600 transition-colors duration-100">محصولات</Link>
+                        <hr className="border border-blue-200" />
+                        <Link onClick={() => setShowMobileMenu(false)} href="/brands/" className="text-sm hover:text-gray-600 transition-colors duration-100">برند ها</Link>
+                        <hr className="border border-blue-200" />
+                        <Link onClick={() => setShowMobileMenu(false)} href="/articles/" className="text-sm hover:text-gray-600 transition-colors duration-100">مقالات</Link>
+                        <hr className="border border-blue-200" />
+                        <div className="relative flex flex-col gap-2">
+                            <button onClick={changeServiceIconHandler} className="flex items-center hover:text-gray-600 transition-colors duration-100">
+                                <span className="text-sm">خدمات مشتریان</span>
+                                {serviceMenuStatus === "close" && <IoMdArrowDropdown size={18} />}
+                                {serviceMenuStatus === "open" && <IoMdArrowDropup size={18} />}
+                            </button>
+                            <div className={`absolute top-8 flex flex-col gap-2 p-3 rounded-md w-fit bg-gradient-to-r from-blue-100 via-blue-200 to-blue-300 text-black transform transition-transform duration-500 ${serviceMenuStatus === "close" && "translate-y-10 opacity-0"}`}>
+			     <Link onClick={() => {
+                                    setShowMobileMenu(false)
+                                    setServiceMenuStatus("close")
+                                }} href="/service/inquiry-guaranty/" className="hover:text-blue-900 transition-colors duration-200 text-sm">استعلام گارانتی</Link>
+				<Link onClick={() => {
+                                    setShowMobileMenu(false)
+                                    setServiceMenuStatus("close")
+                                }} href="/service/guaranty-page/" className="hover:text-blue-900 transition-colors duration-200 text-sm">برگه شرایط گارانتی</Link>
+                                <Link onClick={() => {
+                                    setShowMobileMenu(false)
+                                    setServiceMenuStatus("close")
+                                }} href="/service/ticket/" className="hover:text-blue-900 transition-colors duration-200 text-sm">فرم نظرسنجی و شکایات</Link>
+>>>>>>> Stashed changes
                             </div>
                         </div>
                     </div>
                 </div>
 
+<<<<<<< Updated upstream
                 {/* Desktop header */}
                 <div className="hidden lg:flex items-center gap-4 w-3/6 justify-between font-[YekanBakh-Bold] text-sm">
                     <Link className="hover:text-blue-900 transition-colors duration-100" href="/products/">محصولات</Link>
@@ -369,6 +405,32 @@ const Header = () => {
                                 setServiceMenuStatus("close")
                             }} href="/service/guaranty-page/" className="hover:bg-blue-100 p-1 rounded-md transition-colors duration-200 text-sm text-blue-900">برگه شرایط گارانتی</Link>
                         </div>}
+=======
+            {/* Desktop header */}
+            <div className="hidden lg:flex items-center w-1/3 justify-between font-[YekanBakh-Bold] text-sm">
+                <Link className="hover:text-blue-900 transition-colors duration-100" href="/products/">محصولات</Link>
+                <Link className="hover:text-blue-900 transition-colors duration-100" href="/brands/">برند ها</Link>
+                <Link className="hover:text-blue-900 transition-colors duration-100" href="/articles/">مقالات</Link>
+                <div className="relative flex flex-col gap-2">
+                    <button onClick={changeServiceIconHandler} className="flex items-center hover:text-blue-900 transition-colors duration-100">
+                        <span>خدمات مشتریان</span>
+                        {serviceMenuStatus === "close" && <IoMdArrowDropdown size={18} />}
+                        {serviceMenuStatus === "open" && <IoMdArrowDropup size={18} />}
+                    </button>
+                    <div className={`absolute top-8 flex flex-col gap-2 p-3 rounded-md w-fit md:w-44 bg-gradient-to-r bg-blue-300 text-black transform transition-transform duration-500 ${serviceMenuStatus === "close" && "translate-y-10 opacity-0"}`}>
+		    <Link onClick={() => {
+                                setShowMobileMenu(false)
+                                setServiceMenuStatus("close")
+                            }} href="/service/inquiry-guaranty/" className="hover:text-blue-900 transition-colors duration-200 text-sm">استعلام گارانتی</Link>
+			<Link onClick={() => {
+                                setShowMobileMenu(false)
+                                setServiceMenuStatus("close")
+                            }} href="/service/guaranty-page/" className="hover:text-blue-900 transition-colors duration-200 text-sm">برگه شرایط گارانتی</Link>
+                        <Link onClick={() => {
+                            setShowMobileMenu(false)
+                            setServiceMenuStatus("close")
+                        }} href="/service/ticket/" className="hover:text-blue-900 transition-colors duration-200 text-sm">فرم نظرسنجی و شکایات</Link>
+>>>>>>> Stashed changes
                     </div>
                 </div>
 

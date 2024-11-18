@@ -3,7 +3,7 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { EXTERNAL_BASE_ENDPOINT } from "@/configs/default";
 
-const EXTERNAL_API = `${EXTERNAL_BASE_ENDPOINT}/products/newest`
+const EXTERNAL_API = `${EXTERNAL_BASE_ENDPOINT}/products/newest/`
 
 export type NewestProductType = {
     serialNumber: string,

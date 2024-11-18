@@ -33,7 +33,7 @@ const Page = () => {
 
     const onSubmit: SubmitHandler<InputTypes>  = async(data) => {
         try {
-            const response = await axios.get<responseType>(`${EXTERNAL_API}/${data.serialNumber}`)
+            const response = await axios.get<responseType>(`${EXTERNAL_API}/${data.serialNumber}/`)
             setResponseData(response.data);
         } catch (error) {
             if (axios.isAxiosError(error)) {

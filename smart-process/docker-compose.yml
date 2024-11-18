@@ -5,11 +5,14 @@ services:
     container_name: nextjs
 
   nginx:
-    image: nginx:alpine
+    image: nginx:latest
     container_name: nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl-tutorials.key:/etc/ssl/ssl-tutorials.key
+      - ./nginx/ssl-bundle.crt:/etc/ssl/ssl-bundle.crt
     depends_on:
       - app
