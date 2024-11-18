@@ -192,7 +192,7 @@ const Header = () => {
                                                             setRootCategoriesState({visible: false, fetching: false})
                                                             setShowMobileMenu(false)
                                                         }}
-                                                        href={`http://127.0.0.1:3000/products?categoryExact=${category.name}`}
+                                                        href={`/products?categoryExact=${category.name}`}
                                                         key={category.id}
                                                         className="flex items-center w-full justify-between hover:bg-blue-100 rounded-md px-1 transition-colors duration-200"
                                                     >
@@ -211,11 +211,11 @@ const Header = () => {
                                         })
                                     }
                                 </div>}
-                                {subCategories && <div className="absolute bg-red-100 w-full flex flex-col">
+                                {/* {subCategories && <div className="absolute bg-red-100 w-full flex flex-col">
                                     <li>Hello</li>
                                     <li>Hello</li>
                                     <li>Hello</li>
-                                </div>}
+                                </div>} */}
                             </div>
                             <hr className="border border-blue-200" />
                             <div className="relative flex flex-col gap-2">
@@ -273,7 +273,7 @@ const Header = () => {
                                                         setRootCategoriesState({visible: false, fetching: false})
                                                         setSubCategoriesState({categoryId: 0, enabled: false, layer: "Second"})
                                                     }}
-                                                    href={`http://127.0.0.1:3000/products?categoryExact=${category.name}`}
+                                                    href={`/products?categoryExact=${category.name}`}
                                                     className="flex w-full justify-between cursor-pointer hover:bg-blue-100 p-1 rounded-md transition-colors duration-200 text-sm text-blue-900"
                                                 >
                                                     <p>{category.name}</p>
@@ -300,7 +300,7 @@ const Header = () => {
                                                                 setRootCategoriesState({visible: false, fetching: false})
                                                                 setSubCategoriesState({categoryId: 0, enabled: false, layer: "Second"})
                                                             }}
-                                                            href={`http://127.0.0.1:3000/products?categoryExact=${subCategory.name}`}
+                                                            href={`/products?categoryExact=${subCategory.name}`}
                                                             className="flex w-full justify-between cursor-pointer hover:bg-blue-100 p-1 rounded-md transition-colors duration-200 text-sm text-blue-900"
                                                         >
                                                             <p>{subCategory.name}</p>
@@ -329,7 +329,7 @@ const Header = () => {
                                                             setRootCategoriesState({visible: false, fetching: false})
                                                             setSubCategoriesState({categoryId: 0, enabled: false, layer: "Third"})
                                                         }}
-                                                        href={`http://127.0.0.1:3000/products?categoryExact=${subCategory.name}`} key={subCategory.id}>
+                                                        href={`/products?categoryExact=${subCategory.name}`} key={subCategory.id}>
                                                         <p className="flex w-full justify-between cursor-pointer hover:bg-blue-100 p-1 rounded-md transition-colors duration-200 text-sm text-blue-900">{subCategory.name}</p>
                                                         {index < thirdLayerCategories.length - 1 && <hr className="my-1"/>}
                                                     </Link>
