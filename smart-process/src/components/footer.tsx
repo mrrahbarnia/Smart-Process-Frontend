@@ -1,69 +1,75 @@
-import { BsTelegram } from "react-icons/bs"; 
-import { AiFillInstagram } from "react-icons/ai"; 
-import { AiOutlinePushpin } from "react-icons/ai"; 
-import { AiOutlinePhone } from "react-icons/ai"; 
+import { SiWhatsapp } from "react-icons/si"; 
+import { ImLinkedin2 } from "react-icons/im"; 
+import { ImFacebook2 } from "react-icons/im"; 
+import { BsInstagram } from "react-icons/bs"; 
+import { FaTelegramPlane } from "react-icons/fa"; 
 import Image from "next/image";
+import Link from "next/link";
 
 const Footer = () => {
-    return <footer className="mt-24 bg-gradient-to-b from-white via-blue-200 to-blue-300 [clip-path:polygon(0%_100%,100%_100%,100%_0%,0%_20%)]" >
-                <div className="p-5 py-20 flex flex-col gap-2 items-center">
-                    <Image src="/images/logo.svg" alt="logo" height={500} width={500} className="w-32 md:w-40"/>
-                    <div className="flex flex-col gap-1 w-full md:flex-row lg:w-4/6">
-                        <div className="bg-blue-300 flex flex-col rounded-md w-full p-5 gap-1">
-                            <div className="flex items-center gap-1">
-                                <AiOutlinePhone size={20} />
-                                <span className="text-sm font-[YekanBakh-Bold]">تلفن های تماس</span>
-                            </div>
-                            <hr />
-                            <div className="flex items-center justify-between text-sm">
-                                <span>دفتر مرکزی</span>
-                                <span>۰۴۴۴۴۲۳۸۸۷۸</span>
-                            </div>
-                            <div className="flex items-center justify-between text-sm">
-                                <span>دفتر فروش</span>
-                                <span>۰۴۴۳۲۲۵۴۱۴۱</span>
-                            </div>
-                            <div className="flex items-center justify-between text-sm">
-                                <span>موبایل</span>
-                                <span>۰۹۱۲۰۷۰۸۸۷۸</span>
-                            </div>
-                        </div>
-                        <div className="bg-blue-300 flex flex-col rounded-md w-full p-5 gap-1">
-                            <div className="flex items-center gap-1">
-                                <AiOutlinePushpin size={20} />
-                                <span className="text-sm font-[YekanBakh-Bold]">آدرس</span>
-                            </div>
-                            <hr />
-                            <div className="flex items-center justify-between text-xs">
-                                <span className="text-sm">دفتر مرکزی</span>
-                                <span className="text-xs">پیرانشهر خیابان ملارضا طبقه ۱ واحد ۴</span>
-                            </div>
-                            <div className="flex items-center justify-between">
-                                <span className="text-sm">دفتر فروش</span>
-                                <span className="text-xs">ارومیه خیابان طرزی پلاک 40 طبقه همکف</span>
-                            </div>
-                        </div>
+    return <footer className="mt-24 bg-[#1f5da6] flex flex-col">
+                <div className="p-5 md:p-10 w-full">
+                    <div className="flex items-center gap-3 md:gap-14 text-white text-xs md:text-lg">
+                        <Link className="hover:text-blue-100 transition-colors duration-200" href="/products/">محصولات</Link>
+                        <Link className="hover:text-blue-100 transition-colors duration-200" href="/articles/">مقالات</Link>
+                        <Link className="hover:text-blue-100 transition-colors duration-200" href="#">درباره ما</Link>
+                        <Link className="hover:text-blue-100 transition-colors duration-200" href="/service/inquiry-guaranty/">استعلام گارانتی</Link>
+                        <Link className="hover:text-blue-100 transition-colors duration-200" href="/service/ticket/">رضایت سنجی</Link>
                     </div>
-                    
-                    <hr className="border-blue-800 w-full" />
-                    <div className="flex flex-col items-center">
-                        <p className="font-[YekanBakh-Bold] text-blue-900">لینک شبکه های اجتماعی</p>
-                        <div className="flex items-center gap-1">
-                            <a 
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                href="https://www.instagram.com/smartprocess.ir">
-                                <AiFillInstagram size={25} />
-                            </a>
-                            <a 
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                href="https://t.me/Sale_SmartProcess ">
-                                <BsTelegram size={22} />
-                            </a>
+                    <div className="flex flex-col md:flex-row w-full items-center justify-between text-white mt-12 md:mr-7">
+                        <div className="flex flex-col gap-4">
+                            <p>دفتر مرکزی:۰۴۴-۴۴۲۳۸۸۷۸</p>
+                            <p>دفتر فروش:۰۴۴-۳۲۲۵۴۱۴۱</p>
+                            <p>پشتیبانی فنی:۰۲۱-۸۲۸۰۸۸۷۸</p>
+                            <p className="mt-5">
+                                آدرس:پیرانشهر خیابان ملارضا,مجتمع بوداقی,طبقه ۱ واحد ۴
+                            </p>
+                            <p>کد پستی:۵۷۸۱۹۵۴۵۸۸</p>
                         </div>
+                        <a className="my-8 md:ml-6 md:my-0" referrerPolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=547775&Code=yW4KesUyclZeKva9ToLDEAJEw73hQxNe'><Image referrerPolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=547775&Code=yW4KesUyclZeKva9ToLDEAJEw73hQxNe' alt='' className="cursor-pointer" width={200} height={200} /></a>
                     </div>
                 </div>
+                <div className="flex flex-col-reverse md:flex-row gap-3 md:gap-0 w-full items-center justify-between text-white px-10">
+                    {/* Social Network Links */}
+                    <div className="flex items-center gap-6">
+                        <a 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://t.me/Sale_SmartProcess">
+                            <FaTelegramPlane size={30} />
+                        </a>
+                        <a 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://wa.me/989120708878">
+                            <SiWhatsapp size={30} />
+                        </a>
+                        <a 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://www.instagram.com/smartprocess.ir">
+                            <BsInstagram size={30} />
+                        </a>
+                        <a 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://www.facebook.com/smartproces">
+                            <ImFacebook2 size={30} />
+                        </a>
+                        <a 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            href="https://www.linkedin.com/company/smartprocess-ir/">
+                            <ImLinkedin2 size={30} />
+                        </a>
+                    </div>
+                    <span className="text-5xl -skew-x-12 font-sans font-bold">HIKVISION</span>
+                </div>
+                <div className="bg-white flex flex-col md:flex-row items-center justify-between gap-2 md:gap-0 px-10 mt-3">
+                    <Image src="/images/persian-logo.jpeg" width={300} height={1200} alt="Logo" />
+                    <p className="text-black font-[YekanBakh-Bold] text-xs md:text-lg mb-3 md:mb-0">کلیه حقوق مالکیت این وبسایت متعلق به شرکت پردازش هوشمند میباشد.</p>
+                </div>
+                <p className="text-center my-4 text-white">Be Professional</p>
             </footer>
 };
 

@@ -12,6 +12,11 @@ import TimeAgoModule from 'javascript-time-ago';
 import { CgTimelapse } from "react-icons/cg";
 import StarRating from "@/utils/showArticleRating";
 import useGetNewestProducts from "@/hooks/useQueries/useGetNewestProducts";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-cards';
+import { EffectCards } from 'swiper/modules';
 import useGetMostViewedProducts from "@/hooks/useQueries/useGetMostViewedProducts";
 
 TimeAgoModule.addDefaultLocale(fa);
@@ -44,13 +49,86 @@ const MainPage = () => {
         <div className="flex flex-col gap-10">
             
             {/* Banner Image */}
-            <Image 
-                width={1920}
-                height={600}
-                className="mt-12 w-full min-h-60 sm:max-h-96 md:max-h-[450px] lg:max-h-[600px]"
-                src={"/images/main-banner.jpg"}
-                alt="banner image"
-            />
+            <div className="mt-32 w-full">
+                <Swiper
+                    modules={[EffectCards]}
+                    effect="cards"
+                    grabCursor
+                    className="bg-transparent"
+                    cardsEffect={{
+                        slideShadows: false, // Disable shadows
+                    }}
+                >
+                    <SwiperSlide>
+                        <div className="relative w-11/12 md:w-2/3 mx-auto">
+                            <Image
+                                width={1920}
+                                height={600}
+                                className="rounded-lg"
+                                src={"/images/main-banner.jpg"}
+                                alt="banner image"
+                            />
+                            <p className="backdrop-blur-sm p-1 md:p-2 rounded-md font-[YekanBakh-Black] text-white absolute right-1 bottom-1 md:right-7 md:bottom-7 text-sm md:text-2xl">هایکویژن، رهبر راهکارهای هوشمند و نظارت تصویری</p>
+                        </div>
+                    </SwiperSlide>
+
+                    <SwiperSlide className="w-2/3">
+                        <div className="relative w-11/12 md:w-2/3 mx-auto">
+                            <Image
+                                width={1920}
+                                height={600}
+                                className="rounded-lg w-full"
+                                src={"/images/AI.jpg"}
+                                alt="banner image"
+                            />
+                            <p className="backdrop-blur-sm p-1 md:p-2 rounded-md font-[YekanBakh-Black] text-white absolute right-1 bottom-1 md:right-7 md:bottom-7 text-sm md:text-2xl">به دنیای هوش مصنوعی وارد شوید</p>
+                        </div>
+                    </SwiperSlide>
+
+                    <SwiperSlide>
+                        <div className="relative w-11/12 md:w-2/3 mx-auto">
+                            <Image
+                                width={1920}
+                                height={600}
+                                className="rounded-lg"
+                                src={"/images/03.jpg"}
+                                alt="banner image"
+                            />
+                            <div className="backdrop-blur-sm p-1 md:p-2 rounded-md font-[YekanBakh-Black] text-blue-600 absolute right-1 bottom-1 md:right-7 md:bottom-7 text-sm md:text-2xl">
+                                <p>فناوری های نوین هایک ویژن</p>
+                                <p>نوآوری برای یک دنیای هوشمند و امن</p>
+                            </div>
+                        </div>
+                    </SwiperSlide>
+
+                    <SwiperSlide>
+                        <div className="relative w-11/12 md:w-2/3 mx-auto">
+                            <Image
+                                width={1920}
+                                height={600}
+                                className="rounded-lg"
+                                src={"/images/01.jpg"}
+                                alt="banner image"
+                            />
+                            <p className="backdrop-blur-sm p-1 md:p-2 rounded-md font-[YekanBakh-Black] text-white absolute right-1 bottom-1 md:right-7 md:bottom-7 text-sm md:text-2xl">تصویری از آینده در زندگی امروز</p>
+                        </div>
+                    </SwiperSlide>
+
+                    <SwiperSlide>
+                        <div className="relative w-11/12 md:w-2/3 mx-auto">
+                            <Image
+                                width={1920}
+                                height={600}
+                                className="rounded-lg"
+                                src={"/images/04.jpg"}
+                                alt="banner image"
+                            />
+                            <p className="backdrop-blur-sm p-1 md:p-2 rounded-md font-[YekanBakh-Black] text-white absolute right-1 bottom-1 md:right-7 md:bottom-7 text-sm md:text-2xl">فناوری در جهت امنیت، آسایش و آرامش</p>
+                        </div>
+                    </SwiperSlide>
+                </Swiper>
+            </div>
+            
 
             {/* Newest Products */}
             {newestProductsIsPending && <AiOutlineLoading3Quarters className="animate-spin mx-auto" />}
