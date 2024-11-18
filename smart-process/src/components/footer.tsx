@@ -26,7 +26,7 @@ const Footer = () => {
                             </p>
                             <p>کد پستی:۵۷۸۱۹۵۴۵۸۸</p>
                         </div>
-                        <a className="my-8 md:ml-6 md:my-0" referrerPolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=547775&Code=yW4KesUyclZeKva9ToLDEAJEw73hQxNe'><Image referrerPolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=547775&Code=yW4KesUyclZeKva9ToLDEAJEw73hQxNe' alt='' className="cursor-pointer" width={200} height={200} /></a>
+                        <a className="bg-white rounded-md hover:bg-blue-100 transition-colors duration-200" referrerPolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=547775&Code=yW4KesUyclZeKva9ToLDEAJEw73hQxNe'><img referrerPolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=547775&Code=yW4KesUyclZeKva9ToLDEAJEw73hQxNe' className="w-40 h-40" alt='enamad' style={{ cursor: 'pointer' }} /></a>
                     </div>
                 </div>
                 <div className="flex flex-col-reverse md:flex-row gap-3 md:gap-0 w-full items-center justify-between text-white px-10">
