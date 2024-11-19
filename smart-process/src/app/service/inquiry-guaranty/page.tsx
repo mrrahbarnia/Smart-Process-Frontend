@@ -7,7 +7,7 @@ import { EXTERNAL_BASE_ENDPOINT } from "@/configs/default";
 import { calculateDays } from "@/utils/calculateDays";
 import Link from "next/link";
 
-const EXTERNAL_API = `${EXTERNAL_BASE_ENDPOINT}/products/inquiry-guaranty/`
+const EXTERNAL_API = `${EXTERNAL_BASE_ENDPOINT}/products/inquiry-guaranty`
 
 type InputTypes = {
     serialNumber: string
