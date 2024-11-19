@@ -26,7 +26,10 @@ const Footer = () => {
                             </p>
                             <p>کد پستی:۵۷۸۱۹۵۴۵۸۸</p>
                         </div>
-                        <a className="bg-white rounded-md hover:bg-blue-100 transition-colors duration-200" referrerPolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=547775&Code=yW4KesUyclZeKva9ToLDEAJEw73hQxNe'><img referrerPolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=547775&Code=yW4KesUyclZeKva9ToLDEAJEw73hQxNe' className="w-40 h-40" alt='enamad' style={{ cursor: 'pointer' }} /></a>
+                        <div className="flex gap-1 bg-white rounded-md ">
+                            <a className="hover:bg-blue-100 transition-colors duration-200" referrerPolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=547775&Code=yW4KesUyclZeKva9ToLDEAJEw73hQxNe'><Image referrerPolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=547775&Code=yW4KesUyclZeKva9ToLDEAJEw73hQxNe' className="w-40 h-40" width={40} height={40} alt='enamad' style={{ cursor: 'pointer' }} /></a>
+                            <Image width={40} height={40} referrerPolicy='origin' id = 'rgvjjzpewlaowlaojxlzsizp' style={{ cursor: 'pointer' }} onClick={() => window.open("https://logo.samandehi.ir/Verify.aspx?id=374419&p=xlaojyoeaodsaodsrfthpfvl", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")} alt = 'logo-samandehi' src = 'https://logo.samandehi.ir/logo.aspx?id=374419&p=qftiyndtshwlshwlnbpdbsiy' />
+                        </div>
                     </div>
                 </div>
                 <div className="flex flex-col-reverse md:flex-row gap-3 md:gap-0 w-full items-center justify-between text-white px-10">
