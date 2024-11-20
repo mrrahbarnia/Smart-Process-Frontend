@@ -64,7 +64,7 @@ const MainPage = () => {
                                 src={"/images/main-banner.jpg"}
                                 alt="banner image"
                             />
-                            <p className="backdrop-blur-sm p-2 rounded-md font-[YekanBakh-Black] text-white absolute right-2 bottom-2 text-lg">هایکویژن، رهبر راهکارهای هوشمند و نظارت تصویری</p>
+                            <p className="backdrop-blur-sm p-1 rounded-md font-[YekanBakh-Black] text-white absolute right-2 bottom-2 text-sm">هایکویژن، رهبر راهکارهای هوشمند و نظارت تصویری</p>
                         </div>
                     </SwiperSlide>
 
@@ -76,7 +76,7 @@ const MainPage = () => {
                                 src={"/images/AI.jpg"}
                                 alt="banner image"
                             />
-                            <p className="backdrop-blur-sm p-2 rounded-md font-[YekanBakh-Black] text-white absolute right-2 bottom-2 text-lg">به دنیای هوش مصنوعی وارد شوید</p>
+                            <p className="backdrop-blur-sm p-1 rounded-md font-[YekanBakh-Black] text-white absolute right-2 bottom-2 text-sm">به دنیای هوش مصنوعی وارد شوید</p>
                         </div>
                     </SwiperSlide>
 
@@ -88,7 +88,7 @@ const MainPage = () => {
                                 src={"/images/03.jpg"}
                                 alt="banner image"
                             />
-                            <div className="backdrop-blur-sm p-2 rounded-md font-[YekanBakh-Black] text-blue-600 absolute right-2 bottom-2 text-lg">
+                            <div className="backdrop-blur-sm p-1 rounded-md font-[YekanBakh-Black] text-blue-600 absolute right-2 bottom-2 text-sm">
                                 <p>فناوری های نوین هایک ویژن</p>
                                 <p>نوآوری برای یک دنیای هوشمند و امن</p>
                             </div>
@@ -103,7 +103,7 @@ const MainPage = () => {
                                 src={"/images/01.jpg"}
                                 alt="banner image"
                             />
-                            <p className="backdrop-blur-sm p-2 rounded-md font-[YekanBakh-Black] text-white absolute right-2 bottom-2 text-lg">تصویری از آینده در زندگی امروز</p>
+                            <p className="backdrop-blur-sm p-1 rounded-md font-[YekanBakh-Black] text-white absolute right-2 bottom-2 text-sm">تصویری از آینده در زندگی امروز</p>
                         </div>
                     </SwiperSlide>
 
@@ -115,7 +115,7 @@ const MainPage = () => {
                                 src={"/images/04.jpg"}
                                 alt="banner image"
                             />
-                            <p className="backdrop-blur-sm p-2 rounded-md font-[YekanBakh-Black] text-white absolute right-2 bottom-2 text-lg">فناوری در جهت امنیت، آسایش و آرامش</p>
+                            <p className="backdrop-blur-sm p-1 rounded-md font-[YekanBakh-Black] text-white absolute right-2 bottom-2 text-sm">فناوری در جهت امنیت، آسایش و آرامش</p>
                         </div>
                     </SwiperSlide>
                 </Swiper>
