@@ -138,23 +138,34 @@ const Header = () => {
                         />
                     </div>
                     {showAccountMobileMenu && !showMobileMenu && <div className={`cursor-pointer flex flex-col gap-2 absolute ${isAuthenticated ? "top-10" : "top-7"} bg-blue-100 w-40 p-2 rounded-md shadow-lg`}>
-                        {!isAuthenticated && <Link href="/accounts/login/" className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 p-2 py-1">
+                        {!isAuthenticated && <Link onClick={() => {
+                            setShowAccountMobileMenu(false);
+                        }} href="/accounts/login/" className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 p-2 py-1">
                             <FiLogIn size={18} />
                             <p className="text-sm" >ورود</p>
                         </Link>}
-                        {!isAuthenticated && <Link href="/accounts/reset-password/" className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 p-2 py-1">
+                        {!isAuthenticated && <Link onClick={() => {
+                            setShowAccountMobileMenu(false);
+                        }} href="/accounts/reset-password/" className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 p-2 py-1">
                             <MdLockReset size={18} />
                             <p className="text-sm" >بازیابی رمز عبور</p>
                         </Link>}
-                        {isAuthenticated && <Link href="/accounts/change-password/" className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 p-2 py-1">
+                        {isAuthenticated && <Link onClick={() => {
+                            setShowAccountMobileMenu(false);
+                        }} href="/accounts/change-password/" className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 p-2 py-1">
                             <MdOutlinePassword size={18} />
                             <p className="text-sm" >تغییر رمز عبور</p>
                         </Link>}
-                        {role === "admin" && isAuthenticated && <Link href="/admin/products/" className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 px-2 py-1">
+                        {role === "admin" && isAuthenticated && <Link onClick={() => {
+                            setShowAccountMobileMenu(false);
+                        }} href="/admin/products/" className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 px-2 py-1">
                             <RiAdminLine size={18} />
                             <p className="text-sm" >پنل ادمین</p>
                         </Link>}
-                        {isAuthenticated && <div onClick={logoutHandler} className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 px-2 py-1">
+                        {isAuthenticated && <div onClick={() => {
+                            logoutHandler();
+                            setShowAccountMobileMenu(false);
+                        }} className="flex items-center cursor-pointer gap-1 rounded-md hover:bg-blue-200 hover:text-blue-800 px-2 py-1">
                             <RiLogoutBoxLine size={18} />
                             <a className="text-sm" >خروج</a>
                         </div>}

@@ -40,7 +40,9 @@ export default function RootLayout({
     <html lang="fa" dir="rtl" className="font-[YekanBakh-SemiBold]">
       <body
         className="flex flex-col min-h-screen bg-custom-bg bg-cover bg-center"
+        
       >
+        <link rel="icon" href="/images/favicon.ico" sizes="any" />
         <ReactQueryProvider>
           <Header />
             {children}
